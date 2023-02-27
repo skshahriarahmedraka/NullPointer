@@ -1,0 +1,10 @@
+
+
+
+<script lang="ts">
+ export let text 
+</script>
+
+
+
+{@html text}

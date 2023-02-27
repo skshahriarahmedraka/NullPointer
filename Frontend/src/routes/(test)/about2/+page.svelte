@@ -1,0 +1,57 @@
+<!-- <script>
+
+  import {marked} from 'marked'
+  
+
+  let markdown = ""
+
+ 
+</script>
+
+<h1>Markdown Editor</h1>
+
+<textarea bind:value={markdown}  placeholder="Enter markdown here"/>
+
+
+<div class="preview prose border-4 border-black rounded-md">{@html marked(markdown)}</div>
+ -->
+
+
+ <script lang="ts">
+	import { tick } from 'svelte';
+
+	let text = `Select some text and hit the tab key to toggle uppercase`;
+
+	async function handleKeydown(this: any, event: { key: string; preventDefault: () => void; }) {
+		if (event.key !== 'Tab') return;
+
+		event.preventDefault();
+
+		const { selectionStart, selectionEnd, value } = this;
+		const selection = value.slice(selectionStart, selectionEnd);
+
+		const replacement = /[a-z]/.test(selection)
+			? selection.toUpperCase()
+			: selection.toLowerCase();
+
+		text = (
+			value.slice(0, selectionStart) +
+			replacement +
+			value.slice(selectionEnd)
+		);
+
+		await tick();
+	
+		this.selectionStart = selectionStart;
+		this.selectionEnd = selectionEnd;
+	}
+</script>
+
+<style>
+	textarea {
+		width: 100%;
+		height: 200px;
+	}
+</style>
+
+<textarea value={text} on:keydown={handleKeydown}></textarea>
