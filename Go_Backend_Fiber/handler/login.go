@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -46,7 +47,29 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 			})
 		} else {
 			expirationTime := time.Now().Add(1000 * time.Hour)
-			claims := model
+			claims := model.JwtAuth1{
+				Email:        dbUser.Email,
+				Name:         dbUser.UserName,
+				UserID:       dbUser.UserID,
+				AccountType:  dbUser.AccountType,
+				StandardClaims: jwt.StandardClaims{
+					ExpiresAt: expirationTime.Unix(),
+				},
+			}
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+			tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Error while creating token",
+				})
+			}
+			c.Cookie(&fiber.Cookie{
+				Name:     "Auth1",
+				Value:    tokenString,
+				Expires:  time.Now().Add(1000 * time.Hour),
+				HTTPOnly: true,
+				SameSite: "lax",
+			})
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"message": "Login successful",
 				"User":    dbUser,

@@ -15,22 +15,21 @@ import (
 	// "encoding/json"
 	"fmt"
 
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v4"
 	// "go.mongodb.org/mongo-driver/bson"
 	// "github.com/dgrijalva/jwt-go"
 )
 
 func (H *DatabaseCollections) Register(c *gin.Context) {
 
-
-// c.Request.Header.Set("Access-Control-Allow-Origin", "*")
-// c.Request.Header.Set("Content-Type", "application/json")
-// c.Request.Header.Set("Access-Control-Allow-Credentials", "true")
+	// c.Request.Header.Set("Access-Control-Allow-Origin", "*")
+	// c.Request.Header.Set("Content-Type", "application/json")
+	// c.Request.Header.Set("Access-Control-Allow-Credentials", "true")
 
 	var ReqData model.UserData
 	err := c.BindJSON(&ReqData)
@@ -43,47 +42,44 @@ func (H *DatabaseCollections) Register(c *gin.Context) {
 	if ReqData.Email == os.Getenv("SUPER_ADMIN_EMAIL") {
 
 		ReqData.Accounttype = os.Getenv("SUPER_ADMIN_ACCOUNTTYPE")
-	
 
 	} else {
 		ReqData.Accounttype = "normal"
-		ReqData.UserID =uuid.New().String()
+		ReqData.UserID = uuid.New().String()
 
 	}
 	ReqData.ID = primitive.NewObjectID()
 	ReqData.UserImage = ""
 	ReqData.Aboutme = ""
 
-    // ReqDataTitle string `json:"ReqDataTitle"`
-    ReqData.UserImage = ""
-    ReqData.Badges =   struct {
-        Reputation int `json:Reputation bson:"Reputation"`
-        Gold       int `json:"Gold" bson:"Gold"`
-        Silver     int `json:"Silver" bson:"Silver"`
-        Bronze     int `json:"Bronze" 		bson:"Bronze"`
-    } {
+	// ReqDataTitle string `json:"ReqDataTitle"`
+	ReqData.UserImage = ""
+	ReqData.Badges = struct {
+		Reputation int `json:Reputation bson:"Reputation"`
+		Gold       int `json:"Gold" bson:"Gold"`
+		Silver     int `json:"Silver" bson:"Silver"`
+		Bronze     int `json:"Bronze" 		bson:"Bronze"`
+	}{
 		Reputation: 1,
 		Gold:       0,
 		Silver:     0,
 		Bronze:     0,
 	}
 
-    ReqData.Follower=[]string{}
-    // Badges map[string]int
-    ReqData.Location=""
-    ReqData.MembershipTime=primitive.Timestamp{T:uint32(time.Now().Unix())}
-    ReqData.LastSeen= primitive.Timestamp{T:uint32(time.Now().Unix())}
-    ReqData.Aboutme=""
-    ReqData.Mysite =""
-    ReqData.Github   =""
-    ReqData.Twitter       =""
-    ReqData.Linkedin    =""
-    ReqData.TopTags       = []string{}
-    ReqData.TopTagsPercent =[]int{}
-    ReqData.SelectedPanel = ""  
+	ReqData.Follower = []string{}
+	// Badges map[string]int
+	ReqData.Location = ""
+	ReqData.MembershipTime = primitive.Timestamp{T: uint32(time.Now().Unix())}
+	ReqData.LastSeen = primitive.Timestamp{T: uint32(time.Now().Unix())}
+	ReqData.Aboutme = ""
+	ReqData.Mysite = ""
+	ReqData.Github = ""
+	ReqData.Twitter = ""
+	ReqData.Linkedin = ""
+	ReqData.TopTags = []string{}
+	ReqData.TopTagsPercent = []int{}
+	ReqData.SelectedPanel = ""
 	ReqData.Following = []string{}
-
-
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*20)
 	defer cancel()
@@ -100,7 +96,6 @@ func (H *DatabaseCollections) Register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User already registered"})
 		return
 	}
-
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(ReqData.Password), bcrypt.DefaultCost)
 	ReqData.Password = string(hash)
@@ -161,11 +156,9 @@ func (H *DatabaseCollections) Register(c *gin.Context) {
 	}
 	////////////////////////////////
 	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("Auth1",tokenString,60*60*24,"/","127.0.0.1",false , true)
-		// c.SetCookie("Auth1Refresh",refreshToken,60*60*24,"/","localhost",false , true)
-		c.JSON(http.StatusOK,"successfully Register")
-
-
+	c.SetCookie("Auth1", tokenString, 60*60*24, "/", "127.0.0.1", false, true)
+	// c.SetCookie("Auth1Refresh",refreshToken,60*60*24,"/","localhost",false , true)
+	c.JSON(http.StatusOK, "successfully Register")
 
 	// var SendJwt struct {
 	// 	JWT string

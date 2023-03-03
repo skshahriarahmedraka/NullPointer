@@ -6,6 +6,7 @@ require (
 	github.com/gobuffalo/packr/v2 v2.8.3
 	github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/fiber/v2 v2.42.0
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.2
 	go.mongodb.org/mongo-driver v1.11.2
