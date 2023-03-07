@@ -7,6 +7,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+
 	// "hash"
 	"time"
 
@@ -100,8 +102,11 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		c.Cookie(&fiber.Cookie{
 			Name:     "Auth1",
 			Value:    tokenString,
+			Path:   "/",
+			Domain: os.Getenv("IP"),
 			Expires:  time.Now().Add(1000 * time.Hour),
 			HTTPOnly: true,
+			
 			SameSite: "lax",
 		})
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{

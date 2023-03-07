@@ -1,8 +1,8 @@
 update:
 	go get -u
 	go mod tidy
-	go mod vendor
-	go mod verify
+	# go mod vendor
+	# go mod verify
 
 test:
 	go test -v ./...

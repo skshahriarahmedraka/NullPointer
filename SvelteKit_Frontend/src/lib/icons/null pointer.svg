@@ -1,9 +1,9 @@
 <svg
-	class="{$$props.class}"
+	class=""
 	xmlns="http://www.w3.org/2000/svg"
+	viewBox="-17.14000854492184 7.980004882812494 534.2800170898437 134.039990234375"
 	style="background: none;"
 	preserveAspectRatio="xMidYMid"
-	viewBox="65.82 56.43 368.35 64.9"
 	><defs
 		><linearGradient
 			id="editing-gradient-gradient"
