@@ -11,6 +11,7 @@ import '../app.postcss';
 	<link rel="icon"  href={HeadLogo} />
 </svelte:head>
 
-		<slot></slot>
+<!-- <div class=" h-screen w-screen overflow-hidden "> -->
+	<slot></slot>
 
-	<Footer/>
+<!-- </div> -->

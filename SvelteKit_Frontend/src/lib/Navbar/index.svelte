@@ -233,7 +233,7 @@
 
 {#if UserdataLoading}
 	<div
-		class="fixed flex h-[53px] min-w-full flex-row items-center justify-center overflow-hidden border-b-2 border-solid border-[#32353a] bg-[#262626]  "
+		class=" top-0 flex h-[53px] w-screen  flex-row items-center justify-center overflow-hidden border-b-2 border-solid border-[#32353a] bg-[#262626]  "
 	>
 		<div class=" grow" />
 		<!-- Company logo -->

@@ -65,7 +65,7 @@
     <div class=" h-[150px] w-[1050px]  ml-3 mt-3  flex flex-col text-[#e7e9eb] ">
         <!-- QUESTION TITLE -->
         <div class=" flex flex-row ">
-            <p class=" text-2xl line-clamp-3 basis-10/12 ">{$QuestionData.Title}</p>
+            <p class=" text-2xl line-clamp-3 basis-10/12 font-raleway ">{$QuestionData.Title}</p>
             <div class="ml-3 -mr-3 h-12  basis-2/12  rounded-md bg-sky-500 hover:bg-blue-600 flex justify-center items-center ">
                 <p class="  my-auto text-gray-200 font-semibold text-xl ">Ask</p>
             </div>
@@ -101,7 +101,7 @@
                         </svg>
                     </div>
                     <!-- Question Detail  -->
-                    <div class="w-full text-[#e7e9eb]  ">
+                    <div class="w-full text-[#e7e9eb] font-sf-pro ">
                         <div class="">
                             {$QuestionData.Description}
                         </div>

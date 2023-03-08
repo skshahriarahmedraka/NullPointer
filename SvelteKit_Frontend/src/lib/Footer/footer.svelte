@@ -3,10 +3,9 @@
 	import Stediablue from '$lib/icons/stediablue.svelte';
 </script>
 
-<div class=" flex h-screen w-screen flex-col bg-slate-800 ">
-	<div class=" grow" />
 
-	<div class=" flex h-80  w-full flex-row items-start justify-center gap-2 bg-[#232629]">
+
+	<div class=" flex h-80  w-screen overflow-hidden flex-row items-start justify-center gap-2 bg-[#232629]">
 		<div class=" my-10 flex h-fit  w-52 flex-col items-start text-sm text-[#677079] ">
 			<Nullpointer class=" ml-0 h-6 w-auto" />
 			<!-- <p class=" font-medium">Stack Overflow</p> -->
@@ -78,7 +77,6 @@
 			</p>
 		</div>
 	</div>
-</div>
 
 <style>
 	/* your styles go here */
