@@ -1,31 +1,32 @@
 package model
 
+type QuesData struct {
+	ID                  int      `json:"ID" bson:"_id" validate:"required"`
+	QuesTitle       string   `json:"QuesTitle" bson:"QuesTitle" validate:"required,min=4,max=200"`
+	QuesitonAskedTime   string   `json:"QuesAskedTime" bson:"QuesAskedTime" validate:"omitempty"`
+	QuesModified    string   `json:"QuesModified" bson:"QuesModified" validate:"omitempty"`
+	QuesViewed      int      `json:"QuesViewed" bson:"QuesViewed" validate:"omitempty"`
+	QuesUpvote      int      `json:"QuesUpvote" bson:"QuesUpvote" validate:"omitempty"`
+	QuesDownvote    int      `json:"QuesDownvote" bson:"QuesDownvote" validate:"omitempty"`
+	QuesBookmark    int      `json:"QuesBookmark" bson:"QuesBookmark" validate:"omitempty"`
+	QuesTags        []string `json:"QuesTags" bson:"QuesTags" validate:"omitempty"`
+	QuesAskedBy     string   `json:"QuesAskedBy" bson:"QuesAskedBy" validate:"required"`
+	QuesAnsAccepted string   `json:"QuesAnsAccepted" bson:"QuesAnsAccepted" validate:"required"`
 
-type QuestionData struct {
-	ID 					int      `json:"ID" bson:"_id" validate:"required"`
-	QuestionTitle          string   `json:"QuestionTitle" bson:"QuestionTitle" validate:"required,min=4,max=200"`
-	QuesitonAskedTime      string   `json:"QuestionAskedTime" bson:"QuestionAskedTime" validate:"omitempty"`
-	QuestionModified       string   `json:"QuestionModified" bson:"QuestionModified" validate:"omitempty"`
-	QuestionViewed         int      `json:"QuestionViewed" bson:"QuestionViewed" validate:"omitempty"`
-	QuestionUpvote         int      `json:"QuestionUpvote" bson:"QuestionUpvote" validate:"omitempty"`
-	QuestionDownvote       int      `json:"QuestionDownvote" bson:"QuestionDownvote" validate:"omitempty"`
-	QuestionBookmark       int      `json:"QuestionBookmark" bson:"QuestionBookmark" validate:"omitempty"`
-	QuestionTags           []string `json:"QuestionTags" bson:"QuestionTags" validate:"omitempty"`
-	QuestionAskedBy        string   `json:"QuestionAskedBy" bson:"QuestionAskedBy" validate:"required"`
-	// QuestionAskedByName    string   `json:"QuestionAskedByName" bson:"QuestionAskedByName" validate:"required"`
-	// QuestionAskedByBadge    struct {
+	// QuesAskedByName    string   `json:"QuesAskedByName" bson:"QuesAskedByName" validate:"required"`
+	// QuesAskedByBadge    struct {
 	// 	Reputation int `json:Reputation bson:"Reputation" validate:"omitempty, numeric"`
 	// 	Gold       int `json:"Gold" bson:"Gold" validate:"omitempty,numeric"`
 	// 	Silver     int `json:"Silver" bson:"Silver" validate:"omitempty,numeric"`
 	// 	Bronze     int `json:"Bronze" 		bson:"Bronze" validate:"omitempty,numeric"`
-	// } `json:"QuestionAskedByBadge" bson:"QuestionAskedByBadge"`   
-	QuestionAskedTimeExact string   `json:"QuestionAskedTimeExact" bson:"QuestionAskedTimeExact" validate:"omitempty"`
-	QuestionAskedByImage   string   `json:"QuestionAskedByImage" bson:"QuestionAskedByImage" validate:"omitempty"`
+	// } `json:"QuesAskedByBadge" bson:"QuesAskedByBadge"`
+	QuesAskedTimeExact string `json:"QuesAskedTimeExact" bson:"QuesAskedTimeExact" validate:"omitempty"`
+	QuesAskedByImage   string `json:"QuesAskedByImage" bson:"QuesAskedByImage" validate:"omitempty"`
 
-	QuestionEditedBy        string          `json:"QuestionEditedBy" bson:"QuestionEditedBy" validate:"omitempty"`
+	QuesEditedBy string `json:"QuesEditedBy" bson:"QuesEditedBy" validate:"omitempty"`
 
-	QuestionEditedTimeExact string          `json:"QuestionEditedTimeExact" bson:"QuestionEditedTimeExact" validate:"omitempty"`
-	QuestionDescription     string          `json:"QuestionDescription" bson:"QuestionDescription" validate:"required,min=10,max=10000"`
-	QuestionComment         [][]map[string]string      `json:"QuestionComment" bson:"QuestionComment" validate:"omitempty"`
-	Answers                 [][]string  `json:"Answers" validate:"omitempty"`
+	QuesEditedTimeExact string                `json:"QuesEditedTimeExact" bson:"QuesEditedTimeExact" validate:"omitempty"`
+	QuesDescription     string                `json:"QuesDescription" bson:"QuesDescription" validate:"required,min=10,max=10000"`
+	QuesComment         [][]string  `json:"QuesComment" bson:"QuesComment" validate:"omitempty"`
+	Answers                 [][]string            `json:"Answers" validate:"omitempty"`
 }

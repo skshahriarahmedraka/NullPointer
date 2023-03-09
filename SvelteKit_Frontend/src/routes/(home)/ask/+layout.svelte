@@ -10,6 +10,7 @@
 	import LoadingSVG from '$lib/Loading/index.svelte';
 const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
 import { afterUpdate } from 'svelte';
+	import Footer from '$lib/Footer/footer.svelte';
 
 	let loadingState: boolean = false;
 	afterUpdate(() => {
@@ -24,15 +25,20 @@ import { afterUpdate } from 'svelte';
 	<!-- <link rel="icon"  sizes="any" type="image/svg+xml" href="%sveltekit.assets%/favicon.svg" /> -->
 </svelte:head>
 {#if loadingState}
-	<div class="flex   w-full flex-row justify-center bg-[#181818] z-40 overflow-y-scroll  ">
-		<Navbar  />
-		<!-- COLLECTIVE -->
-		<Collectives  />
-		<!-- QUESTION LIST -->
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+	<Navbar />
+	<div class="flex w-full flex-row justify-center   ">
 		
+		<!-- COLLECTIVE -->
+		<Collectives />
+		<!-- QUESTION LIST -->
 
 		<slot></slot>
-    </div>
+	</div>
+	<Footer />
+</div>
+	<!-- ////////////////////////////// -->
+
     
 {:else}
 	<LoadingSVG/>

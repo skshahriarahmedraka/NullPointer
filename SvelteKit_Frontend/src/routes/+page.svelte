@@ -17,7 +17,7 @@
 </script>
 
 {#if loadingState}
-	<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+	<div class="   flex   w-full flex-col  justify-start overflow-x-hidden overflow-y-hidden bg-[#181818] min-h-screen ">
 		<Navbar />
 		<div class="flex w-full flex-row justify-center   ">
 			
@@ -26,7 +26,7 @@
 			<!-- QUESTION LIST -->
 
 			<!-- settings -->
-			<div class=" mt-2 mb-2  min-h-full   w-[1200px]  bg-[#2d2d2d]  ">
+			<div class=" mt-2 mb-2 min-h-screen   w-[1200px]  bg-[#2d2d2d]  ">
 				<div class="flex flex-row ">
 					<!-- questions -->
 					<div class="flex w-[850px] flex-col">
@@ -99,7 +99,7 @@
 						<PublicQues />
 					</div>
 					<!-- right sidebar -->
-					<div class="flex h-full w-[350px] flex-col">
+					<div class="flex h-full w-[350px] flex-col ">
 						<!-- Blog -->
 						<BlogListCom />
 						<!-- hot ques -->
