@@ -161,7 +161,7 @@
 	>
 		Groups
 	</div>
-	{#if GroupList.length == 0}
+	{#if GroupList.length != 0}
 		{#each GroupList as i}
 			<div
 				on:click={() => SetFocusID(i.ID)}

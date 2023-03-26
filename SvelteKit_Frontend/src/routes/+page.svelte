@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { afterUpdate } from 'svelte';
 	import Footer from '$lib/Footer/footer.svelte';
+	import PageNum from '$lib/PageNum/pageNum.svelte';
 
 	let loadingState: boolean = false;
 	afterUpdate(() => {
@@ -97,6 +98,7 @@
 
 						<!-- all Question list -->
 						<PublicQues />
+						<PageNum/>
 					</div>
 					<!-- right sidebar -->
 					<div class="flex h-full w-[350px] flex-col ">

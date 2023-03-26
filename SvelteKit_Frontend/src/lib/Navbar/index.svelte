@@ -344,7 +344,7 @@
 			</button>
 			{#if NotificationOptsOpen}
 				<div
-					class=" fixed z-30 float-left -ml-[340px]  mt-2 flex max-h-screen min-h-fit w-96  flex-col overflow-scroll   rounded-lg border-2 border-gray-600 bg-gray-500 text-gray-200"
+					class=" fixed z-30 float-left -ml-[340px]  mt-2 flex max-h-screen min-h-fit w-96  flex-col overflow-scroll scrol3  rounded-lg border-2 border-gray-600 bg-gray-500 text-gray-200"
 				>
 					{#each NotificationOpts2 as i}
 						<button

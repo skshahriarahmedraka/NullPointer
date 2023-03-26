@@ -8,7 +8,8 @@ const config = {
 				"sf-pro": ['SF Pro Display', 'sans-serif'],
 				"raleway": ['Raleway', 'sans-serif']
 			  },
-		}
+		},
+		
 	},
 
 	plugins: [

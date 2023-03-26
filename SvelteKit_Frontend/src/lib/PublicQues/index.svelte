@@ -121,10 +121,10 @@
 	];
 </script>
 
-<div class="h-full w-full">
+<div class="h-full w-full ">
 	{#if QuestionList.length != 0}
 		{#each QuestionList as i}
-			<div class=" min-h-32 mx-2 flex max-h-40 w-full flex-row border-t-2 border-[#404245] py-2">
+			<div class=" min-h-32 mx-2 flex max-h-40 w-full flex-row border-t-2 border-[#404245] py-2 ">
 				<!-- quesVote -->
 				<div class="my-2 flex h-full w-60 flex-col items-center justify-center gap-1 ">
 					<!-- VoteNumber -->
@@ -176,6 +176,7 @@
 		<div class=" h-full w-full text-xl text-white">NO Question Found</div>
 	{/if}
 </div>
+
 
 <style>
 	/* your styles go here */

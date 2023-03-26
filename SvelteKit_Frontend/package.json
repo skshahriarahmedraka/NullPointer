@@ -45,8 +45,11 @@
 		"@tailwindcss/line-clamp": "^0.4.2",
 		"@types/jsonwebtoken": "^9.0.1",
 		"@types/marked": "^4.0.8",
+		"@types/showdown": "^2.0.0",
 		"jsonwebtoken": "^9.0.0",
 		"marked": "^4.2.12",
+		"showdown": "^2.1.0",
+		"svelte-markdown": "^0.2.3",
 		"tailwindcss-question-mark": "^0.1.1"
 	}
 }

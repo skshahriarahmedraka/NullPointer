@@ -71,7 +71,7 @@
     </div>
     <div class="">
         <div class=" flex flex-row">
-            <div class=" ml-8 mt-2 self-start text-left text-xl text-base font-semibold text-gray-300 ">
+            <div class=" ml-8 mt-2 self-start text-left text-xl  font-semibold text-gray-300 ">
                 Title :
             </div>
             {#if ErrorMsg.Email[0] }
