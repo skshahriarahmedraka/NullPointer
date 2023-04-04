@@ -8,9 +8,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
+	"app/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v4"
+	// "github.com/golang-jwt/jwt/v4"
+	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -29,7 +30,7 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	var dbUser model.UserData
-	err = H.MongoUserCol.FindOne(ctx, model.UserData{Email: loginData.Email}).Decode(&dbUser)
+	err = H.MongoUserCol.FindOne(ctx, bson.D{{"Email", loginData.Email}}).Decode(&dbUser)
 	// Check if the user exists
 	logs.Error("User Email not found in database :", err)
 	if err != nil {
@@ -41,24 +42,30 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 		userPass := []byte(loginData.Password)
 		dbPass := []byte(dbUser.Password)
 		err := bcrypt.CompareHashAndPassword(dbPass, userPass)
-		if err == nil {
+		if err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 				"message": "Invalid credentials",
 			})
 		} else {
-			expirationTime := time.Now().Add(1000 * time.Hour)
-			claims := model.JwtAuth1{
-				Email:        dbUser.Email,
-				Name:         dbUser.UserName,
-				UserID:       dbUser.UserID,
-				AccountType:  dbUser.AccountType,
-				StandardClaims: jwt.StandardClaims{
-					ExpiresAt: expirationTime.Unix(),
-				},
-			}
-			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-			tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
-			if err != nil {
+			// expirationTime := time.Now().Add(1000 * time.Hour)
+			// claims := model.JwtAuth1{
+			// 	Email:        dbUser.Email,
+			// 	Name:         dbUser.UserName,
+			// 	UserID:       dbUser.UserID,
+			// 	AccountType:  dbUser.AccountType,
+			// 	StandardClaims: jwt.StandardClaims{
+			// 		ExpiresAt: expirationTime.Unix(),
+			// 	},
+			// }
+			// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+			// tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
+			// if err != nil {
+			// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			// 		"message": "Error while creating token",
+			// 	})
+			// }
+			tokenString := utils.GenerateHttpOnlyJWT(dbUser)
+			if tokenString == "" {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 					"message": "Error while creating token",
 				})
@@ -70,6 +77,7 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 				HTTPOnly: true,
 				SameSite: "lax",
 			})
+			
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"message": "Login successful",
 				"User":    dbUser,

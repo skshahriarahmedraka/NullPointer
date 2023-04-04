@@ -8,7 +8,7 @@
 	// // import {UserData,QuestionData,Loading} from "$lib/store/store"
 
 	import LoadingSVG from '$lib/Loading/index.svelte';
-const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
+// const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
 import { afterUpdate } from 'svelte';
 	import Footer from '$lib/Footer/footer.svelte';
 

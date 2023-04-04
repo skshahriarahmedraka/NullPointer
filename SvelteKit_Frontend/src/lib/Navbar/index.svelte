@@ -1,4 +1,5 @@
 <script lang="ts">
+	// import { UserData } from '$lib/store/store';
 	import { goto } from '$app/navigation';
 	import K8s from '$lib/Navbar/svgs/k8s.svelte';
 	import Following from '$lib/Navbar/svgs/following.svelte';
@@ -19,194 +20,241 @@
 	import Stedia from '$lib/icons/stedia.svelte';
 	import StediaRed from '$lib/icons/stediaRed.svelte';
 	import Stediablue from '$lib/icons/stediablue.svelte';
+	import { UserData } from '$lib/store/store';
 
 	let UserdataLoading: boolean = true;
 
-	let UserData: {
-		UserID: string;
-		UserName: string;
-		Email: string;
-		Password: string;
-		UserImage: string;
-		Badges: {
-			Reputation: number;
-			Gold: number;
-			Silver: number;
-			Bronze: number;
-		};
-		Follower: string[];
-		Following: string[];
-		Location: string;
-		MembershipTime: string;
-		LastSeen: string;
-		Aboutme: string;
-		Mysite: string;
-		Github: string;
-		Twitter: string;
-		Linkedin: string;
-		TopTags: {
-			Name: string;
-			Score: number;
-			NumberOfPost: number;
-		}[];
+	// let UserData: {
+	// 	UserID: string;
+	// 	UserName: string;
+	// 	Email: string;
+	// 	Password: string;
+	// 	UserImage: string;
+	// 	Badges: {
+	// 		Reputation: number;
+	// 		Gold: number;
+	// 		Silver: number;
+	// 		Bronze: number;
+	// 	};
+	// 	Follower: string[];
+	// 	Following: string[];
+	// 	Location: string;
+	// 	MembershipTime: string;
+	// 	LastSeen: string;
+	// 	Aboutme: string;
+	// 	Mysite: string;
+	// 	Github: string;
+	// 	Twitter: string;
+	// 	Linkedin: string;
+	// 	TopTags: {
+	// 		Name: string;
+	// 		Score: number;
+	// 		NumberOfPost: number;
+	// 	}[];
 
-		SelectedPanel: string;
-		AccountType: string;
-	} = {
-		UserID: 'skraka',
-		UserName: 'Sk Shahriar Ahmed Raka',
-		Email: 'skshahra@gmail.com',
-		Password: '123456',
-		// UserTitle string `json:"UserTitle"`
-		UserImage:
-			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-		Badges: {
-			Reputation: 13452543,
-			Gold: 999,
-			Silver: 888,
-			Bronze: 777
+	// 	SelectedPanel: string;
+	// 	AccountType: string;
+	// } = {
+	// 	UserID: 'skraka',
+	// 	UserName: 'Sk Shahriar Ahmed Raka',
+	// 	Email: 'skshahra@gmail.com',
+	// 	Password: '123456',
+	// 	// UserTitle string `json:"UserTitle"`
+	// 	UserImage:
+	// 		'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
+	// 	Badges: {
+	// 		Reputation: 13452543,
+	// 		Gold: 999,
+	// 		Silver: 888,
+	// 		Bronze: 777
+	// 	},
+	// 	Follower: ['RKA', 'SHAHRIAR	'],
+	// 	Following: ['RKA', 'SHAHRIAR'],
+	// 	// Badges map[string]int
+	// 	Location: 'Dhaka, Bangladesh',
+	// 	MembershipTime: '3 year 5 Month',
+	// 	LastSeen: 'This Week',
+	// 	Aboutme:
+	// 		'A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ',
+	// 	Mysite: 'www.shahriarraka.me',
+	// 	Github: 'www.github.com/skshahriarahmedraka',
+	// 	Twitter: 'www.twitter.com/shahriarraka7',
+	// 	Linkedin: 'www.linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/',
+	// 	// "TopTags"    : ["Go","Rust","Python","Svelte","PostgreSQL"],
+	// 	TopTags: [
+	// 		{ Name: 'Go', Score: 12, NumberOfPost: 4 },
+	// 		{ Name: 'Rust', Score: 10, NumberOfPost: 6 },
+	// 		{ Name: 'Python', Score: 7, NumberOfPost: 4 },
+	// 		{ Name: 'Svelte', Score: 12, NumberOfPost: 4 },
+	// 		{ Name: 'PostgreSQL', Score: 12, NumberOfPost: 4 }
+	// 	],
+	// 	SelectedPanel: 'Profile',
+	// 	AccountType: 'regular'
+	// };
+
+	// let NavbarOpts = ['Profile', 'Followers', 'Followings', 'Other Networks', 'settings', 'logout'];
+	// let NotificationOpts = [
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question ',
+	// 	'thanks for your ans',
+	// 	'new Question new Question new Question new Question new Question',
+	// 	'reply of your question '
+	// ];
+
+	// let NotificationOpts2 = [
+	// 	[
+	// 		'answer',
+	// 		'5 jul at 1:23',
+	// 		'How to ensure translation with I18n is working in production?',
+	// 		'either add the pass keyword to an empty function, also function args cannot have .s in them only valid names and * or ** followed by a name'
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'29 aug at 3:12',
+	// 		'How build lib for 386 arch with cgo on windows?',
+	// 		" have a golang library that builds and works well on Linux, MacOs and Windows. The problem comes when I'm trying to build it for 386 on the amd64 Windows VM"
+	// 	],
+	// 	['reward', '29 aug at 3:12', 20, 'Golang pass sensitive data as argument using docker'],
+	// 	[
+	// 		'answer',
+	// 		'30 jan at 22:23',
+	// 		'How to access a method from the extended abstract class when using it as a type constraint in a method',
+	// 		"Except this doesn't work because it isn't assumed that T extends Animal so there I can't access it.What can I do make this getAnimalSound method working?"
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'29 aug at 3:12',
+	// 		'What I would do in your place is to use overriding. However, it also only works on non static methods. (untested but should work)',
+	// 		"Yeah, sorry I was a bit out of practice. However, you don't need a type parameter at all! You just say that the thing you want to have the sound from is an animal, doesn't matter which. If you give it a dog, dart will call the getSound method inside of the dog. I've updated my answer accordingly"
+	// 	],
+	// 	['reward', '29 aug at 3:12', -5, 'https and websocket handler with different deadlines'],
+	// 	[
+	// 		'reward',
+	// 		'29 aug at 3:12',
+	// 		-20,
+	// 		'How can I add entire Array of structures into mysql database using GORM'
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'24 mar at 2:43',
+	// 		'Encoding with image/jpeg cause image saturation / wrong pixels',
+	// 		'I don\'t speak "Go" at all, but you appear to be trying to get and set RGBA values on JPEG images '
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'23 sep at 23;54',
+	// 		"Can't install golangci-lint locally",
+	// 		'I am dockerized a golang application and i am trying to access the application.'
+	// 	],
+	// 	[
+	// 		'answer',
+	// 		'5 jul at 1:23',
+	// 		'How to ensure translation with I18n is working in production?',
+	// 		'either add the pass keyword to an empty function, also function args cannot have .s in them only valid names and * or ** followed by a name'
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'29 aug at 3:12',
+	// 		'How build lib for 386 arch with cgo on windows?',
+	// 		" have a golang library that builds and works well on Linux, MacOs and Windows. The problem comes when I'm trying to build it for 386 on the amd64 Windows VM"
+	// 	],
+	// 	['reward', '29 aug at 3:12', 20, 'Golang pass sensitive data as argument using docker'],
+	// 	[
+	// 		'answer',
+	// 		'30 jan at 22:23',
+	// 		'How to access a method from the extended abstract class when using it as a type constraint in a method',
+	// 		"Except this doesn't work because it isn't assumed that T extends Animal so there I can't access it.What can I do make this getAnimalSound method working?"
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'29 aug at 3:12',
+	// 		'What I would do in your place is to use overriding. However, it also only works on non static methods. (untested but should work)',
+	// 		"Yeah, sorry I was a bit out of practice. However, you don't need a type parameter at all! You just say that the thing you want to have the sound from is an animal, doesn't matter which. If you give it a dog, dart will call the getSound method inside of the dog. I've updated my answer accordingly"
+	// 	],
+	// 	['reward', '29 aug at 3:12', -5, 'https and websocket handler with different deadlines'],
+	// 	[
+	// 		'reward',
+	// 		'29 aug at 3:12',
+	// 		-20,
+	// 		'How can I add entire Array of structures into mysql database using GORM'
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'24 mar at 2:43',
+	// 		'Encoding with image/jpeg cause image saturation / wrong pixels',
+	// 		'I don\'t speak "Go" at all, but you appear to be trying to get and set RGBA values on JPEG images '
+	// 	],
+	// 	[
+	// 		'comment',
+	// 		'23 sep at 23;54',
+	// 		"Can't install golangci-lint locally",
+	// 		'I am dockerized a golang application and i am trying to access the application.'
+	// 	]
+	// ];
+	import type { NotificationDataType } from '$lib/store/types';
+	import UserAnonymous from '$lib/icons/UserAnonymous.svelte';
+	const NotificationData: NotificationDataType[] = [
+		{
+			type: 'answer',
+			time: '5 jul at 1:23',
+			title: 'How to ensure translation with I18n is working in production?',
+			description:
+				'either add the pass keyword to an empty function, also function args cannot have .s in them only valid names and * or ** followed by a name'
 		},
-		Follower: ['RKA', 'SHAHRIAR	'],
-		Following: ['RKA', 'SHAHRIAR'],
-		// Badges map[string]int
-		Location: 'Dhaka, Bangladesh',
-		MembershipTime: '3 year 5 Month',
-		LastSeen: 'This Week',
-		Aboutme:
-			'A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ',
-		Mysite: 'www.shahriarraka.me',
-		Github: 'www.github.com/skshahriarahmedraka',
-		Twitter: 'www.twitter.com/shahriarraka7',
-		Linkedin: 'www.linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/',
-		// "TopTags"    : ["Go","Rust","Python","Svelte","PostgreSQL"],
-		TopTags: [
-			{ Name: 'Go', Score: 12, NumberOfPost: 4 },
-			{ Name: 'Rust', Score: 10, NumberOfPost: 6 },
-			{ Name: 'Python', Score: 7, NumberOfPost: 4 },
-			{ Name: 'Svelte', Score: 12, NumberOfPost: 4 },
-			{ Name: 'PostgreSQL', Score: 12, NumberOfPost: 4 }
-		],
-		SelectedPanel: 'Profile',
-		AccountType: 'regular'
-	};
-
-	let NavbarOpts = ['Profile', 'Followers', 'Followings', 'Other Networks', 'settings', 'logout'];
-	let NotificationOpts = [
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question ',
-		'thanks for your ans',
-		'new Question new Question new Question new Question new Question',
-		'reply of your question '
-	];
-
-	let NotificationOpts2 = [
-		[
-			'answer',
-			'5 jul at 1:23',
-			'How to ensure translation with I18n is working in production?',
-			'either add the pass keyword to an empty function, also function args cannot have .s in them only valid names and * or ** followed by a name'
-		],
-		[
-			'comment',
-			'29 aug at 3:12',
-			'How build lib for 386 arch with cgo on windows?',
-			" have a golang library that builds and works well on Linux, MacOs and Windows. The problem comes when I'm trying to build it for 386 on the amd64 Windows VM"
-		],
-		['reward', '29 aug at 3:12', 20, 'Golang pass sensitive data as argument using docker'],
-		[
-			'answer',
-			'30 jan at 22:23',
-			'How to access a method from the extended abstract class when using it as a type constraint in a method',
-			"Except this doesn't work because it isn't assumed that T extends Animal so there I can't access it.What can I do make this getAnimalSound method working?"
-		],
-		[
-			'comment',
-			'29 aug at 3:12',
-			'What I would do in your place is to use overriding. However, it also only works on non static methods. (untested but should work)',
-			"Yeah, sorry I was a bit out of practice. However, you don't need a type parameter at all! You just say that the thing you want to have the sound from is an animal, doesn't matter which. If you give it a dog, dart will call the getSound method inside of the dog. I've updated my answer accordingly"
-		],
-		['reward', '29 aug at 3:12', -5, 'https and websocket handler with different deadlines'],
-		[
-			'reward',
-			'29 aug at 3:12',
-			-20,
-			'How can I add entire Array of structures into mysql database using GORM'
-		],
-		[
-			'comment',
-			'24 mar at 2:43',
-			'Encoding with image/jpeg cause image saturation / wrong pixels',
-			'I don\'t speak "Go" at all, but you appear to be trying to get and set RGBA values on JPEG images '
-		],
-		[
-			'comment',
-			'23 sep at 23;54',
-			"Can't install golangci-lint locally",
-			'I am dockerized a golang application and i am trying to access the application.'
-		],
-		[
-			'answer',
-			'5 jul at 1:23',
-			'How to ensure translation with I18n is working in production?',
-			'either add the pass keyword to an empty function, also function args cannot have .s in them only valid names and * or ** followed by a name'
-		],
-		[
-			'comment',
-			'29 aug at 3:12',
-			'How build lib for 386 arch with cgo on windows?',
-			" have a golang library that builds and works well on Linux, MacOs and Windows. The problem comes when I'm trying to build it for 386 on the amd64 Windows VM"
-		],
-		['reward', '29 aug at 3:12', 20, 'Golang pass sensitive data as argument using docker'],
-		[
-			'answer',
-			'30 jan at 22:23',
-			'How to access a method from the extended abstract class when using it as a type constraint in a method',
-			"Except this doesn't work because it isn't assumed that T extends Animal so there I can't access it.What can I do make this getAnimalSound method working?"
-		],
-		[
-			'comment',
-			'29 aug at 3:12',
-			'What I would do in your place is to use overriding. However, it also only works on non static methods. (untested but should work)',
-			"Yeah, sorry I was a bit out of practice. However, you don't need a type parameter at all! You just say that the thing you want to have the sound from is an animal, doesn't matter which. If you give it a dog, dart will call the getSound method inside of the dog. I've updated my answer accordingly"
-		],
-		['reward', '29 aug at 3:12', -5, 'https and websocket handler with different deadlines'],
-		[
-			'reward',
-			'29 aug at 3:12',
-			-20,
-			'How can I add entire Array of structures into mysql database using GORM'
-		],
-		[
-			'comment',
-			'24 mar at 2:43',
-			'Encoding with image/jpeg cause image saturation / wrong pixels',
-			'I don\'t speak "Go" at all, but you appear to be trying to get and set RGBA values on JPEG images '
-		],
-		[
-			'comment',
-			'23 sep at 23;54',
-			"Can't install golangci-lint locally",
-			'I am dockerized a golang application and i am trying to access the application.'
-		]
+		{
+			type: 'comment',
+			time: '29 aug at 3:12',
+			title: 'How build lib for 386 arch with cgo on windows?',
+			description:
+				" have a golang library that builds and works well on Linux, MacOs and Windows. The problem comes when I'm trying to build it for 386 on the amd64 Windows VM"
+		},
+		{
+			type: 'reward',
+			time: '29 aug at 3:12',
+			point: 20,
+			title: 'Golang pass sensitive data as argument using docker'
+		},
+		{
+			type: 'answer',
+			time: '30 jan at 22:23',
+			title:
+				'How to access a method from the extended abstract class when using it as a type constraint in a method',
+			description:
+				"Except this doesn't work because it isn't assumed that T extends Animal so there I can't access it.What can I do make this getAnimalSound method working?"
+		},
+		{
+			type: 'comment',
+			time: '29 aug at 3:12',
+			title:
+				'What I would do in your place is to use overriding. However, it also only works on non static methods. (untested but should work)',
+			description:
+				"Yeah, sorry I was a bit out of practice. However, you don't need a type parameter at all! You just say that the thing you want to have the sound from is an animal, doesn't matter which. If you give it a dog, dart will call the getSound method inside of the dog. I've updated my answer accordingly"
+		},
+		{
+			type: 'reward',
+			time: '29 aug at 3:12',
+			point: -20,
+			title: 'How can I add entire Array of structures into mysql database using GORM'
+		}
 	];
 
 	let NavbarOptsOpen = false;
@@ -238,14 +286,14 @@
 		<div class=" grow" />
 		<!-- Company logo -->
 		<button
-			class="flex h-[53px] w-fit flex-row gap-1 items-center justify-center rounded-lg px-3  hover:bg-slate-800 "
+			class="flex h-[53px] w-fit flex-row items-center justify-center gap-1 rounded-lg px-3  hover:bg-slate-800 "
 			on:click={() => {
 				goto('/');
 			}}
 		>
 			<Stediablue class=" h-14  w-20  " />
 			<!-- <GPodcast  /> -->
-			<Nullpointer  class="h-7" />
+			<Nullpointer class="h-7" />
 			<!-- <p class="font-serif text-xl leading-5 text-sky-500">Null Pointer</p> -->
 		</button>
 
@@ -291,39 +339,42 @@
 				</div>
 			</div>
 		</div>
-		<div
-			class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
-			on:click={() => {
-				goto(`${UserData['UserID']}`);
-			}}
-			on:keydown={(e) => {}}
-		>
-			<!-- User -->
-			<img
-				src={UserData['UserImage']}
-				alt=""
-				class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
-			/>
-			<!-- user Credit -->
-			<div class="max-w-36   flex h-fit  min-w-min flex-row items-center justify-center">
-				<p class="mx-1 font-semibold text-white">
-					{ShortenNumber(UserData['Badges']['Reputation'])}
-				</p>
+		<!-- User Profile data -->
+		{#if $UserData.UserID != null}
+			<div
+				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
+				on:click={() => {
+					goto(`${$UserData['UserID']}`);
+				}}
+				on:keydown={(e) => {}}
+			>
+				<!-- User -->
+				<img
+					src={$UserData['UserImage']}
+					alt=""
+					class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+				/>
+				<!-- user Credit -->
+				<div class="max-w-36   flex h-fit  min-w-min flex-row items-center justify-center">
+					<p class="mx-1 font-semibold text-white">
+						{ShortenNumber($UserData['Badges']['Reputation'])}
+					</p>
 
-				{#if UserData['Badges']['Gold'] != 0}
-					<GoldDot />
-					<p class="mx-1   text-[#ffcc01]">{ShortenNumber(UserData['Badges']['Gold'])}</p>
-				{/if}
-				{#if UserData['Badges']['Silver'] != 0}
-					<SilverDot />
-					<p class="mx-1 my-4 text-[#b4b8bc]">{ShortenNumber(UserData['Badges']['Silver'])}</p>
-				{/if}
-				{#if UserData['Badges']['Bronze'] != 0}
-					<BronzeDot />
-					<p class="mx-1 my-4 text-[#d1a684]">{ShortenNumber(UserData['Badges']['Bronze'])}</p>
-				{/if}
+					{#if $UserData['Badges']['Gold'] != 0}
+						<GoldDot />
+						<p class="mx-1   text-[#ffcc01]">{ShortenNumber($UserData['Badges']['Gold'])}</p>
+					{/if}
+					{#if $UserData['Badges']['Silver'] != 0}
+						<SilverDot />
+						<p class="mx-1 my-4 text-[#b4b8bc]">{ShortenNumber($UserData['Badges']['Silver'])}</p>
+					{/if}
+					{#if $UserData['Badges']['Bronze'] != 0}
+						<BronzeDot />
+						<p class="mx-1 my-4 text-[#d1a684]">{ShortenNumber($UserData['Badges']['Bronze'])}</p>
+					{/if}
+				</div>
 			</div>
-		</div>
+		
 		<!-- notification -->
 		<div class="   ">
 			<button
@@ -344,9 +395,9 @@
 			</button>
 			{#if NotificationOptsOpen}
 				<div
-					class=" fixed z-30 float-left -ml-[340px]  mt-2 flex max-h-screen min-h-fit w-96  flex-col overflow-scroll scrol3  rounded-lg border-2 border-gray-600 bg-gray-500 text-gray-200"
+					class=" scrol3 fixed z-30 float-left  -ml-[340px] mt-2 flex max-h-screen min-h-fit  w-96 flex-col overflow-scroll  rounded-lg border-2 border-gray-600 bg-gray-500 text-gray-200"
 				>
-					{#each NotificationOpts2 as i}
+					{#each NotificationData as i}
 						<button
 							class="flex h-fit w-full  flex-row border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d]  py-2 px-4 text-[#3196e3] transition-all duration-150  ease-linear  hover:bg-[#404245] "
 						>
@@ -358,52 +409,56 @@
 									{i}
 								</div>
 							</div> -->
-
-							{#if i[0] === 'answer'}
+							<!-- type: string;
+							time: string;
+							title: string;
+							description: string;
+							point?: number; -->
+							{#if i.type === 'answer'}
 								<Svelte />
 								<div class=" flex w-80 flex-col gap-1">
 									<div class="StackTextColor flex flex-row  font-mono">
-										<div class="">{i[0]}</div>
+										<div class="">{i.type}</div>
 										<div class=" grow" />
-										<div class="">{i[1]}</div>
+										<div class="">{i.time}</div>
 									</div>
 									<div class=" text-left line-clamp-1">
-										{i[2]}
+										{i.title}
 									</div>
 									<div class=" StackTextColor text-left leading-tight line-clamp-2">
-										{i[3]}
+										{i.description}
 									</div>
 								</div>
-							{:else if i[0] === 'comment'}
+							{:else if i.type === 'comment'}
 								<Flutter />
 								<div class=" flex w-80 flex-col gap-1">
 									<div class="StackTextColor flex flex-row  font-mono">
-										<div class="">{i[0]}</div>
+										<div class="">{i.type}</div>
 										<div class=" grow" />
-										<div class="">{i[1]}</div>
+										<div class="">{i.time}</div>
 									</div>
 									<div class=" text-left line-clamp-1">
-										{i[2]}
+										{i.title}
 									</div>
 									<div class=" StackTextColor text-left leading-tight line-clamp-2">
-										{i[3]}
+										{i.description}
 									</div>
 								</div>
-							{:else if i[0] === 'reward'}
+							{:else if i.type === 'reward'}
 								<Vue />
 								<div class=" flex w-80 flex-col gap-1">
 									<div class="StackTextColor flex flex-row  font-mono ">
-										{#if Number(i[2]) < 0}
-											<div class=" mx-1 text-xs font-semibold text-red-500 ">{i[2]}</div>
+										{#if Number(i.point) < 0}
+											<div class=" mx-1 text-xs font-semibold text-red-500 ">{i.point}</div>
 										{:else}
-											<div class=" mx-1 font-semibold text-green-400">+{i[2]}</div>
+											<div class=" mx-1 font-semibold text-green-400">+{i.point}</div>
 										{/if}
-										<div class="">{i[0]}</div>
+										<div class="">{i.type}</div>
 										<div class=" grow" />
-										<div class="">{i[1]}</div>
+										<div class="">{i.time}</div>
 									</div>
 									<div class=" text-left line-clamp-1">
-										{i[3]}
+										{i.title}
 									</div>
 								</div>
 							{/if}
@@ -437,15 +492,15 @@
 				>
 					<div class="mt-3 ml-2 mb-1 flex flex-row">
 						<img
-							src={UserData['UserImage']}
+							src={$UserData['UserImage']}
 							alt=""
 							class=" aspect-square active:ring-offset-base-50 mx-2  h-16 w-16  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
 						/>
 						<div class="flex flex-col items-center justify-center">
-							<div class=" text-2xl font-light line-clamp-1 ">{UserData.UserName}</div>
+							<div class=" text-2xl font-light line-clamp-1 ">{$UserData.UserName}</div>
 							<p class=" font-semibold">
-								{ShortenNumber(UserData.Badges.Reputation)} Reputation <WhiteDot />
-								{ShortenNumber(UserData.Follower.length)} Follower
+								{ShortenNumber($UserData.Badges.Reputation)} Reputation <WhiteDot />
+								{ShortenNumber($UserData.Follower.length)} Follower
 							</p>
 						</div>
 					</div>
@@ -488,6 +543,14 @@
 				</div>
 			{/if}
 		</div>
+		{:else}
+			<!-- else content here -->
+			<div class="flex   h-full flex-row items-center justify-center gap-2">
+				<UserAnonymous />
+				<button on:click={()=>{goto("/login")}} class=" text-blue-600 font-medium  my-2 border-[1px] border-blue-500 bg-blue-500  bg-opacity-25 hover:bg-opacity-0  px-2 py-1 rounded-md ">Sign In</button>
+				<button on:click={()=>{goto("/register")}} class=" text-gray-100 font-medium  my-2 border-[1px] border-blue-500 bg-blue-700 bg-opacity-50 hover:bg-opacity-0 px-2 py-1 rounded-md">Sign Up</button>
+			</div>
+		{/if}
 
 		<div class=" grow" />
 	</div>

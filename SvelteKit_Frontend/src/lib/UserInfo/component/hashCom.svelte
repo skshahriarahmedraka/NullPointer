@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Following } from '$lib/Navbar/svgs/following.svelte';
+	// import { Following } from '$lib/Navbar/svgs/following.svelte';
 
-	import Groupdecoration from "../svgs/groupdecoration.svelte";
+	// import Groupdecoration from "../svgs/groupdecoration.svelte";
     export let  HashData: {
         ID: string;
         Name: string;
@@ -18,6 +18,7 @@
     NumberOfMember: number;
 }
     console.log("🚀 ~ file: groupCom.svelte:5 ~ HashData:", HashData)
+    
 
     // your script goes here
 </script>

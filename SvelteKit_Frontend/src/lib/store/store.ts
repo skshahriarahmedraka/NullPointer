@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-let  Loading=writable(false)
+const  Loading=writable(false)
 
 // let UserData = writable({})
 // let QuestionData = writable({})
@@ -141,25 +141,45 @@ let  Loading=writable(false)
 // // export default dataStore
 
 // // USER DATA
-let UserData = writable(
- {
-        "UserID":"skraka",
-        "UserName":"Sk Shahriar Ahmed Raka",
-        "UserTitle":"Working at Google Inc.",
-        "UserImage":"https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg",
-        "Badges":{"Reputation":66813,"Gold":999,"Silver":888,"Bronze":777},
-        "Location":"Dhaka, Bangladesh",
-        "MembershipTime":"3 year 5 Month",
-        "LastSeen":"This Week",
-        "Aboutme":"A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ", "MySite":"https://stackoverflow.com/users/12216779/sk-shahriar-ahmed-raka",
-        "Mysite":"",
-        "Github":"https://github.com/skshahriarahmedraka",
-        "Twitter":"https://twitter.com/shahriarraka7",
-        "Linkedin":"https://twitter.com/shahriarraka7",
-        "TopTags":["go","rust","python","svelte","postgresql"],
-        "TopTagsPercent":[50,30,20,5,2],
-        "SelectedPanel":"Profile",
-    })
+const SampleUserData =  {
+    UserID: 'skraka',
+    UserName: 'Sk Shahriar Ahmed Raka',
+    Email: 'skshahra@gmail.com',
+    Password: '123456',
+    // UserTitle string `json:"UserTitle"`
+    UserImage:
+        'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
+    Badges: {
+        Reputation: 13452543,
+        Gold: 999,
+        Silver: 888,
+        Bronze: 777
+    },
+    Follower: ['RKA', 'SHAHRIAR	'],
+    Following: ['RKA', 'SHAHRIAR'],
+    // Badges map[string]int
+    Location: 'Dhaka, Bangladesh',
+    MembershipTime: '3 year 5 Month',
+    LastSeen: 'This Week',
+    Aboutme:
+        'A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ',
+    Mysite: 'www.shahriarraka.me',
+    Github: 'www.github.com/skshahriarahmedraka',
+    Twitter: 'www.twitter.com/shahriarraka7',
+    Linkedin: 'www.linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/',
+    // "TopTags"    : ["Go","Rust","Python","Svelte","PostgreSQL"],
+    TopTags: [
+        { Name: 'Go', Score: 12, NumberOfPost: 4 },
+        { Name: 'Rust', Score: 10, NumberOfPost: 6 },
+        { Name: 'Python', Score: 7, NumberOfPost: 4 },
+        { Name: 'Svelte', Score: 12, NumberOfPost: 4 },
+        { Name: 'PostgreSQL', Score: 12, NumberOfPost: 4 }
+    ],
+    SelectedPanel: 'Profile',
+    AccountType: 'regular'
+}
+const UserData = writable({})
+UserData.update(()=>SampleUserData)
   
 
 
@@ -178,7 +198,66 @@ let UserData = writable(
 
 
 // // QUESTION DATA
-let QuestionData=writable(
+const SampleQuestionData :  {
+	ID   :string 
+	QuesTitle     :  string   
+	QuesitonAskedTime :  Date 
+	QuesModifiedTime  :  Date  
+	QuesViewed   :   number      
+	QuesUpvote    :  number      
+	QuesDownvote  :  number      
+	QuesBookmark  :  number      
+	QuesTags      :  string []
+	QuesAskedBy    : string  
+	QuesAnsAccepted : string   
+
+
+	QuesAskedTimeExact : string 
+	QuesAskedByImage  : string 
+
+	QuesEditedBy : string 
+
+	QuesEditedTimeExact : string              
+	QuesDescription   :  string          
+	QuesComment       :  string[][]  
+	Answers            :     string[][]     
+}={
+    "ID": "143",
+    "QuesTitle": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
+    "QuesitonAskedTime": new Date(),
+    "QuesModifiedTime": new Date(),
+    "QuesViewed": 577000,
+
+    "QuesUpvote": 4,
+    "QuesDownvote": 32,
+    "QuesBookmark": 23,
+
+    "QuesTags": [
+        "go",
+        "string",
+        "Concatination",
+        "go"
+    ],
+    "QuesAskedBy":  "UserID",
+    "EditedBy": { "UserID": 154123 },
+
+    "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+    "Comment": [
+        {
+            "ID": 1,
+            "Upvote": 4,
+            "Downvote": 1,
+            "UserID": 154123,
+            "UserName": "sk shahriar ahmed raka",
+            "Time": " Aug 7, 2011 at 2:14",
+            "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
+        }
+    ],
+    "Answers": [
+        
+    ]
+}
+const QuestionData=writable(
     {
         "ID": 1,
         "Title": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
@@ -303,7 +382,7 @@ let QuestionData=writable(
 // //     n=> n=x
 // // )
 
-let RelatedQuestionList= writable([
+const RelatedQuestionList= writable([
     
 ["How to differentiate empty string and nothing in a map",342,true,"https://www.youtube.com/"],
 
@@ -330,7 +409,7 @@ let RelatedQuestionList= writable([
 // //     n=>n=y
 // // )
 
-let SpaceList = writable([
+const SpaceList = writable([
     ["Go programming","https://stackoverflow.com/"],
     ["GTK","https://stackoverflow.com/"],
     ["QT framework","https://stackoverflow.com/"],
@@ -344,7 +423,7 @@ let SpaceList = writable([
 ])
 
 
-let FavoriteHash = writable([
+const FavoriteHash = writable([
     ["go","https://github.com/","https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"],
     ["rust","https://github.com/","https://cdn-icons-png.flaticon.com/512/732/732221.png"],
     ["fiber","https://github.com/","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXyTXn1zirGyXZd15ukEGTupWvTasppbf7N5dW3AT8bc7iUDwFxgI3aRyaGYS2NYQUO9c&usqp=CAU"],
@@ -356,7 +435,7 @@ let FavoriteHash = writable([
     ["linux","https://github.com/","https://upload.wikimedia.org/wikipedia/commons/7/70/Firefox_Focus_2021_Icon.png"],
 ])
 
-let HotQues= writable([
+const HotQues= writable([
     // [QuestionTitle ,SvgIcon,QuesLink ]
     ["How to efficiently concatenate strings in go" ,`<svg xmlns="http://www.w3.org/2000/svg"  xml:space="preserve" y="0" x="0" id="Layer_1" version="1.1" viewBox="-30.80817 -19.183575 267.00414 115.10145"><style id="style2490" type="text/css">.st4{fill:#00acd7}</style><g transform="translate(-24.7 -77.8657)" id="g2529"><g id="g2498"><g id="g2496"><g id="g2494"><path id="path2492" d="M40.2 101.1c-.4 0-.5-.2-.3-.5l2.1-2.7c.2-.3.7-.5 1.1-.5h35.7c.4 0 .5.3.3.6l-1.7 2.6c-.2.3-.7.6-1 .6z" class="st4"/></g></g></g><g id="g2506"><g id="g2504"><g id="g2502"><path id="path2500" d="M25.1 110.3c-.4 0-.5-.2-.3-.5l2.1-2.7c.2-.3.7-.5 1.1-.5h45.6c.4 0 .6.3.5.6l-.8 2.4c-.1.4-.5.6-.9.6z" class="st4"/></g></g></g><g id="g2514"><g id="g2512"><g id="g2510"><path id="path2508" d="M49.3 119.5c-.4 0-.5-.3-.3-.6l1.4-2.5c.2-.3.6-.6 1-.6h20c.4 0 .6.3.6.7l-.2 2.4c0 .4-.4.7-.7.7z" class="st4"/></g></g></g><g id="g2527"><g id="CXHf1q_3_"><g id="g2524"><g id="g2518"><path id="path2516" d="M153.1 99.3c-6.3 1.6-10.6 2.8-16.8 4.4-1.5.4-1.6.5-2.9-1-1.5-1.7-2.6-2.8-4.7-3.8-6.3-3.1-12.4-2.2-18.1 1.5-6.8 4.4-10.3 10.9-10.2 19 .1 8 5.6 14.6 13.5 15.7 6.8.9 12.5-1.5 17-6.6.9-1.1 1.7-2.3 2.7-3.7h-19.3c-2.1 0-2.6-1.3-1.9-3 1.3-3.1 3.7-8.3 5.1-10.9.3-.6 1-1.6 2.5-1.6h36.4c-.2 2.7-.2 5.4-.6 8.1-1.1 7.2-3.8 13.8-8.2 19.6-7.2 9.5-16.6 15.4-28.5 17-9.8 1.3-18.9-.6-26.9-6.6-7.4-5.6-11.6-13-12.7-22.2-1.3-10.9 1.9-20.7 8.5-29.3 7.1-9.3 16.5-15.2 28-17.3 9.4-1.7 18.4-.6 26.5 4.9 5.3 3.5 9.1 8.3 11.6 14.1.6.9.2 1.4-1 1.7z" class="st4"/></g><g id="g2522"><path id="path2520" d="M186.2 154.6c-9.1-.2-17.4-2.8-24.4-8.8-5.9-5.1-9.6-11.6-10.8-19.3-1.8-11.3 1.3-21.3 8.1-30.2 7.3-9.6 16.1-14.6 28-16.7 10.2-1.8 19.8-.8 28.5 5.1 7.9 5.4 12.8 12.7 14.1 22.3 1.7 13.5-2.2 24.5-11.5 33.9-6.6 6.7-14.7 10.9-24 12.8-2.7.5-5.4.6-8 .9zm23.8-40.4c-.1-1.3-.1-2.3-.3-3.3-1.8-9.9-10.9-15.5-20.4-13.3-9.3 2.1-15.3 8-17.5 17.4-1.8 7.8 2 15.7 9.2 18.9 5.5 2.4 11 2.1 16.3-.6 7.9-4.1 12.2-10.5 12.7-19.1z" class="st4"/></g></g></g></g></g></svg>`,"https://stackoverflow.com/"],
     // ["How to print struct variables in console?" ,`<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <g id="logo" transform="translate(53, 53)"> <path id="r" transform="translate(0.5, 0.5)" stroke="black" stroke-width="1" stroke-linejoin="round" d="     M -9,-15 H 4 C 12,-15 12,-7 4,-7 H -9 Z     M -40,22 H 0 V 11 H -9 V 3 H 1 C 12,3 6,22 15,22 H 40     V 3 H 34 V 5 C 34,13 25,12 24,7 C 23,2 19,-2 18,-2 C 33,-10 24,-26 12,-26 H -35     V -15 H -25 V 11 H -40 Z"/> <g id="gear" mask="url(#holes)"> <circle r="43" fill="none" stroke="black" stroke-width="9"/> <g id="cogs"> <polygon id="cog" stroke="black" stroke-width="3" stroke-linejoin="round" points="46,3 51,0 46,-3"/> <use xlink:href="#cog" transform="rotate(11.25)"/> <use xlink:href="#cog" transform="rotate(22.50)"/> <use xlink:href="#cog" transform="rotate(33.75)"/> <use xlink:href="#cog" transform="rotate(45.00)"/> <use xlink:href="#cog" transform="rotate(56.25)"/> <use xlink:href="#cog" transform="rotate(67.50)"/> <use xlink:href="#cog" transform="rotate(78.75)"/> <use xlink:href="#cog" transform="rotate(90.00)"/> <use xlink:href="#cog" transform="rotate(101.25)"/> <use xlink:href="#cog" transform="rotate(112.50)"/> <use xlink:href="#cog" transform="rotate(123.75)"/> <use xlink:href="#cog" transform="rotate(135.00)"/> <use xlink:href="#cog" transform="rotate(146.25)"/> <use xlink:href="#cog" transform="rotate(157.50)"/> <use xlink:href="#cog" transform="rotate(168.75)"/> <use xlink:href="#cog" transform="rotate(180.00)"/> <use xlink:href="#cog" transform="rotate(191.25)"/> <use xlink:href="#cog" transform="rotate(202.50)"/> <use xlink:href="#cog" transform="rotate(213.75)"/> <use xlink:href="#cog" transform="rotate(225.00)"/> <use xlink:href="#cog" transform="rotate(236.25)"/> <use xlink:href="#cog" transform="rotate(247.50)"/> <use xlink:href="#cog" transform="rotate(258.75)"/> <use xlink:href="#cog" transform="rotate(270.00)"/> <use xlink:href="#cog" transform="rotate(281.25)"/> <use xlink:href="#cog" transform="rotate(292.50)"/> <use xlink:href="#cog" transform="rotate(303.75)"/> <use xlink:href="#cog" transform="rotate(315.00)"/> <use xlink:href="#cog" transform="rotate(326.25)"/> <use xlink:href="#cog" transform="rotate(337.50)"/> <use xlink:href="#cog" transform="rotate(348.75)"/> </g> <g id="mounts"> <polygon id="mount" stroke="black" stroke-width="6" stroke-linejoin="round" points="-7,-42 0,-35 7,-42"/> <use xlink:href="#mount" transform="rotate(72)"/> <use xlink:href="#mount" transform="rotate(144)"/> <use xlink:href="#mount" transform="rotate(216)"/> <use xlink:href="#mount" transform="rotate(288)"/> </g> </g> <mask id="holes"> <rect x="-60" y="-60" width="120" height="120" fill="white"/> <circle id="hole" cy="-40" r="3"/> <use xlink:href="#hole" transform="rotate(72)"/> <use xlink:href="#hole" transform="rotate(144)"/> <use xlink:href="#hole" transform="rotate(216)"/> <use xlink:href="#hole" transform="rotate(288)"/> </mask> </g> </svg>`,"https://stackoverflow.com/"],
@@ -372,7 +451,7 @@ let HotQues= writable([
 ])
 
 
-let BlogList = writable([
+const BlogList = writable([
     // ["blogTite","link"]
     ["Stack under attack: what we learned about handling DDoS attacks","https://heroicons.dev"],
     ["An unfiltered look back at April Fools’ 2022","https://heroicons.dev"],

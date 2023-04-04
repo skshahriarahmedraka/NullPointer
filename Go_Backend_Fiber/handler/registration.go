@@ -14,6 +14,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -33,7 +34,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	var dbUser model.UserData
-	err = H.MongoUserCol.FindOne(ctx, model.UserData{Email: RegData.Email}).Decode(&dbUser)
+	err = H.MongoUserCol.FindOne(ctx, bson.D{{"Email", RegData.Email}}).Decode(&dbUser)
 	if err == nil {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"message": "User Already Exists",

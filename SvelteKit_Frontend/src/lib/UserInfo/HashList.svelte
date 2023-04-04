@@ -64,7 +64,7 @@
 
 <!-- markup (zero or more items) goes here -->
 <div class=" text-[#e7e9eb] text-2xl ml-4 ">
-    Groups 
+    Favorite  
 </div>
 <div class="w-auto h-auto  m-4 rounded-xl border-[1px]  border-gray-500 p-2 flex flex-col gap-1  ">
     {#if FavoriteHash.length !=0}

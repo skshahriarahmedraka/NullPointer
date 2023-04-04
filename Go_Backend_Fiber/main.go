@@ -33,7 +33,12 @@ func main() {
 	// app.Use(middleware.Recover())
 
 	router.RouteWithoutAuth(app)
-	app.Use(middle.JwtAuth)
+	// app.Use(func(c *fiber.Ctx) error {
+	// 	token := c.Get(os.Getenv("COOKIE_SECRET_JWT_AUTH1"))
+    //     fmt.Println("🚀 ~ file: main.go ~ line 38 ~ app.Use ~ token : ", token)
+	// 	return c.Next()
+	// })
+	app.Use(middle.JwtAuth())
 // 	app.Use(func(c *fiber.Ctx) error {
 // 		return c.Next() // => 404 "Not Found"
 // })
