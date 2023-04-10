@@ -3,6 +3,7 @@
  export type UserDataType ={
     UserID: string;
     UserName: string;
+    UserTitle: string;
     Email: string;
     Password: string;
     UserImage: string;
@@ -38,4 +39,29 @@ export type NotificationDataType =  {
     title: string;
     description?: string;
     point?: number;
+}
+
+export type QuestionDataType =   {
+	ID   :string 
+	QuesTitle     :  string   
+	QuesViewed   :   number      
+	QuesUpvote    :  number      
+	QuesDownvote  :  number      
+	QuesBookmark  :  number      
+	QuesTags      :  string []
+	QuesAnsAccepted : string   
+
+	QuesAskedBy    : string  
+	QuesAskedTime : string 
+    
+	QuesEditedBy : string 
+	QuesEditedTime  :  string 
+
+	QuesDescription   :  string          
+	QuesComment       :  string[]  
+	Answers            :     {
+        ID : string
+        Vote : number
+        Comment : string[]
+    }[]
 }

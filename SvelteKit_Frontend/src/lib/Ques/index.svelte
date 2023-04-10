@@ -65,16 +65,16 @@
     <div class=" h-[150px] w-[1050px]  ml-3 mt-3  flex flex-col text-[#e7e9eb] ">
         <!-- QUESTION TITLE -->
         <div class=" flex flex-row ">
-            <p class=" text-2xl line-clamp-3 basis-10/12 font-raleway ">{$QuestionData.Title}</p>
+            <p class=" text-2xl line-clamp-3 basis-10/12 font-raleway ">{$QuestionData.QuesTitle}</p>
             <div class="ml-3  h-12  basis-2/12  rounded-md bg-[#0964aa] hover:bg-blue-600 flex justify-center items-center ">
                 <p class="  my-auto text-gray-200 font-semibold text-xl ">Ask Question</p>
             </div>
 
         </div>
         <div class="flex flex-row space-x-3 mt-2 ml-3">
-            <div class=""><p class="text-[#959ba0] inline-flex ">Asked</p> {$QuestionData.AskedTime}</div>
-            <div class=""><p class="text-[#959ba0] inline-flex ">Modified</p> {$QuestionData.ModifiedTime}</div>
-            <div class=""><p class="text-[#959ba0] inline-flex ">Viewed</p> {$QuestionData.Viewed}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Asked</p> {$QuestionData.QuesAskedTime}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Modified</p> {$QuestionData.QuesEditedTime}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Viewed</p> {$QuestionData.QuesViewed}</div>
         </div>
         
     </div>
@@ -92,8 +92,8 @@
                         <svg  class="  h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
                         </svg>
-                        <div class=" text-xl mx-2 text-center {($QuestionData.Upvote - $QuestionData.Downvote)<0 ? " text-red-500" :" text-green-500" }">
-                            {$QuestionData.Upvote - $QuestionData.Downvote}
+                        <div class=" text-xl mx-2 text-center {($QuestionData.QuesUpvote - $QuestionData.QuesDownvote)<0 ? " text-red-500" :" text-green-500" }">
+                            {$QuestionData.QuesUpvote - $QuestionData.QuesDownvote}
                         </div>
                         <!-- DOWN -->
                         <svg class=" h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400 " xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
@@ -103,11 +103,11 @@
                     <!-- Question Detail  -->
                     <div class="w-full text-[#e7e9eb] font-sf-pro ">
                         <div class="">
-                            {$QuestionData.Description}
+                            {$QuestionData.QuesDescription}
                         </div>
                         <!-- Question Tag -->
                         <div class="  min-h-10 max-h-20  w-full mt-2 flex flex-row flex-wrap">
-                            {#each $QuestionData.Tags as tag}
+                            {#each $QuestionData.QuesTags as tag}
                                 <div class="text-[#9bc0da] bg-[#3d4951] hover:text-teal-200 hover:bg-slate-600 hover:cursor-pointer m-1 px-2 py-1 rounded-md">
                                     {tag}
                                 </div>
@@ -121,10 +121,10 @@
                             <!-- Gap -->
                             <div class="grow"></div>
                             <!-- MODIFIED BY -->
-                            {#if $QuestionData.ModifiedTime != ''}
+                            {#if $QuestionData.QuesEditedTime != ''}
 				<!-- content here -->
 				<div class=" flex h-20  w-60 flex-col overflow-hidden px-2 ">
-					<p class="text-sm text-white ">Edited : {$QuestionData.ModifiedTime}</p>
+					<p class="text-sm text-white ">Edited : {$QuestionData.QuesEditedTime}</p>
 					<div class="flex  h-12 w-full flex-row  ">
                         {#if ModifiedBy.UserImage != "" }
                              <img
@@ -194,7 +194,7 @@
 			{/if}
 			<!-- ANSWERED BY -->
 			<div class=" ml-2 flex h-20  w-56 flex-col overflow-hidden px-2">
-				<p class="text-sm text-white ">Answered : {$QuestionData.AskedTime}</p>
+				<p class="text-sm text-white ">Answered : {"answer time"}</p>
 				<div class="flex h-12 w-full flex-row ">
                     {#if AskedBy.UserImage != ""}
                     <!-- svelte-ignore a11y-img-redundant-alt -->
@@ -283,9 +283,9 @@
                      <MarkDownWriter/>
                     {/if}
                 </div>
-                {#each $QuestionData.Answers as ans }
+                <!-- {#each $QuestionData.Answers as ans }
                     <Ans {ans} />
-                {/each}
+                {/each} -->
             
             </div>
         

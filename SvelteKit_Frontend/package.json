@@ -20,6 +20,7 @@
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
+		"@types/dotenv": "^8.2.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.7",
@@ -38,7 +39,7 @@
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0",
-		"vitest": "^0.25.3"
+		"vitest": "^0.25.8"
 	},
 	"type": "module",
 	"dependencies": {
@@ -46,6 +47,7 @@
 		"@types/jsonwebtoken": "^9.0.1",
 		"@types/marked": "^4.0.8",
 		"@types/showdown": "^2.0.0",
+		"dotenv": "^16.0.3",
 		"jsonwebtoken": "^9.0.0",
 		"marked": "^4.2.12",
 		"showdown": "^2.1.0",

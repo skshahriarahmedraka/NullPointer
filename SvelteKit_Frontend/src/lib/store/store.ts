@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import type {QuestionDataType,UserDataType} from './types'
 
 const  Loading=writable(false)
 
@@ -141,12 +142,12 @@ const  Loading=writable(false)
 // // export default dataStore
 
 // // USER DATA
-const SampleUserData =  {
+const SampleUserData :UserDataType =  {
     UserID: 'skraka',
     UserName: 'Sk Shahriar Ahmed Raka',
     Email: 'skshahra@gmail.com',
     Password: '123456',
-    // UserTitle string `json:"UserTitle"`
+    UserTitle : 'Full-Stack Web Developer',
     UserImage:
         'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
     Badges: {
@@ -178,7 +179,7 @@ const SampleUserData =  {
     SelectedPanel: 'Profile',
     AccountType: 'regular'
 }
-const UserData = writable({})
+const UserData = writable({} as UserDataType)
 UserData.update(()=>SampleUserData)
   
 
@@ -198,34 +199,12 @@ UserData.update(()=>SampleUserData)
 
 
 // // QUESTION DATA
-const SampleQuestionData :  {
-	ID   :string 
-	QuesTitle     :  string   
-	QuesitonAskedTime :  Date 
-	QuesModifiedTime  :  Date  
-	QuesViewed   :   number      
-	QuesUpvote    :  number      
-	QuesDownvote  :  number      
-	QuesBookmark  :  number      
-	QuesTags      :  string []
-	QuesAskedBy    : string  
-	QuesAnsAccepted : string   
 
-
-	QuesAskedTimeExact : string 
-	QuesAskedByImage  : string 
-
-	QuesEditedBy : string 
-
-	QuesEditedTimeExact : string              
-	QuesDescription   :  string          
-	QuesComment       :  string[][]  
-	Answers            :     string[][]     
-}={
+const SampleQuestionData:QuestionDataType ={
     "ID": "143",
     "QuesTitle": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
-    "QuesitonAskedTime": new Date(),
-    "QuesModifiedTime": new Date(),
+   
+    "QuesEditedTime": new Date().toISOString(),
     "QuesViewed": 577000,
 
     "QuesUpvote": 4,
@@ -239,88 +218,82 @@ const SampleQuestionData :  {
         "go"
     ],
     "QuesAskedBy":  "UserID",
-    "EditedBy": { "UserID": 154123 },
-
-    "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
-    "Comment": [
-        {
-            "ID": 1,
-            "Upvote": 4,
-            "Downvote": 1,
-            "UserID": 154123,
-            "UserName": "sk shahriar ahmed raka",
-            "Time": " Aug 7, 2011 at 2:14",
-            "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
-        }
+    "QuesAnsAccepted" : "answerIDNumber",
+    "QuesAskedTime" : new Date().toISOString(),
+    "QuesEditedBy": "154123",
+    
+    "QuesDescription": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+    "QuesComment": [
+        "82567384","887874","72643"
     ],
     "Answers": [
-        
+        {"ID": "1","Vote":12,"Comment":["234234","234234","234234"]},
     ]
 }
-const QuestionData=writable(
-    {
-        "ID": 1,
-        "Title": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
-        "AskedTime": " Aug 7, 2011 at 2:14 ",
-        "ModifiedTime": " Aug 7, 2011 at 2:14 ",
-        "Viewed": 577000,
+const QuestionData=writable({} as QuestionDataType )
+QuestionData.update(()=>SampleQuestionData)
+    // {
+    //     "ID": 1,
+    //     "Title": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
+    //     "AskedTime": " Aug 7, 2011 at 2:14 ",
+    //     "ModifiedTime": " Aug 7, 2011 at 2:14 ",
+    //     "Viewed": 577000,
     
-        "Upvote": 4,
-        "Downvote": 32,
-        "Bookmark": 23,
+    //     "Upvote": 4,
+    //     "Downvote": 32,
+    //     "Bookmark": 23,
     
-        "Tags": [
-            "go",
-            "string",
-            "Concatination",
-            "go"
-        ],
-        "AskedBy": { "UserID": 154123 },
-        "EditedBy": { "UserID": 154123 },
+    //     "Tags": [
+    //         "go",
+    //         "string",
+    //         "Concatination",
+    //         "go"
+    //     ],
+    //     "AskedBy": { "UserID": 154123 },
+    //     "EditedBy": { "UserID": 154123 },
     
-        "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
-        "Comment": [
-            {
-                "ID": 1,
-                "Upvote": 4,
-                "Downvote": 1,
-                "UserID": 154123,
-                "UserName": "sk shahriar ahmed raka",
-                "Time": " Aug 7, 2011 at 2:14",
-                "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
-            }
-        ],
-        "Answers": [
-            {
-                "ID": 1,
-                "AnsweredTime": " Aug 7, 2011 at 2:14 ",
-                "Modified": " Aug 7, 2011 at 2:14 ",
+    //     "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+    //     "Comment": [
+    //         {
+    //             "ID": 1,
+    //             "Upvote": 4,
+    //             "Downvote": 1,
+    //             "UserID": 154123,
+    //             "UserName": "sk shahriar ahmed raka",
+    //             "Time": " Aug 7, 2011 at 2:14",
+    //             "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
+    //         }
+    //     ],
+    //     "Answers": [
+    //         {
+    //             "ID": 1,
+    //             "AnsweredTime": " Aug 7, 2011 at 2:14 ",
+    //             "Modified": " Aug 7, 2011 at 2:14 ",
     
-                "Upvote": 4,
-                "Downvote": 32,
-                "Bookmark": 23,
-                "Accepted": true,
+    //             "Upvote": 4,
+    //             "Downvote": 32,
+    //             "Bookmark": 23,
+    //             "Accepted": true,
     
-                "AnsweredBy": { "UserID": 154123 },
-                "EditedBy": { "UserID": 154123 },
+    //             "AnsweredBy": { "UserID": 154123 },
+    //             "EditedBy": { "UserID": 154123 },
     
     
-                "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
-                "Comment": [
-                    {
-                        "ID": 1,
-                        "Upvote": 4,
-                        "Downvote": 1,
-                        "UserID": 154123,
-                        "UserName": "sk shahriar ahmed raka",
-                        "Time": " Aug 7, 2011 at 2:14",
-                        "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
-                    }
-                ]
-            }
-        ]
-    }
-)
+    //             "Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+    //             "Comment": [
+    //                 {
+    //                     "ID": 1,
+    //                     "Upvote": 4,
+    //                     "Downvote": 1,
+    //                     "UserID": 154123,
+    //                     "UserName": "sk shahriar ahmed raka",
+    //                     "Time": " Aug 7, 2011 at 2:14",
+    //                     "Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
 // let QuestionData = writable({
 //     "QuestionTitle":"How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
 //     "QuestionAskedTime":"12 years, 5 months ago",

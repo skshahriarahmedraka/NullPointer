@@ -8,7 +8,7 @@ type UserData struct {
 	UserName string             `json:"UserName" bson:"UserName" validate:"omitempty,min=4,max=64,UserName"`
 	Email    string             `json:"Email" bson:"Email" validate:"required,min=4,max=100,Email"`
 	Password string             `json:"Password"	bson:"Password" validate:"omitempty,min=4,max=100"`
-	// UserTitle string `json:"UserTitle"`
+	UserTitle string `json:"UserTitle" bson:"UserTitle" validate:"omitempty"`
 	UserImage string `json:"UserImage" bson:"UserImage" validate:"omitempty" `
 	Badges    struct {
 		Reputation int `json:Reputation bson:"Reputation" validate:"omitempty, numeric"`
@@ -16,8 +16,8 @@ type UserData struct {
 		Silver     int `json:"Silver" bson:"Silver" validate:"omitempty,numeric"`
 		Bronze     int `json:"Bronze" 		bson:"Bronze" validate:"omitempty,numeric"`
 	} `json:"Badges" bson:"Badges"`
-	Follower  []string `json:"Follower" json:"Follower" validate:"omitempty"`
-	Following []string `json:"Following" json:"Following" validate:"omitempty"`
+	Follower  []string `json:"Follower" bson:"Follower" validate:"omitempty"`
+	Following []string `json:"Following" bson:"Following" validate:"omitempty"`
 	// Badges map[string]int
 	Location       string              `json:"Location" bson:"Location" validate:"omitempty"`
 	MembershipTime primitive.Timestamp `json:"MembershipTime" bson:"MembershipTime" validate:"omitempty"`
@@ -30,5 +30,5 @@ type UserData struct {
 	TopTags        []string            `json:"TopTags" bson:"TopTags" validate:"omitempty"`
 	TopTagsPercent map[string]int               `json:"TopTagsPercent" bson:"TopTagsPercent" validate:"omitempty"`
 	SelectedPanel  string              `json:"SelectedPanel" bson:"SelectedPanel" validate:"omitempty"`
-	AccountType    string              `json:"Accounttype" bson:"Accounttype" validate:"omitempty"`
+	AccountType    string              `json:"AccountType" bson:"AccountType" validate:"omitempty"`
 }
