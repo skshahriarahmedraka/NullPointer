@@ -12,11 +12,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	console.log('🚀 ~ file: hooks.server.ts ~ line 12 ~ consthandle:Handle= ~ MyCookie', MyCookie);
 	// event.locals.user.Authenticated=false
 
-	const JWT_Auth_KEY: string = process.env.JWT_SECRET as string;
-	console.log(
-		'🚀 ~ file: hooks.server.ts ~ line 14 ~ consthandle:Handle= ~ JWT_Auth_KEY',
-		JWT_Auth_KEY
-	);
+	const JWT_Auth_KEY: string = process.env.COOKIE_SECRET_JWT_AUTH1 as string;
+	console.log("🚀 ~ file: hooks.server.ts:16 ~ consthandle:Handle= ~ JWT_Auth_KEY:", JWT_Auth_KEY)
+	
 	// const decoded = jwt.verify(MyCookie, JWT_Auth_KEY);
 	// console.log(decoded);
 	jwt.verify(MyCookie, JWT_Auth_KEY, (err) => {

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"app/model"
+	"os"
 	"time"
 
 	// "github.com/gofiber/fiber/v2"
@@ -20,7 +21,7 @@ func GenerateHttpOnlyJWT(UserData model.UserData) string {
 				},
 			}
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-			tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
+			tokenString, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET_JWT_AUTH1")))
 			if err != nil {
 				return ""
 			}

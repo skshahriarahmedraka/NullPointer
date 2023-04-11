@@ -94,7 +94,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 			},
 		}
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
+		tokenString, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET_JWT_AUTH1")))
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Error while creating token",
