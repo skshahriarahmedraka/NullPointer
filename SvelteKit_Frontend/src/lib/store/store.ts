@@ -180,7 +180,7 @@ const SampleUserData :UserDataType =  {
     AccountType: 'regular'
 }
 const UserData = writable({} as UserDataType)
-UserData.update(()=>SampleUserData)
+// UserData.update(()=>SampleUserData)
   
 
 

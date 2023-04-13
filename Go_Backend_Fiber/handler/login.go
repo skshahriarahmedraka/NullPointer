@@ -3,15 +3,19 @@ package handler
 import (
 	"app/logs"
 	"app/model"
+	"app/utils"
 	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 	"time"
-	"app/utils"
+
 	"github.com/gofiber/fiber/v2"
+
 	// "github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson"
+	// "go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -31,6 +35,8 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 	defer cancel()
 	var dbUser model.UserData
 	err = H.MongoUserCol.FindOne(ctx, bson.D{{"Email", loginData.Email}}).Decode(&dbUser)
+
+	
 	// Check if the user exists
 	logs.Error("User Email not found in database :", err)
 	if err != nil {
@@ -73,11 +79,29 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 			c.Cookie(&fiber.Cookie{
 				Name:     "Auth1",
 				Value:    tokenString,
+				Path:     "/",
+				Domain:   os.Getenv("IP"),
 				Expires:  time.Now().Add(1000 * time.Hour),
 				HTTPOnly: true,
+
 				SameSite: "lax",
 			})
-			
+
+			tokenString2 := utils.GenerateHttpCookie(dbUser)
+			if tokenString2 == "" {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Error while creating token2",
+				})
+			}
+			c.Cookie(&fiber.Cookie{
+				Name:     "Info1",
+				Value:    tokenString2,
+				Path:     "/",
+				Domain:   os.Getenv("IP"),
+				Expires:  time.Now().Add(1000 * time.Hour),
+				HTTPOnly: false,
+				SameSite: "lax",
+			})
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"message": "Login successful",
 				"User":    dbUser,

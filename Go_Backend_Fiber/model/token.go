@@ -7,5 +7,6 @@ type JwtAuth1 struct {
 	Name   string `json:"Name"  validate:"required"`
 	UserID string `json:"UserID"  validate:"required"`
 	AccountType string `json:"AccountType"  validate:"required"`
+	UUID string `json:"UUID"  validate:"required"`
 	jwt.StandardClaims
 }

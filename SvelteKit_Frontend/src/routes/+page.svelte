@@ -13,6 +13,7 @@
 	import type { PageData } from './$types';
 	import { UserData } from '$lib/store/store';
 	import type { UserDataType } from '$lib/store/types';
+	
 
 	// export let data: PageData 
 	// let GetUserData:UserDataType = data.GetUserData
@@ -20,6 +21,7 @@
 	// 	data = GetUserData;
 	// 	return data;
 	// });
+
 	let loadingState: boolean = false;
 	afterUpdate(() => {
 		loadingState = true;

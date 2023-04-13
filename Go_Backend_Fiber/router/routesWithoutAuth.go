@@ -23,6 +23,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/favchannel",H.FavChannelList)
 	r.Get("/channel/:ID",H.Channel)
 
+	r.Get("/user/:ID",H.UserData)
 
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)

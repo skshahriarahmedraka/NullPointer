@@ -3,6 +3,7 @@ package handler
 import (
 	"app/logs"
 	"app/model"
+	"app/utils"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -13,7 +14,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v4"
+	// "github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
@@ -83,31 +84,55 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		}
 		fmt.Println("🚀 inserted UserData : ", res)
 
-		expirationTime := time.Now().Add(1000 * time.Hour)
-		claims := model.JwtAuth1{
-			Email:       dbUser.Email,
-			Name:        dbUser.UserName,
-			UserID:      dbUser.UserID,
-			AccountType: dbUser.AccountType,
-			StandardClaims: jwt.StandardClaims{
-				ExpiresAt: expirationTime.Unix(),
-			},
-		}
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		tokenString, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET_JWT_AUTH1")))
-		if err != nil {
+		// expirationTime := time.Now().Add(1000 * time.Hour)
+		// claims := model.JwtAuth1{
+		// 	Email:       dbUser.Email,
+		// 	Name:        dbUser.UserName,
+		// 	UserID:      dbUser.UserID,
+		// 	AccountType: dbUser.AccountType,
+		// 	StandardClaims: jwt.StandardClaims{
+		// 		ExpiresAt: expirationTime.Unix(),
+		// 	},
+		// }
+		// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		// tokenString, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET_JWT_AUTH1")))
+		// if err != nil {
+		// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		// 		"message": "Error while creating token",
+		// 	})
+		// }
+		tokenString := utils.GenerateHttpOnlyJWT(dbUser)
+		if tokenString == "" {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Error while creating token",
 			})
 		}
+		
 		c.Cookie(&fiber.Cookie{
 			Name:     "Auth1",
 			Value:    tokenString,
-			Path:   "/",
-			Domain: os.Getenv("IP"),
+			Path:     "/",
+			Domain:   os.Getenv("IP"),
 			Expires:  time.Now().Add(1000 * time.Hour),
 			HTTPOnly: true,
-			
+
+			SameSite: "lax",
+		})
+
+		tokenString2 := utils.GenerateHttpCookie(dbUser)
+		if tokenString2 == "" {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"message": "Error while creating token2",
+			})
+		}
+		c.Cookie(&fiber.Cookie{
+			Name:     "Info1",
+			Value:    tokenString,
+			Path:     "/",
+			Domain:   os.Getenv("IP"),
+			Expires:  time.Now().Add(1000 * time.Hour),
+			HTTPOnly: false,
+
 			SameSite: "lax",
 		})
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
