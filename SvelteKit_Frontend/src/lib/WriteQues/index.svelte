@@ -5,6 +5,9 @@
 	import { fade, fly } from 'svelte/transition';
 	import { tick } from 'svelte';
 	import HotQuesCom from '$lib/HotQues/index.svelte';
+	import BoldIcon from '$lib/icons/writtingIcon/boldIcon.svelte';
+	import ItalicIcon from '$lib/icons/writtingIcon/ItalicIcon.svelte';
+	import UnderlineIcon from '$lib/icons/writtingIcon/UnderlineIcon.svelte';
 
 	// export let HotQues: any;
 	let ShowLinkedText: boolean = false;
@@ -486,68 +489,27 @@
 		<div
 			class=" mt-3 flex h-fit w-[95%] flex-row flex-wrap gap-2 self-center hover:cursor-pointer "
 		>
-			<!-- bold -->
-			<!-- <button
-				on:click={(e) => HandleSelectedStr(e, 'bold')}
-				class="h-full w-12 rounded-lg bg-slate-500 text-white hover:bg-slate-200 focus:bg-stone-500"
-				>Bold</button
-			>
-			<button
-				on:click={(e) => HandleSelectedStr(e, 'italic')}
-				class="h-full w-12 rounded-lg bg-slate-500 text-white hover:bg-slate-200 focus:bg-stone-500"
-				>italic</button
-			>
-			<button
-				on:click={(e) => HandleSelectedStr(e, 'blockquote')}
-				class="h-full w-12 rounded-lg bg-slate-500 text-white hover:bg-slate-200 focus:bg-stone-500"
-				>blockquote</button
-			>
-			<button
-				on:click={(e) => HandleSelectedStr(e, 'codesample')}
-				class="h-full w-12 rounded-lg bg-slate-500 text-white hover:bg-slate-200 focus:bg-stone-500"
-				>code</button
-			> -->
+		
 			<!-- BOLD -->
 			<button
 				on:click={(e) => HandleSelectedStr(e, 'bold')}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500 active:bg-gray-400"
 			>
-				<svg
-					class="h-9 w-9 fill-slate-400 p-2 hover:fill-gray-300 "
-					viewBox="0 0 384 512"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						d="M321.1 242.4C340.1 220.1 352 191.6 352 160c0-70.59-57.42-128-128-128L32 32.01c-17.67 0-32 14.31-32 32s14.33 32 32 32h16v320H32c-17.67 0-32 14.31-32 32s14.33 32 32 32h224c70.58 0 128-57.41 128-128C384 305.3 358.6 264.8 321.1 242.4zM112 96.01H224c35.3 0 64 28.72 64 64s-28.7 64-64 64H112V96.01zM256 416H112v-128H256c35.3 0 64 28.71 64 63.1S291.3 416 256 416z"
-					/></svg
-				>
+				<BoldIcon/>
 			</button>
 			<!-- ITALIC -->
 			<button
 				on:click={(e) => HandleSelectedStr(e, 'italic')}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
-				<svg
-					class="h-9 w-9 fill-slate-400 p-2  hover:fill-gray-300"
-					viewBox="0 0 384 512"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						d="M384 64.01c0 17.69-14.31 32-32 32h-58.67l-133.3 320H224c17.69 0 32 14.31 32 32s-14.31 32-32 32H32c-17.69 0-32-14.31-32-32s14.31-32 32-32h58.67l133.3-320H160c-17.69 0-32-14.31-32-32s14.31-32 32-32h192C369.7 32.01 384 46.33 384 64.01z"
-					/></svg
-				>
+			<ItalicIcon />
 			</button>
 			<!-- UNDERLINE -->
 			<button
 				on:click={(e) => HandleSelectedStr(e, 'underline')}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
-				<svg
-					class="h-9 w-9 fill-slate-400 p-2  hover:fill-gray-300"
-					viewBox="0 0 448 512"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						d="M416 448H32c-17.69 0-32 14.31-32 32s14.31 32 32 32h384c17.69 0 32-14.31 32-32S433.7 448 416 448zM48 64.01H64v160c0 88.22 71.78 159.1 160 159.1s160-71.78 160-159.1v-160h16c17.69 0 32-14.32 32-32s-14.31-31.1-32-31.1l-96-.0049c-17.69 0-32 14.32-32 32s14.31 32 32 32H320v160c0 52.94-43.06 95.1-96 95.1S128 276.1 128 224v-160h16c17.69 0 32-14.31 32-32s-14.31-32-32-32l-96 .0049c-17.69 0-32 14.31-32 31.1S30.31 64.01 48 64.01z"
-					/></svg
-				>
+				<UnderlineIcon/>
 			</button>
 			<!-- DELETED TEXT -->
 			<button

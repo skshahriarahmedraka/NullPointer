@@ -21,7 +21,7 @@ func (H *DatabaseCollections)Channel(c *fiber.Ctx) error  {
 		logs.Error("Error while finding blog", err)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"message": "Internal Server Error while fetching blog",
+				"message": "Internal Server Error while fetching channel",
 			})
 		}
 		return c.Status(fiber.StatusOK).JSON(blog)

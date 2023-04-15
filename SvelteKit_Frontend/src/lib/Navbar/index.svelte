@@ -342,9 +342,9 @@
 		<!-- User Profile data -->
 		{#if $UserData.UserID != null}
 			<div
-				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
+				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 ?"
 				on:click={() => {
-					goto(`${$UserData['UserID']}`);
+					goto(`/${$UserData.ID}`);
 				}}
 				on:keydown={(e) => {}}
 			>

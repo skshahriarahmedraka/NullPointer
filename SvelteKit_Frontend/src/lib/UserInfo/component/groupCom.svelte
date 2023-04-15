@@ -16,7 +16,7 @@
     CoverImage: string;
     NumberOfMember: number;
 }
-    console.log("🚀 ~ file: groupCom.svelte:5 ~ GroupData:", GroupData)
+    // console.log("🚀 ~ file: groupCom.svelte:5 ~ GroupData:", GroupData)
 
     // your script goes here
 </script>

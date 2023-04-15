@@ -11,11 +11,10 @@
 	import Footer from '$lib/Footer/footer.svelte';
 	import PageNum from '$lib/PageNum/pageNum.svelte';
 	import type { PageData } from './$types';
-	import { UserData } from '$lib/store/store';
-	import type { UserDataType } from '$lib/store/types';
+
 	
 
-	// export let data: PageData 
+	export let data : PageData
 	// let GetUserData:UserDataType = data.GetUserData
 	// UserData.update((data) => {
 	// 	data = GetUserData;
