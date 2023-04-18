@@ -1,5 +1,16 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
+	import Github from "$lib/icons/Github.svelte";
+	import Twitter from "$lib/icons/Twitter.svelte";
+	import UserAnonymous from "$lib/icons/UserAnonymous.svelte";
+	import EditIcon from "$lib/icons/UtilityIcons/EditIcon.svelte";
+	import GithubIcon from "$lib/icons/UtilityIcons/GithubIcon.svelte";
+	import LocationIcon from "$lib/icons/UtilityIcons/LocationIcon.svelte";
+	import LinkedinIcon from "$lib/icons/UtilityIcons/linkedinIcon.svelte";
+	import Linkedin from "$lib/icons/UtilityIcons/linkedinIcon.svelte";
+	import SiteIcon from "$lib/icons/UtilityIcons/siteIcon.svelte";
+	import Site from "$lib/icons/UtilityIcons/siteIcon.svelte";
+	import TwitterIcon from "$lib/icons/UtilityIcons/twitterIcon.svelte";
 
 
     import {UserData} from "../store/store"
@@ -14,47 +25,62 @@ import { goto } from "$app/navigation";
 <!-- markup (zero or more items) goes here -->
 
 <div class="w-full  flex flex-row  items-center">
-    <img src="{$UserData["UserImage"]}" alt="" class=" w-32 h-32 m-5 aspect-square rounded-xl  hover:rounded-xl active:rounded-md object-cover hover:ring hover:ring-cyan-500 transition-all duration-150 ease-linear cursor-pointer  active:ring  active:ring-offset-base-50  active:ring-blue-600">
+    {#if $UserData.UserImage.trim() != ""}
+         <img src="{$UserData.UserImage}" alt="" class=" w-32 h-32 m-5 aspect-square rounded-xl  hover:rounded-xl active:rounded-md object-cover hover:ring hover:ring-cyan-500 transition-all duration-150 ease-linear cursor-pointer  active:ring  active:ring-offset-base-50  active:ring-blue-600">
+    {:else}
+         <!-- else content here -->
+         <UserAnonymous class ="fill-cyan-600  w-32 h-32 m-5 aspect-square rounded-xl  hover:rounded-xl active:rounded-md object-cover hover:ring hover:ring-cyan-500 transition-all duration-150 ease-linear cursor-pointer  active:ring  active:ring-offset-base-50  active:ring-blue-60"/>
+    {/if}
     <div class=" flex flex-col w-full">
         <!-- Username -->
         <div class="flex flex-row text-[#e7e9eb] ">
             <div class=" text-3xl">{$UserData["UserName"]}</div>
             <div class="grow"></div>
-            <button class="" on:click="{()=>{goto(`${$UserData["UserID"]}/edit`)}}">
-                <svg class="w-8 h-8 mr-8 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <button class="" on:click="{()=>{goto(`/${$UserData.ID}/edit`)}}">
+                <EditIcon class="mr-8 h-8 w-8"/>
             </button>
             <!-- <svg class="w-6 h-6 mr-8  fill-white rounded-full border-2 border-[#e7e9eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> -->
         </div>
         <!-- Work where -->
-        <div class="text-[#959ca3] text-xl">
-            {$UserData["UserTitle"]}
-        </div>
+        {#if $UserData.UserTitle.trim() != ""}
+             <!-- content here -->
+             <div class="text-[#959ca3] text-xl">
+                 {$UserData.UserTitle}
+             </div>
+        {:else}
+             <!-- else content here -->
+             <div class="text-[#959ca3] opacity-50 text-xl">
+                {"No Title"}
+            </div>
+        {/if}
         <!-- membership & lastSeen -->
         <div class="flex flex-row">
             <svg class="w-6 h-6 mr-2 stroke-[#e7e9eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
             <div class="text-[#959ca3] ">
-                {$UserData["MembershipTime"]}
+                {$UserData.MembershipTime}
             </div>
             <svg class="w-6 h-6 mx-2 stroke-[#e7e9eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <div class="text-[#959ca3]">
-                {$UserData["LastSeen"]}
+                {$UserData.LastSeen}
             </div>
         </div>
         <!-- Related Sites -->
         <div class="flex flex-row items-center justify-left">
             <!-- Mysite -->
-            <svg class="w-6 h-6 mt-2 mr-2 stroke-[#e7e9eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            <SiteIcon class="w-6 h-6 mt-2 mr-2 stroke-[#e7e9eb]"/>
+            <!-- <Site class="w-6 h-6 mt-2 mr-2 stroke-[#e7e9eb]"/> -->
             <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg> -->
             <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg> -->
             <!-- twiter -->
-            <svg class="w-6 h-6 mt-2 mr-2 fill-[#e7e9eb]" fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 30 30" width="30px" height="30px">    <path d="M28,6.937c-0.957,0.425-1.985,0.711-3.064,0.84c1.102-0.66,1.947-1.705,2.345-2.951c-1.03,0.611-2.172,1.055-3.388,1.295 c-0.973-1.037-2.359-1.685-3.893-1.685c-2.946,0-5.334,2.389-5.334,5.334c0,0.418,0.048,0.826,0.138,1.215 c-4.433-0.222-8.363-2.346-10.995-5.574C3.351,6.199,3.088,7.115,3.088,8.094c0,1.85,0.941,3.483,2.372,4.439 c-0.874-0.028-1.697-0.268-2.416-0.667c0,0.023,0,0.044,0,0.067c0,2.585,1.838,4.741,4.279,5.23 c-0.447,0.122-0.919,0.187-1.406,0.187c-0.343,0-0.678-0.034-1.003-0.095c0.679,2.119,2.649,3.662,4.983,3.705 c-1.825,1.431-4.125,2.284-6.625,2.284c-0.43,0-0.855-0.025-1.273-0.075c2.361,1.513,5.164,2.396,8.177,2.396 c9.812,0,15.176-8.128,15.176-15.177c0-0.231-0.005-0.461-0.015-0.69C26.38,8.945,27.285,8.006,28,6.937z"/></svg>
+            <TwitterIcon class="w-6 h-6 mt-2 mr-2 fill-[#e7e9eb]" />
+            <!-- <Twitter /> -->
             <!-- <svg class="w-6 h-6  stroke-[#e7e9eb] fill-[#e7e9eb]" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 324.142 324.142" style="enable-background:new 0 0 324.142 324.142;" xml:space="preserve"> <g> <g> <g> <path d="M162.07,0C73.163,0,0.83,72.333,0.83,161.241c0,37.076,12.788,73.004,36.1,101.676 c-6.651,16.758-17.789,31.247-32.401,42.089c-2.238,1.66-3.37,4.424-2.941,7.178c0.429,2.753,2.349,5.042,4.986,5.942 c11.683,3.992,23.856,6.016,36.182,6.016c19.572,0,38.698-5.093,55.569-14.763c20.158,8.696,41.584,13.103,63.747,13.103 c88.909,0,161.241-72.333,161.241-161.242C323.313,72.333,250.979,0,162.07,0z M162.07,307.483 c-21.32,0-41.881-4.492-61.111-13.35c-2.292-1.055-4.959-0.889-7.101,0.444c-15.314,9.529-32.985,14.565-51.105,14.565 c-6.053,0-12.065-0.564-17.981-1.683c12.52-12.121,22.013-26.951,27.787-43.547c0.879-2.526,0.346-5.328-1.398-7.355 C28.377,230.07,15.83,196.22,15.83,161.241C15.83,80.604,81.434,15,162.07,15s146.241,65.604,146.241,146.241 C308.313,241.879,242.708,307.483,162.07,307.483z"/> <path d="M253.389,102.125c0.572-1.293,1.08-2.619,1.521-3.974c0.963-2.96-0.002-6.209-2.427-8.162 c-2.425-1.954-5.804-2.204-8.492-0.633c-5.124,2.998-10.619,5.252-16.38,6.723c-7.721-6.577-17.7-10.282-27.988-10.282 c-23.436,0-42.529,18.709-42.768,41.793c-22.825-3.3-43.8-14.938-58.529-32.722c-1.558-1.88-3.944-2.883-6.365-2.693 c-2.434,0.192-4.622,1.556-5.865,3.657c-3.812,6.439-5.826,13.797-5.826,21.278c0,6.252,1.391,12.307,3.974,17.799 c-0.197,0.094-0.391,0.198-0.581,0.311c-2.277,1.351-3.673,3.803-3.673,6.45v0.437c0,11.941,5.121,22.946,13.467,30.728 c-1.136,1.855-1.422,4.136-0.734,6.244c3.501,10.73,11.073,19.349,20.719,24.391c-7.661,3.141-15.915,4.764-24.452,4.764 c-2.533,0-5.072-0.146-7.548-0.436c-3.48-0.403-6.776,1.649-7.942,4.953c-1.166,3.303,0.109,6.973,3.072,8.841 c17.386,10.961,37.47,16.754,58.082,16.754c40.536,0,65.935-18.863,80.104-34.687c17.643-19.703,27.761-45.804,27.761-71.609 c0-0.278,0-0.55-0.002-0.814c6.27-4.956,11.713-10.811,16.217-17.45c1.875-2.764,1.696-6.436-0.438-9.004 C257.03,103.259,255.259,102.342,253.389,102.125z M227.518,132.05c0,22.162-8.724,44.615-23.936,61.603 c-12.129,13.546-33.933,29.693-68.929,29.693c-8.136,0-16.176-1.046-23.941-3.087c9.592-2.706,18.602-7.229,26.673-13.449 c2.523-1.944,3.543-5.27,2.543-8.294s-3.8-5.087-6.985-5.145c-7.847-0.143-15.056-3.501-20.096-8.958 c1.648-0.243,3.28-0.58,4.887-1.01c3.369-0.903,5.67-4.008,5.555-7.493c-0.116-3.485-2.619-6.431-6.04-7.109 c-9.1-1.801-16.438-7.918-19.973-15.899c1.962,0.339,3.948,0.543,5.94,0.61c3.373,0.108,6.378-2.023,7.396-5.224 c1.018-3.201-0.217-6.688-3.021-8.536c-7.717-5.084-12.324-13.548-12.324-22.642c0-1.125,0.071-2.246,0.211-3.355 c18.659,17.722,43.334,28.378,69.408,29.667c2.343,0.117,4.62-0.878,6.128-2.685s2.081-4.217,1.545-6.51 c-0.471-2.02-0.71-4.105-0.71-6.199c0-15.015,12.458-27.23,27.771-27.23c7.683,0,15.085,3.149,20.312,8.64 c1.464,1.54,3.483,2.381,5.582,2.328c-0.833,1.72-1.005,3.745-0.361,5.662c0.755,2.246,2.491,3.934,4.612,4.683 c-1.569,1.488-2.434,3.597-2.331,5.791C227.492,129.114,227.518,130.432,227.518,132.05z"/> </g> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg> -->
             <!-- github -->
-            <svg class="w-5 h-5 mt-2 mr-2 fill-[#e7e9eb]" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> <path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183 0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 2.641-0.532 4-0.541 1.36 0.009 2.719 0.187 4 0.541 3.043-2.068 4.381-1.641 4.381-1.641 0.859 2.204 0.317 3.833 0.161 4.235 1.015 1.12 1.635 2.547 1.635 4.297 0 6.145-3.74 7.5-7.296 7.891 0.556 0.479 1.077 1.464 1.077 2.959 0 2.14-0.020 3.864-0.020 4.385 0 0.416 0.28 0.916 1.104 0.755 6.4-2.093 10.979-8.093 10.979-15.156 0-8.833-7.161-16-16-16z"/> </svg>
+            <GithubIcon class="w-5 h-5 mt-2 mr-2 fill-[#e7e9eb]"/>
             <!-- Linkedin -->
-            <svg class="w-5 h-5 mt-2 mr-2 fill-[#e7e9eb]" height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z"/></svg>
+            <LinkedinIcon class="w-5 h-5 mt-2 mr-2 fill-[#e7e9eb]"/>
             <!-- location -->
-            <svg class="w-6 h-6 mt-2 mr-2 fill-[#e7e9eb]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+            <LocationIcon class="w-6 h-6 mt-2 mr-2 fill-[#e7e9eb]" />
             <div class="text-[#959ca3] mt-2 text-lg font-semibold">{$UserData["Location"]}</div>
 
         </div>

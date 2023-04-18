@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {UserData} from "../store/store"
+    // import {UserData} from "../store/store"
     // export let UserData:any
 </script>
 

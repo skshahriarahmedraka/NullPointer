@@ -26,7 +26,8 @@ func init() {
 
 func TestTEST(t *testing.T) {
 	var db = database.MongoDBConnection()
-	var h = database.DatabaseInit(db)
+	minioClient := database.MinioInit()
+	var h = database.DatabaseInit(db,minioClient)
 
 
 	app := fiber.New()

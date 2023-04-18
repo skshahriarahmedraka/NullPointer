@@ -4,10 +4,12 @@ import (
 	"os"
 
 	"app/handler"
+
+	"github.com/minio/minio-go/v7"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func DatabaseInit(db *mongo.Database) handler.DatabaseCollections {
+func DatabaseInit(db *mongo.Database , minioClient *minio.Client) handler.DatabaseCollections {
 
 	c := handler.DatabaseCollections{
 		MongoDB:          db,
@@ -17,6 +19,7 @@ func DatabaseInit(db *mongo.Database) handler.DatabaseCollections {
 		MongoBlogCol:     db.Collection(os.Getenv("MONGO_BLOG_COL")),
 		MongoGroupCol:    db.Collection(os.Getenv("MONGO_GROUP_COL")),
 		MongoChannelCol:  db.Collection(os.Getenv("MONGO_CHANNEL_COL")),
+		MinioClient:      minioClient,
 	}
 	return c
 }

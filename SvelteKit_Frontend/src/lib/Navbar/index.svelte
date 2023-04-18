@@ -546,7 +546,7 @@
 		{:else}
 			<!-- else content here -->
 			<div class="flex   h-full flex-row items-center justify-center gap-2">
-				<UserAnonymous />
+				<UserAnonymous class="fill-blue-600 w-10 h-10" />
 				<button on:click={()=>{goto("/login")}} class=" text-blue-600 font-medium  my-2 border-[1px] border-blue-500 bg-blue-500  bg-opacity-25 hover:bg-opacity-0  px-2 py-1 rounded-md ">Sign In</button>
 				<button on:click={()=>{goto("/register")}} class=" text-gray-100 font-medium  my-2 border-[1px] border-blue-500 bg-blue-700 bg-opacity-50 hover:bg-opacity-0 px-2 py-1 rounded-md">Sign Up</button>
 			</div>

@@ -88,6 +88,20 @@ async function fetchBlogData(BlogID: string): Promise<FavouriteHashListType[]> {
 	const BlogData: FavouriteHashListType[] = await response.json();
 	return BlogData;
 }
+async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<UserDataType> {
+	const response = await fetch(`/api/updateuser`,{
+		method: 'POST',
+		body: JSON.stringify(UpdatedUserData),
+		headers:{
+		  'Content-Type': 'application/json'
+		}
+	  });
+	if (!response.ok) {
+		throw new Error(`Failed to fetch /api/updateuser UpdatedUserData`);
+	}
+	const UpdatedData:UserDataType = await response.json();
+	return UpdatedData;
+}
 
 export {
 	fetchUserData,
@@ -95,5 +109,6 @@ export {
 	fetchBlogList,
 	fetchGroupList,
 	fetchFavouriteHashList,
-	fetchBlogData
+	fetchBlogData,
+	fetchUpdateUserData
 };

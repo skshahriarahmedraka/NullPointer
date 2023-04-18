@@ -8,7 +8,8 @@ import (
 func RouteWithoutAuth(app *fiber.App) {
 
 	db := database.MongoDBConnection()
-	H := database.DatabaseInit(db)
+	minioClient := database.MinioInit()
+	H := database.DatabaseInit(db, minioClient)
 
 	r := app.Group("/api")
 	r.Get("/test", H.TEST)
@@ -26,6 +27,9 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/user/:ID",H.UserData)
 	r.Post("/updateuser",H.UpdateUserData)
 
+
+	r.Post("/uploadimage",H.UploadImage)
+	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)
 	// r.Get("/channel/:ID",H.Channel)

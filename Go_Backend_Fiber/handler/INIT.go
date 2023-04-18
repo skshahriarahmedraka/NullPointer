@@ -2,6 +2,7 @@ package handler
 
 import (
 	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/minio/minio-go/v7"
 )
 
 type DatabaseCollections struct {
@@ -12,4 +13,5 @@ type DatabaseCollections struct {
 	MongoBlogCol *mongo.Collection
 	MongoGroupCol *mongo.Collection
 	MongoChannelCol *mongo.Collection
+	MinioClient *minio.Client
 }
