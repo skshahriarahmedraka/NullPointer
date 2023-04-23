@@ -15,6 +15,8 @@
 	
 
 	export let data : PageData
+	console.log("🚀 ~ file: +page.svelte:18 ~ data:", data)
+	
 	// let GetUserData:UserDataType = data.GetUserData
 	// UserData.update((data) => {
 	// 	data = GetUserData;

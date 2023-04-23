@@ -23,6 +23,7 @@
 
 	// export let HotQues: any;
 	let ShowLinkedText: boolean = false;
+	let ShowLinkedImage: boolean = false;
 	let markdown: string = '';
 	let QuestionTitle: string = '';
 	// let obj;
@@ -77,7 +78,47 @@
 		}
 	}
 	let CashedLink: string = 'https://';
+	let CashedLinkImage: string = 'https://';
 	let tArea: any = null;
+
+	// Image Upload
+	let file: File | null = null;
+	// let FileInput: HTMLInputElement;
+
+	const handleFileChange = (event: Event) => {
+		const inputElement = event.target as HTMLInputElement;
+		file = inputElement.files?.[0] ?? null;
+		handleSubmit();
+	};
+
+	const handleSubmit = async () => {
+		if (!file) return;
+		const formData = new FormData();
+		formData.append('image', file);
+		let ResObj: { ImageUrl: string } = {} as { ImageUrl: string };
+		try {
+			const response = await fetch('/api/uploadimage', {
+				method: 'POST',
+				body: formData
+			});
+			ResObj = await response.json();
+			CashedLinkImage = ResObj.ImageUrl;
+			console.log('🚀 ~ file: index.svelte:106 ~ handleSubmit ~ CashedLinkImage:', CashedLinkImage);
+
+			// handle server response
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	let ShowTableInfo = false;
+	async function OnclickTable() {
+		ShowTableInfo = !ShowTableInfo;
+		if (ShowTableInfo) {
+			ShowLinkedImage = false;
+			ShowLinkedText = false;
+		}
+	}
 	async function HandleSelectedStr(
 		e: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
 		s: string
@@ -85,7 +126,7 @@
 		// if (e.key !="Tab") return ;
 
 		e.preventDefault();
-		const { selectionStart, selectionEnd, value } = tArea;
+		let { selectionStart, selectionEnd, value } = tArea;
 		if (selectionStart === selectionEnd) {
 			if (!(s === 'BreakLine')) {
 				tArea.focus();
@@ -248,6 +289,7 @@
 				break;
 			}
 			case 'OrderedList': {
+				console.log('🚀 ~ file: index.svelte:252 ~ AddOrdered: OrderedList');
 				let AddOrdered: boolean = false;
 				//check ordered or not
 				let i: number;
@@ -316,16 +358,17 @@
 					tArea.selectionStart = selectionStart;
 					tArea.selectionEnd = selectionEnd - 3 * count;
 				}
+				break;
 			}
-			case 'unrderedList': {
-				let AddOrdered: boolean = false;
+			case 'UnorderedList': {
+				let AddOrdered: boolean = true;
 				//check ordered or not
 				let i: number;
 				let arr: string[] = selection.split('\n');
 
 				let interate = arr.map((s) => {
-					if (!(/[0-9]/.test(s[0]) && s.slice(1, 3) === '. ')) {
-						AddOrdered = true;
+					if (s.slice(0, 2) === '- ') {
+						AddOrdered = false;
 					}
 				});
 				interate;
@@ -334,15 +377,12 @@
 					// add order number
 					let i: number;
 					let count: number = 1;
-					for (i = 0; true; i++) {
-						if (i > selection.length) {
-							break;
-						}
+					for (i = 0; i <= selection.length; i++) {
 						if (i === 0) {
-							selection = `${count}. ` + selection;
+							selection = `- ` + selection;
 							count += 1;
 						} else if (selection[i] === '\n') {
-							selection = selection.slice(0, i + 1) + `${count}. ` + selection.slice(i + 3);
+							selection = selection.slice(0, i + 1) + `- ` + selection.slice(i + 1);
 							count += 1;
 						}
 					}
@@ -370,10 +410,10 @@
 
 					let interate = arr.map((s) => {
 						if (count === arr.length - 1) {
-							x += s.slice(3);
+							x += s.slice(2);
 							count += 1;
 						} else {
-							x += s.slice(3) + '\n';
+							x += s.slice(2) + '\n';
 							count += 1;
 						}
 					});
@@ -384,10 +424,29 @@
 					await tick();
 					tArea.focus();
 					tArea.selectionStart = selectionStart;
-					tArea.selectionEnd = selectionEnd - 3 * count;
+					tArea.selectionEnd = selectionEnd - 2 * count;
 				}
+				break;
 			}
-			case 'link': {
+			case 'Undo': {
+				console.log('🚀 ~ Undo is called');
+
+				tArea.focus();
+				document.execCommand('undo');
+				tArea.focus();
+
+				break;
+			}
+			case 'Redo': {
+				console.log('🚀 ~ redo is called');
+
+				tArea.focus();
+				document.execCommand('redo');
+				tArea.focus();
+
+				break;
+			}
+			case 'Link': {
 				markdown =
 					value.slice(0, selectionStart) +
 					'[' +
@@ -397,10 +456,29 @@
 					value.slice(selectionEnd);
 				await tick();
 				tArea.focus();
-				tArea.selectionStart = selectionStart + 3;
-				tArea.selectionEnd = selectionEnd + 3;
+				tArea.selectionStart = selectionStart + 1;
+				tArea.selectionEnd = selectionEnd + 1;
+				ShowLinkedText = !ShowLinkedText;
+				CashedLink = 'https://';
 				break;
 			}
+			case 'ImageLink': {
+				markdown =
+					value.slice(0, selectionStart) +
+					'![' +
+					selection +
+					']' +
+					`(${CashedLink})` +
+					value.slice(selectionEnd);
+				await tick();
+				tArea.focus();
+				tArea.selectionStart = selectionStart + 2;
+				tArea.selectionEnd = selectionEnd + 2;
+				ShowLinkedImage = !ShowLinkedImage;
+				CashedLinkImage = 'https://';
+				break;
+			}
+
 			// 				<div align="left">raka</div>
 			// <div align="center">raka</div>
 			// <div align="right">raka</div>
@@ -560,24 +638,31 @@
 			<!-- ORDERED LIST -->
 			<button
 				on:click={(e) => HandleSelectedStr(e, 'OrderedList')}
-				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
+				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500 "
 			>
 				<OrderedListIcon />
 			</button>
 			<!-- UNORDERED LIST -->
 			<button
+				on:click={(e) => HandleSelectedStr(e, 'UnorderedList')}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
 				<UnorderedList />
 			</button>
 			<!-- UNDO -->
 			<button
+				on:click={(e) => {
+					HandleSelectedStr(e, 'Undo');
+				}}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
 				<UndoIcon />
 			</button>
 			<!-- REDO -->
 			<button
+				on:click={(e) => {
+					HandleSelectedStr(e, 'Redo');
+				}}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
 				<RedoIcon />
@@ -586,6 +671,9 @@
 			<button
 				on:click={(e) => {
 					ShowLinkedText = !ShowLinkedText;
+					if (ShowLinkedText) {
+						ShowLinkedImage = false;
+					}
 				}}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
@@ -593,7 +681,13 @@
 			</button>
 			<!-- image -->
 			<button
-				on:click={(e) => HandleSelectedStr(e, 'image')}
+				on:click={(e) => {
+					HandleSelectedStr(e, 'image');
+					ShowLinkedImage = !ShowLinkedImage;
+					if (ShowLinkedImage) {
+						ShowLinkedText = false;
+					}
+				}}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
 				<ImageIcon />
@@ -613,7 +707,9 @@
 			</button> -->
 			<!-- Table -->
 			<button
-				on:click={(e) => HandleSelectedStr(e, 'Table')}
+				on:click={() => {
+					OnclickTable();
+				}}
 				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
 			>
 				<TableIcon />
@@ -693,12 +789,80 @@
 						>Add Link</button
 					>
 					<button
-						on:click={() => (ShowLinkedText = false)}
+						on:click={() => {
+							ShowLinkedText = false;
+							CashedLink = 'https://';
+						}}
 						class=" text-base text-red-500 hover:text-red-400 active:text-red-700">Cancel</button
 					>
 				</div>
 			</div>
+		{:else if ShowLinkedImage}
+			<div class="mt-2 flex flex-row items-center gap-5 ">
+				<img
+					src={CashedLinkImage}
+					alt=""
+					class=" aspect-square active:ring-offset-base-50 m-5 h-32  w-32  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+				/>
+				<input
+					on:change={handleFileChange}
+					type="file"
+					accept=".jpg, .jpeg, .png, .svg .webp"
+					class=" to-gay-700 founded-full h-20
+				w-96 cursor-pointer rounded-2xl  
+				bg-gradient-to-br from-gray-600 text-white/80 
+				shadow-xl shadow-gray-700/60 file:m-5  
+				 file:cursor-pointer file:rounded-full file:border-none file:bg-gradient-to-b file:from-blue-500 file:to-blue-600 file:px-6 
+				 file:py-3   
+				 file:text-white file:shadow-lg file:shadow-blue-600/50
+			"
+				/>
+				<button
+					on:click={(e) => {
+						HandleSelectedStr(e, 'ImageLink');
+					}}
+					class="rounded-md border-2 border-sky-600 bg-sky-500 px-2 font-semibold text-gray-200 hover:bg-blue-500  "
+					>Add Link</button
+				>
+				<button
+					on:click={() => {
+						ShowLinkedImage = false;
+						CashedLinkImage = 'https://';
+					}}
+					class=" text-base text-red-500 hover:text-red-400 active:text-red-700">Cancel</button
+				>
+			</div>
+		{:else if ShowTableInfo}
+			<div class=" flex flex-wrap  justify-between text-[#e7e9eb] flex-col  mx-4">
+				<p class=" ">
+					<b
+						>Create tables using the <a href="https://github.github.com/gfm/#tables-extension-"
+						 class=" text-blue-600 underline"	>GitHub-flavored markdown format</a
+						></b
+					>
+				</p>
+				<pre class=" my-2 flex-wrap bg-transparent p-4">| A header | Another header |
+| -------- | -------------- |
+| First    | row            |
+| Second   | row            |</pre>
+
+				<p class="">
+					A header row is required and must be followed by a separator row with the same number of
+					cells. Cells are separated by a pipe (<code>|</code>) symbol.
+				</p>
+
+				<p class="">
+					<b
+						>Set the alignment of a table column by placing a <code>:</code> on the left, right, or both
+						sides of a separator in the separator line</b
+					>
+				</p>
+				<pre class=" flex-wrap bg-transparent p-4">| left | center | right |
+|:---- |:------:| -----:|
+| One  | Two    | Three |</pre>
+			</div>
 		{/if}
+
 		<textarea
 			bind:value={markdown}
 			bind:this={tArea}

@@ -30,6 +30,7 @@
 
 // fetch user data using user id
 
+// import { UserData } from './store';
 import type {
 	UserDataType,
 	NotificationDataType,
@@ -37,10 +38,13 @@ import type {
 	GroupListType,
 	FavouriteHashListType
 } from './types';
+
 async function fetchUserData(UUID: string): Promise<UserDataType> {
 	const response = await fetch(`/api/user/${UUID}`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch user data for user ${UUID}.`);
+		console.log(`Failed to fetch user data for user ${UUID}.`);
+
+		return {} as UserDataType;
 	}
 	const userData: UserDataType = await response.json();
 	return userData;
@@ -49,7 +53,8 @@ async function fetchUserData(UUID: string): Promise<UserDataType> {
 async function fetchNotificationData(UUID: string): Promise<NotificationDataType[]> {
 	const response = await fetch(`/api/user/${UUID}/notifications`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/user/${UUID}/notifications.`);
+		console.log(`Failed to fetch /api/user/${UUID}/notifications`);
+		return  [] as NotificationDataType[];
 	}
 	const notificationData: NotificationDataType[] = await response.json();
 	return notificationData;
@@ -58,7 +63,8 @@ async function fetchNotificationData(UUID: string): Promise<NotificationDataType
 async function fetchBlogList(UUID: string): Promise<BlogListType[]> {
 	const response = await fetch(`/api/user/${UUID}/bloglist`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/user/${UUID}/bloglist`);
+		console.log(`Failed to fetch /api/user/${UUID}/bloglist`);
+		return [] as BlogListType[];
 	}
 	const BlogListData: BlogListType[] = await response.json();
 	return BlogListData;
@@ -66,7 +72,8 @@ async function fetchBlogList(UUID: string): Promise<BlogListType[]> {
 async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 	const response = await fetch(`/api/user/${UUID}/grouplist`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/user/${UUID}/grouplist`);
+		console.log(`Failed to fetch /api/user/${UUID}/grouplist`);
+		return [] as GroupListType[];
 	}
 	const GroupListData: GroupListType[] = await response.json();
 	return GroupListData;
@@ -74,7 +81,8 @@ async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListType[]> {
 	const response = await fetch(`/api/user/${UUID}/favouritehashlist`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/user/${UUID}/favouritehashlist`);
+		console.log(`Failed to fetch /api/user/${UUID}/favouritehashlist`);
+		return [] as FavouriteHashListType[];
 	}
 	const FavouriteHashListData: FavouriteHashListType[] = await response.json();
 	return FavouriteHashListData;
@@ -83,7 +91,8 @@ async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListTy
 async function fetchBlogData(BlogID: string): Promise<FavouriteHashListType[]> {
 	const response = await fetch(`/api/blog/${BlogID}`);
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/blog/${BlogID}`);
+		console.log(`Failed to fetch /api/blog/${BlogID}`);
+		return [] as FavouriteHashListType[];
 	}
 	const BlogData: FavouriteHashListType[] = await response.json();
 	return BlogData;
@@ -97,7 +106,8 @@ async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<User
 		}
 	  });
 	if (!response.ok) {
-		throw new Error(`Failed to fetch /api/updateuser UpdatedUserData`);
+		console.log(`Failed to fetch /api/updateuser UpdatedUserData`);
+		return {} as UserDataType;
 	}
 	const UpdatedData:UserDataType = await response.json();
 	return UpdatedData;

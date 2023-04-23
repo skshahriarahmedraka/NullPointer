@@ -56,9 +56,9 @@ import { goto } from "$app/navigation";
 					Email: '',
 					Password: ''
 				};
-				let s:string="/"+String(value.ID)
-                 
-				goto(s);
+				// let s:string="/"+String(value.ID)
+				goto("/");
+				// goto();
 			}else{
 				console.log("🚀 ~ file: index.svelte ~ line 57 ~ OnSubmit ~ err : ")
 				ErrorMsg.Email[1] = 'invalid/wrong email or password';

@@ -61,7 +61,7 @@
 			})
 				.then((response) => response.json())
 				.then((value) => {
-					// console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value : ", value)
+					console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value : ", value)
 					// console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value.ID : ", value.ID)
 					ErrorMsg.UserName[1] = 'Success';
 					ErrorMsg.UserName[0] = true;
@@ -70,10 +70,10 @@
 						Email: '',
 						Password: ''
 					};
-					let s:string="/"+String(value.ID)
+		
                     // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s : ", s)
                     // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s typeof : ", typeof(s))
-					goto(s);
+					goto("/");
 				});
 		}
 	}

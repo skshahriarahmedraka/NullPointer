@@ -34,7 +34,7 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	var dbUser model.UserData
-	err = H.MongoUserCol.FindOne(ctx, bson.D{{"Email", loginData.Email}}).Decode(&dbUser)
+	err = H.MongoUserCol.FindOne(ctx, bson.D{{Key: "Email", Value: loginData.Email}}).Decode(&dbUser)
 
 	
 	// Check if the user exists
@@ -53,23 +53,7 @@ func (H *DatabaseCollections) Login(c *fiber.Ctx) error {
 				"message": "Invalid credentials",
 			})
 		} else {
-			// expirationTime := time.Now().Add(1000 * time.Hour)
-			// claims := model.JwtAuth1{
-			// 	Email:        dbUser.Email,
-			// 	Name:         dbUser.UserName,
-			// 	UserID:       dbUser.UserID,
-			// 	AccountType:  dbUser.AccountType,
-			// 	StandardClaims: jwt.StandardClaims{
-			// 		ExpiresAt: expirationTime.Unix(),
-			// 	},
-			// }
-			// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-			// tokenString, err := token.SignedString([]byte("COOKIE_SECRET_JWT_AUTH1"))
-			// if err != nil {
-			// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			// 		"message": "Error while creating token",
-			// 	})
-			// }
+		
 			tokenString := utils.GenerateHttpOnlyJWT(dbUser)
 			if tokenString == "" {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

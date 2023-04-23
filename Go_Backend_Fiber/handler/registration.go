@@ -35,7 +35,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	var dbUser model.UserData
-	err = H.MongoUserCol.FindOne(ctx, bson.D{{"Email", RegData.Email}}).Decode(&dbUser)
+	err = H.MongoUserCol.FindOne(ctx, bson.D{{Key: "Email", Value: RegData.Email}}).Decode(&dbUser)
 	if err == nil {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"message": "User Already Exists",
@@ -54,7 +54,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 			Silver     int `json:"Silver" bson:"Silver" validate:"omitempty,numeric"`
 			Bronze     int `json:"Bronze" 		bson:"Bronze" validate:"omitempty,numeric"`
 		}{
-			Reputation: 0,
+			Reputation: 1,
 			Gold:       0,
 			Silver:     0,
 			Bronze:     0,
@@ -101,7 +101,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		// 		"message": "Error while creating token",
 		// 	})
 		// }
-		tokenString := utils.GenerateHttpOnlyJWT(dbUser)
+		tokenString := utils.GenerateHttpOnlyJWT(RegData)
 		if tokenString == "" {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Error while creating token",
@@ -119,7 +119,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 			SameSite: "lax",
 		})
 
-		tokenString2 := utils.GenerateHttpCookie(dbUser)
+		tokenString2 := utils.GenerateHttpCookie(RegData)
 		if tokenString2 == "" {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Error while creating token2",
@@ -135,9 +135,10 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 
 			SameSite: "lax",
 		})
+		RegData.Password=""
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"message": "Register successful",
-			"User":    dbUser,
+			"User":    RegData,
 		})
 
 	}

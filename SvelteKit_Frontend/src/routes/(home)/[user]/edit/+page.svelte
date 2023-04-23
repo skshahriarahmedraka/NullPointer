@@ -4,6 +4,7 @@
 	import Wyswyg from '$lib/WriteQues/wyswyg.svelte';
 	import { UserData } from '$lib/store/store';
 	import type { UserDataType } from '$lib/store/types';
+	import { fetchUpdateUserData, fetchUserData } from '$lib/store/fetch';
 
 	// export let $UserData:any
 	let NewUserData: UserDataType = {
@@ -43,7 +44,9 @@
 		Twitter : [false, 'Twitter is not Valid'],
 		Linkedin : [false, 'Linkedin is not Valid'],
 	};
-	let file: File | null = null;
+	let 
+	: 
+	 | null = null;
 	// let FileInput: HTMLInputElement;
 
 	const handleFileChange = (event: Event) => {
@@ -60,7 +63,7 @@
 		try {
 			const response = await fetch('/api/uploadimage', {
 				method: 'POST',
-				body: formData
+				body: 	formData
 			});
 			ResObj = await response.json();
 			NewUserData.UserImage = ResObj.ImageUrl
@@ -73,33 +76,81 @@
 		
 	};
 
+// 	import axios from 'axios';
 
-// 	const input = document.getElementById('location-input') as HTMLInputElement;
-// const resultsContainer = document.getElementById('location-results') as HTMLElement;
-// const resultsList = document.getElementById('location-list') as HTMLElement;
+// // Function to split the file into chunks
+// function chunkFile(file: File, chunkSize: number): Blob[] {
+//   const chunks: Blob[] = [];
+//   let offset = 0;
+//   while (offset < file.size) {
+//     const chunk = file.slice(offset, offset + chunkSize);
+//     chunks.push(chunk);
+//     offset += chunk.size;
+//   }
+//   return chunks;
+// }
 
-// input.addEventListener('input', async () => {
-//   const query = input.value;
-//   const results = await fetch(`/api/search/locations?q=${query}`).then(res => res.json());
+// // Function to upload the file chunks
+// async function uploadChunks(chunks: Blob[], url: string) {
+//   for (let i = 0; i < chunks.length; i++) {
+//     const chunk = chunks[i];
+//     const formData = new FormData();
+//     formData.append('chunk', chunk);
+//     formData.append('index', i.toString());
+//     formData.append('total', chunks.length.toString());
+//     await axios.post(url, formData);
+//   }
+// }
 
-//   // Clear existing results
-//   resultsList.innerHTML = '';
+// // Function to handle the file input change event
+// async function handleFileChange(event: Event) {
+//   const input = event.target as HTMLInputElement;
+//   const file = input.files && input.files[0];
+//   if (file) {
+//     const chunks = chunkFile(file, 1024 * 1024); // Split the file into 1MB chunks
+//     const url = '/api/uploadimage'; // Replace with your server-side endpoint URL
+//     await uploadChunks(chunks, url); // Upload the file chunks
+//   }
+// }
 
-//   // Generate new results
-//   results.forEach(result => {
-//     const li = document.createElement('li');
-//     li.classList.add('px-3', 'py-1', 'cursor-pointer', 'hover:bg-gray-100');
-//     li.textContent = result.name;
-//     li.addEventListener('click', () => {
-//       input.value = result.name;
-//       resultsContainer.classList.add('hidden');
-//     });
-//     resultsList.appendChild(li);
-//   });
+async function UpdateUserData(){
+	fetchUpdateUserData(NewUserData)
 
-//   // Show results container
-//   resultsContainer.classList.remove('hidden');
-// });
+	if (NewUserData.ID != null) {
+			const GetUserData = await fetchUserData(NewUserData.ID);
+			console.log("🚀 ~ file: +page.svelte:119 ~ UpdateUserData ~ GetUserData:", GetUserData)
+			UserData.update(() => GetUserData);
+		}
+}
+
+function DiscartChanges(){
+	 NewUserData = {
+		ID: $UserData.ID,
+		UserID: $UserData.UserID,
+		UserName: $UserData['UserName'],
+		Email: $UserData.Email,
+		Password: '',
+		UserTitle: $UserData['UserTitle'],	
+		UserImage: $UserData['UserImage'],
+		Badges: $UserData.Badges,
+		Follower: $UserData['Follower'],
+		Following: $UserData['Following'],
+		Location: $UserData['Location'],
+		MembershipTime: $UserData['MembershipTime'],
+		LastSeen: $UserData['LastSeen'],
+		Aboutme: $UserData['Aboutme'],
+		Mysite: $UserData['Mysite'],
+		TopTags: $UserData['TopTags'],
+		SelectedPanel: 'Profile',
+		AccountType: $UserData.AccountType,
+		Github: $UserData['Github'],
+		Twitter: $UserData['Twitter'],
+		Linkedin: $UserData['Linkedin'],
+	};
+}
+
+
+
 
 </script>
 
@@ -416,11 +467,13 @@
 	
 	<div class=" flex flex-row  justify-center gap-5">
 		<button
+			on:click={UpdateUserData}
 			class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
 		>
 			<p class="my-auto text-xl font-semibold text-gray-200">Save Info</p>
 		</button>
 		<button
+			on:click={DiscartChanges}
 			class=" m-5 flex h-12 w-fit items-center justify-center  rounded-md border-2 border-red-600 bg-inherit px-3 text-red-600 hover:bg-red-500 hover:text-gray-200 active:bg-red-600 "
 		>
 			<p class="my-auto text-xl font-semibold  ">Discart</p>

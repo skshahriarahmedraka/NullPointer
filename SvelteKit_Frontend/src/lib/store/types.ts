@@ -99,3 +99,10 @@ export type HotQuesListType = {
 	QuesTitle: string;
 	ImageUrl: string;
 };
+
+
+export type RegistrationType = {
+    UserName: string;
+    Email: string;
+    Password: string;
+}

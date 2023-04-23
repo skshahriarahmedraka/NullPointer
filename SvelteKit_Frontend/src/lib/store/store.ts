@@ -180,6 +180,7 @@ const SampleUserData :UserDataType =  {
     SelectedPanel: 'Profile',
     AccountType: 'regular'
 }
+SampleUserData
 const UserData = writable({} as UserDataType)
 // UserData.update(()=>SampleUserData)
   

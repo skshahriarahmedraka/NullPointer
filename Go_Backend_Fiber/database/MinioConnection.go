@@ -2,6 +2,7 @@ package database
 
 import (
 	"app/logs"
+	"fmt"
 	"os"
 
 	"github.com/minio/minio-go/v7"
@@ -21,6 +22,9 @@ func  MinioInit() *minio.Client {
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
 		Secure: useSSL,
 	})
-	logs.Error("🚀 ~ file: MinioConnection.go ~ line 15 ~ funcMinioInit ~ err : ", err)
+	if err != nil {
+		logs.Error("🚀 ~ file: MinioConnection.go ~ line 15 ~ funcMinioInit ~ err : ", err)
+	}
+    fmt.Println("😁🤩 Minio Connected successfullly : ", minioClient)
 	return minioClient
 }

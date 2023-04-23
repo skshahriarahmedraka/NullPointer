@@ -29,7 +29,7 @@ func (H *DatabaseCollections) UpdateUserData(c *fiber.Ctx) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	count, err := H.MongoUserCol.CountDocuments(ctx, bson.M{"UserID": reqUserData.UserID})
+	count, err := H.MongoUserCol.CountDocuments(ctx, bson.M{"Email": reqUserData.Email})
 	logs.Error("Error while counting user data", err)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -39,21 +39,21 @@ func (H *DatabaseCollections) UpdateUserData(c *fiber.Ctx) error {
 
 	if count > 0 {
 		opts := options.Update().SetUpsert(true)
-		filter := bson.D{{"UserID", reqUserData.UserID}}
+		filter := bson.D{{Key: "Email", Value: reqUserData.Email}}
 		
 		update := bson.D{
-			{"$set", bson.D{{"UserID", reqUserData.UserID}}},
-			{"$set", bson.D{{"UserName", reqUserData.UserName}}},
-			{"$set", bson.D{{"Email", reqUserData.Email}}},
-			{"$set", bson.D{{"Password", reqUserData.Password}}},
-			{"$set", bson.D{{"UserTitle", reqUserData.UserTitle}}},
-			{"$set", bson.D{{"UserImage", reqUserData.UserImage}}},
-			{"$set", bson.D{{"Location", reqUserData.Location}}},
-			{"$set", bson.D{{"Aboutme", reqUserData.Aboutme}}},
-			{"$set", bson.D{{"Mysite", reqUserData.Mysite}}},
-			{"$set", bson.D{{"Github", reqUserData.Github}}},
-			{"$set", bson.D{{"Twitter", reqUserData.Twitter}}},
-			{"$set", bson.D{{"Linkedin", reqUserData.Linkedin}}},
+			{Key: "$set", Value: bson.D{{Key: "UserID", Value: reqUserData.UserID}}},
+			{Key: "$set", Value: bson.D{{Key: "UserName", Value: reqUserData.UserName}}},
+			{Key: "$set", Value: bson.D{{Key: "Email", Value: reqUserData.Email}}},
+			{Key: "$set", Value: bson.D{{Key: "Password", Value: reqUserData.Password}}},
+			{Key: "$set", Value: bson.D{{Key: "UserTitle", Value: reqUserData.UserTitle}}},
+			{Key: "$set", Value: bson.D{{Key: "UserImage", Value: reqUserData.UserImage}}},
+			{Key: "$set", Value: bson.D{{Key: "Location", Value: reqUserData.Location}}},
+			{Key: "$set", Value: bson.D{{Key: "Aboutme", Value: reqUserData.Aboutme}}},
+			{Key: "$set", Value: bson.D{{Key: "Mysite", Value: reqUserData.Mysite}}},
+			{Key: "$set", Value: bson.D{{Key: "Github", Value: reqUserData.Github}}},
+			{Key: "$set", Value: bson.D{{Key: "Twitter", Value: reqUserData.Twitter}}},
+			{Key: "$set", Value: bson.D{{Key: "Linkedin", Value: reqUserData.Linkedin}}},
 			
 		}
 		res, err := H.MongoUserCol.UpdateOne(ctx, filter, update, opts)

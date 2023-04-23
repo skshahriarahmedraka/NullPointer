@@ -342,7 +342,7 @@
 		<!-- User Profile data -->
 		{#if $UserData.UserID != null}
 			<div
-				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 ?"
+				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
 				on:click={() => {
 					goto(`/${$UserData.ID}`);
 				}}
@@ -356,9 +356,15 @@
 				/>
 				<!-- user Credit -->
 				<div class="max-w-36   flex h-fit  min-w-min flex-row items-center justify-center">
+					{#if $UserData['Badges']['Reputation'] != 0}
 					<p class="mx-1 font-semibold text-white">
 						{ShortenNumber($UserData['Badges']['Reputation'])}
 					</p>
+					{:else}
+					<p class="mx-1 font-semibold text-white">
+						{"0 Reputation"}
+					</p>
+					{/if}
 
 					{#if $UserData['Badges']['Gold'] != 0}
 						<GoldDot />
