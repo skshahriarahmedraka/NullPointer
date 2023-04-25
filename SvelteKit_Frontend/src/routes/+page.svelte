@@ -16,6 +16,8 @@
 
 	export let data : PageData
 	console.log("🚀 ~ file: +page.svelte:18 ~ data:", data)
+	const {InfoCookieData} = data
+	console.log("🚀 ~ file: +page.svelte:19 ~ InfoCookieData:", InfoCookieData)
 	
 	// let GetUserData:UserDataType = data.GetUserData
 	// UserData.update((data) => {

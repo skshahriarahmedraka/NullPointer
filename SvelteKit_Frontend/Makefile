@@ -1,9 +1,11 @@
 dev :
 	npm run dev
 build:
-	npm run build
+	pnpm run build
 preview:
-	npm run preview
+	pnpm run preview
+preview2:
+	pnpm run build && pnpm run preview
 test:
 	npm run test
 
