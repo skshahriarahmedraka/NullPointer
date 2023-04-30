@@ -32,11 +32,9 @@ import '../app.postcss';
 
 <!-- <div class=" h-screen w-screen overflow-hidden "> -->
 
-	{#if $isLoading}
-  <LoadingSVG/>
-  {:else}
+
   <slot></slot>
-{/if}
+
 
 
 <!-- show page content -->

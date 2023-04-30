@@ -76,6 +76,7 @@ func (H *DatabaseCollections)UserData(c *fiber.Ctx) error  {
 		}
 		dbUserData.Password = ""
 		
+        fmt.Println("🚀 ~ file: Userdata.go ~  : ", dbUserData)
 		return c.Status(fiber.StatusOK).JSON(dbUserData)
 	}else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

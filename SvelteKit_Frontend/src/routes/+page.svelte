@@ -11,6 +11,10 @@
 	import Footer from '$lib/Footer/footer.svelte';
 	import PageNum from '$lib/PageNum/pageNum.svelte';
 	import type { PageData } from './$types';
+	// import { page } from '$app/stores';
+	// import { UserData } from '$lib/store/store';
+	// import { fetchUserData } from '$lib/store/fetch';
+	// import type { UserDataType } from '$lib/store/types';
 
 	
 
@@ -19,11 +23,7 @@
 	const {InfoCookieData} = data
 	console.log("🚀 ~ file: +page.svelte:19 ~ InfoCookieData:", InfoCookieData)
 	
-	// let GetUserData:UserDataType = data.GetUserData
-	// UserData.update((data) => {
-	// 	data = GetUserData;
-	// 	return data;
-	// });
+	
 
 	let loadingState: boolean = false;
 	afterUpdate(() => {

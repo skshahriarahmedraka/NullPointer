@@ -36,7 +36,8 @@ import type {
 	NotificationDataType,
 	BlogListType,
 	GroupListType,
-	FavouriteHashListType
+	FavouriteHashListType,
+	QuestionDataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -47,7 +48,22 @@ async function fetchUserData(UUID: string): Promise<UserDataType> {
 		return {} as UserDataType;
 	}
 	const userData: UserDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:50 ~ fetchUserData ~ userData:", userData)
 	return userData;
+	// const response = await fetch(`/api/user/${UUID}`);
+	// if (!response.ok) {
+	// 	console.log(`Failed to fetch user data for user ${UUID}.`);
+
+	// 	return {} as UserDataType;
+	// }
+	// const userData: UserDataType = await response.json();
+	// console.log("🚀 ~ file: fetch.ts:50 ~ fetchUserData ~ userData:", userData)
+	// return new Promise<UserDataType>((resolve) => {
+	// 	setTimeout(() => {
+			
+	// 	  resolve(userData);
+	// 	}, 2000);
+	//   });
 }
 
 async function fetchNotificationData(UUID: string): Promise<NotificationDataType[]> {
@@ -57,6 +73,7 @@ async function fetchNotificationData(UUID: string): Promise<NotificationDataType
 		return  [] as NotificationDataType[];
 	}
 	const notificationData: NotificationDataType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:61 ~ fetchNotificationData ~ notificationData:", notificationData)
 	return notificationData;
 }
 
@@ -67,6 +84,7 @@ async function fetchBlogList(UUID: string): Promise<BlogListType[]> {
 		return [] as BlogListType[];
 	}
 	const BlogListData: BlogListType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:72 ~ fetchBlogList ~ BlogListData:", BlogListData)
 	return BlogListData;
 }
 async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
@@ -76,6 +94,7 @@ async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 		return [] as GroupListType[];
 	}
 	const GroupListData: GroupListType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:82 ~ fetchGroupList ~ GroupListData:", GroupListData)
 	return GroupListData;
 }
 async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListType[]> {
@@ -85,6 +104,7 @@ async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListTy
 		return [] as FavouriteHashListType[];
 	}
 	const FavouriteHashListData: FavouriteHashListType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:92 ~ fetchFavouriteHashList ~ FavouriteHashListData:", FavouriteHashListData)
 	return FavouriteHashListData;
 }
 
@@ -95,6 +115,7 @@ async function fetchBlogData(BlogID: string): Promise<FavouriteHashListType[]> {
 		return [] as FavouriteHashListType[];
 	}
 	const BlogData: FavouriteHashListType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:", BlogData)
 	return BlogData;
 }
 async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<UserDataType> {
@@ -110,7 +131,25 @@ async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<User
 		return {} as UserDataType;
 	}
 	const UpdatedData:UserDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:119 ~ fetchUpdateUserData ~ UpdatedData:", UpdatedData)
 	return UpdatedData;
+}
+
+async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<QuestionDataType> {
+	const response = await fetch(`/api/q/askquestion`,{
+		method: 'POST',
+		body: JSON.stringify(QuestionData),
+		headers:{
+		  'Content-Type': 'application/json'
+		}
+	  });
+	if (!response.ok) {
+		console.log(`Failed to fetch /api/q/askquestion QuestionData`);
+		return {} as QuestionDataType;
+	}
+	const QuestionDataResponse:QuestionDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:119 ~ fetchAskQuestion ~ QuestionDataResponse:", QuestionDataResponse)
+	return QuestionDataResponse;
 }
 
 export {
@@ -120,5 +159,6 @@ export {
 	fetchGroupList,
 	fetchFavouriteHashList,
 	fetchBlogData,
-	fetchUpdateUserData
+	fetchUpdateUserData,
+	fetchAskQuestion
 };

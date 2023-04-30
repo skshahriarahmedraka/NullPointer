@@ -26,7 +26,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	
 	
 	r.Post("/uploadimage",H.UploadImage)
-	r.Post("/q/ask",H.QuesAsk)
+	r.Post("/q/askquestion",H.QuesAsk)
 
 
 	r.Get("/api/search/locations",H.SearchLocation)

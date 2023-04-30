@@ -64,6 +64,8 @@ func (H *DatabaseCollections) UpdateUserData(c *fiber.Ctx) error {
 			})
 
 		} else {
+			// res.Password = ""
+			fmt.Println("🚀 ~ file: UserdataUpdate.go  : ", reqUserData)
 			fmt.Println("response ", res)
 			return c.Status(fiber.StatusOK).JSON(res)
 			

@@ -1,4 +1,6 @@
 <script lang="ts">
+	
+	import { UserData } from '$lib/store/store';
 	import { marked } from 'marked';
 	import { fade, fly } from 'svelte/transition';
 	import { tick } from 'svelte';
@@ -20,6 +22,9 @@
 	import AlignLeft from '$lib/icons/writtingIcon/AlignLeft.svelte';
 	import AlignRight from '$lib/icons/writtingIcon/AlignRight.svelte';
 	import AlignCenter from '$lib/icons/writtingIcon/AlignCenter.svelte';
+	import type { QuestionDataType } from '$lib/store/types';
+	import { fetchAskQuestion } from '$lib/store/fetch';
+	import { goto } from '$app/navigation';
 
 	// export let HotQues: any;
 	let ShowLinkedText: boolean = false;
@@ -550,6 +555,162 @@
 			}
 		}
 	}
+
+	let QuestionData: QuestionDataType = {
+		ID: '',
+		QuesTitle: QuestionTitle,
+		QuesViewed: 0,
+		QuesUpvote: 0,
+		QuesDownvote: 0,
+		QuesBookmark: 0,
+		QuesTags: TagObj.List,
+		QuesGroup : GroupsObj.List,
+		QuesAnsAccepted: "",
+
+		QuesAskedBy: $UserData.ID,
+		QuesAskedTime: new Date().toISOString(),
+
+		QuesEditedBy: '',
+		QuesEditedTime: '',
+
+		QuesDescription: markdown ,
+		QuesComment: [] as string[],
+		Answers: [] as {
+			ID: string;
+			Vote: number;
+			Comment: string[];
+		}[]
+	};
+	let ErrorMsg = {
+		QuesTitle: [false, 'QuesTitle is not Valid'],
+		QuesTags: [false, 'QuesTags are empty'],
+		QuesDescription: [false, 'QuesDescription is too short']
+	};
+	function ValidQuesTitle(s:string): boolean{
+		if (s.length < 5) {
+			return false;
+		} else {
+			return true
+		}
+	}
+	function ValidQuesDescription(s:string): boolean{
+		if (s.length < 15) {
+			return false;
+		} else {
+			return true
+		}
+	}
+	async function OnSubmitQuestion() {
+		QuestionData = {
+		ID: '',
+		QuesTitle: QuestionTitle,
+		QuesViewed: 0,
+		QuesUpvote: 0,
+		QuesDownvote: 0,
+		QuesBookmark: 0,
+		QuesTags: TagObj.List,
+		QuesGroup : GroupsObj.List,
+		QuesAnsAccepted: "",
+
+		QuesAskedBy: $UserData.ID,
+		QuesAskedTime: new Date().toISOString(),
+
+		QuesEditedBy: '',
+		QuesEditedTime: '',
+
+		QuesDescription: markdown ,
+		QuesComment: [] as string[],
+		Answers: [] as {
+			ID: string;
+			Vote: number;
+			Comment: string[];
+		}[]
+	}
+		if (QuestionData.QuesTitle.trim() === '') {
+			ErrorMsg.QuesTitle[1] = 'Title is empty';
+			ErrorMsg.QuesTitle[0] = true;
+		} else if (!ValidQuesTitle(QuestionData.QuesTitle)) {
+			ErrorMsg.QuesTitle[1] = 'Title is too small';
+			ErrorMsg.QuesTitle[0] = true;
+		} else {
+			ErrorMsg.QuesTitle[0] = false;
+		}
+		if (QuestionData.QuesTags.length <1) {
+			ErrorMsg.QuesTags[1] = 'Tags are atleast 1';
+			ErrorMsg.QuesTags[0] = true;
+		}else {
+			ErrorMsg.QuesTags[0] = false;
+		}
+		
+		 if (!ValidQuesDescription(QuestionData.QuesDescription)) {
+			ErrorMsg.QuesDescription[1] = 'Description is too short ';
+			ErrorMsg.QuesDescription[0] = true;
+		} else {
+			ErrorMsg.QuesDescription[0] = false;
+		}
+		
+		if (!ErrorMsg.QuesTitle[0] && !ErrorMsg.QuesTags[0] && !ErrorMsg.QuesDescription[0]) {
+			console.log("🚀 ~ file: index.svelte:648 ~ OnSubmitQuestion ~ /api/register:")
+
+			const SubmittedQuesData: QuestionDataType = await fetchAskQuestion(QuestionData)
+			console.log("🚀 ~ file: index.svelte:648 ~ OnSubmitQuestion ~ SubmittedQuesData:", SubmittedQuesData)
+			goto('/q/'+SubmittedQuesData.ID)
+			// await fetch('/api/register', {
+			// 	// credentials: 'same-origin',
+			// 	method: 'POST',
+			// 	// mode: 'cors',
+			// 	body: JSON.stringify(RegisterData)
+			// })
+			// 	.then((response) => response.json())
+			// 	.then((value) => {
+			// 		console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value : ", value)
+			// 		// console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value.ID : ", value.ID)
+			// 		ErrorMsg.UserName[1] = 'Success';
+			// 		ErrorMsg.UserName[0] = true;
+			// 		RegisterData = {
+			// 			UserName: '',
+			// 			Email: '',
+			// 			Password: ''
+			// 		};
+		
+            //         // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s : ", s)
+            //         // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s typeof : ", typeof(s))
+			// 		goto("/");
+			// 	});
+		}
+	}
+	async function OnResetQuestion(){
+
+		QuestionData = {
+		ID: '',
+		QuesTitle: "",
+		QuesViewed: 0,
+		QuesUpvote: 0,
+		QuesDownvote: 0,
+		QuesBookmark: 0,
+		QuesTags: [] as string[],
+		QuesGroup : [] as string[],
+		QuesAnsAccepted: "",
+	
+		QuesAskedBy: "",
+		QuesAskedTime: "",
+	
+		QuesEditedBy: '',
+		QuesEditedTime: '',
+	
+		QuesDescription: "" ,
+		QuesComment: [] as string[],
+		Answers: [] as {
+			ID: string;
+			Vote: number;
+			Comment: string[];
+		}[]
+	};
+	}
+	async function OnCancelQuestion() {
+		OnResetQuestion()
+		goto('/');
+	}
 </script>
 
 <!-- <h1>Markdown Editor</h1> -->
@@ -833,11 +994,12 @@
 				>
 			</div>
 		{:else if ShowTableInfo}
-			<div class=" flex flex-wrap  justify-between text-[#e7e9eb] flex-col  mx-4">
+			<div class=" mx-4 flex  flex-col flex-wrap justify-between  text-[#e7e9eb]">
 				<p class=" ">
 					<b
-						>Create tables using the <a href="https://github.github.com/gfm/#tables-extension-"
-						 class=" text-blue-600 underline"	>GitHub-flavored markdown format</a
+						>Create tables using the <a
+							href="https://github.github.com/gfm/#tables-extension-"
+							class=" text-blue-600 underline">GitHub-flavored markdown format</a
 						></b
 					>
 				</p>
@@ -960,11 +1122,19 @@
 		</div>
 		<div class=" flex flex-row  justify-center gap-5">
 			<button
+			on:click={() => {OnSubmitQuestion()}}
 				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
 			>
-				<p class="my-auto text-xl font-semibold text-gray-200">Save Info</p>
+				<p class="my-auto text-xl font-semibold text-gray-200">Ask Question</p>
 			</button>
 			<button
+			on:click={() => {OnResetQuestion()}}
+				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
+			>
+				<p class="my-auto text-xl font-semibold text-gray-200">Reset</p>
+			</button>
+			<button
+				on:click={() => {OnCancelQuestion()}}
 				class=" m-5 flex h-12 w-fit items-center justify-center  rounded-md border-2 border-red-600 bg-inherit px-3 text-red-600 hover:bg-red-500 hover:text-gray-200 active:bg-red-600 "
 			>
 				<p class="my-auto text-xl font-semibold  ">Discart</p>

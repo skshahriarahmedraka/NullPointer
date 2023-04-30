@@ -48,6 +48,7 @@ export type QuestionDataType = {
 	QuesDownvote: number;
 	QuesBookmark: number;
 	QuesTags: string[];
+	QuesGroup : string[];
 	QuesAnsAccepted: string;
 
 	QuesAskedBy: string;
