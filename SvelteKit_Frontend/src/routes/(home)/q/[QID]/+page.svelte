@@ -6,6 +6,10 @@
     // import Collectives from "$lib/Collectives/index.svelte"
     // import RelatedQues from "$lib/RelatedQues/index.svelte"
     import Ques from "$lib/Ques/index.svelte"
+    import Navbar from '$lib/Navbar/index.svelte';
+	import Collectives from "$lib/Collectives/index.svelte"
+	import Footer from '$lib/Footer/footer.svelte';
+
     // import Ans from "$lib/Ans/index.svelte"
     // import {UserData,QuestionData,Loading} from "$lib/store/store"
     import LoadingSVG from "$lib/Loading/index.svelte"
@@ -101,13 +105,20 @@ export let data: PageData;
 {:else}
 {/if} -->
 
-{#if true}
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+	<Navbar />
+	<div class="flex w-full flex-row justify-center   ">
+		
+		<!-- COLLECTIVE -->
+		<Collectives />
+		<!-- QUESTION LIST -->
+
+        <Ques  QuestionData={QuestionData} />
+	</div>
+	<Footer />
+</div>
 <!-- content here -->
-<Ques  QuestionData={QuestionData} />
-{:else}
-<!-- else content here -->
-<LoadingSVG/>
-{/if}
+
 
 
 

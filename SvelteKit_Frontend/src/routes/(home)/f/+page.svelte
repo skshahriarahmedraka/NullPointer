@@ -1,27 +1,26 @@
-<script lang="ts" context="module">
-	export async function load({ params, fetch, session, stuff }) {
-		// const UserURL = params.user
-		// console.log("🚀 ~ file: index.svelte ~ line 4 ~ load ~ UserURL", UserURL)
-		// console.log("🚀 ~ file: index.svelte ~ line 4 ~ load ~ UserURL type", typeof( UserURL))
-		if (!session.user.authenticated) {
-			return {
-				status: 302,
-				redirect: '/login'
-			};
-		}
-        return {}
-	}
-</script>
+
 
 <script lang="ts">
 	// your script goes here
+	import Navbar from '$lib/Navbar/index.svelte';
+	import Footer from '$lib/Footer/footer.svelte';
+	import Collectives from "$lib/Collectives/index.svelte"
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+	<Navbar />
+	<div class="flex w-full flex-row justify-center   ">
+		
+		<!-- COLLECTIVE -->
+		<Collectives />
+		<!-- QUESTION LIST -->
 
-<h1 class=" flex flex-col text-white items-center justify-center ">Following
-</h1>
+		<h1 class=" flex flex-col text-white items-center justify-center ">Following</h1>
+	</div>
+	<Footer />
+</div>
 
 
 

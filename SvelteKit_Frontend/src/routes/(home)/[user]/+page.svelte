@@ -7,6 +7,9 @@
 	import Badges from '$lib/UserInfo/Badges.svelte';
 	import GroupList from '$lib/UserInfo/GroupList.svelte';
 	import HashList from '$lib/UserInfo/HashList.svelte';
+	import Navbar from '$lib/Navbar/index.svelte';
+	import Footer from '$lib/Footer/footer.svelte';
+	import Collectives from "$lib/Collectives/index.svelte"
 	// import { UserData } from '$lib/store/store';
 
 	// let UserData: {
@@ -83,81 +86,93 @@
 </script>
 
 <!-- settings -->
-<div class=" mt-2 flex max-h-full  min-h-screen w-[1100px] flex-col bg-[#2d2d2d]   ">
-	<!-- image & name & social media -->
-	<UserInfo />
-	<!-- Button : profile, activity, -->
-	<div class="  flex w-full flex-row items-center justify-start gap-5 pl-10 ">
-		<div
-			on:click={() => (SelectedPanel = 'Profile')}
-			on:keydown={() => {}}
-			class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Profile'
-				? 'bg-sky-500 hover:bg-blue-600'
-				: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
-		>
-			<p
-				class=" my-auto  text-base font-semibold {SelectedPanel === 'Profile'
-					? 'text-gray-200'
-					: 'text-sky-500'}"
-			>
-				Profile
-			</p>
-		</div>
-		<div
-			on:click={() => (SelectedPanel = 'Activity')}
-			on:keydown={() => {}}
-			class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Activity'
-				? 'bg-sky-500 hover:bg-blue-600'
-				: 'border-2 border-blue-600 '}   flex items-center justify-center hover:cursor-pointer "
-		>
-			<p
-				class=" my-auto  text-base font-semibold {SelectedPanel === 'Activity'
-					? 'text-gray-200'
-					: 'text-sky-500'}"
-			>
-				Activity
-			</p>
-		</div>
-		<div
-			on:click={() => (SelectedPanel = 'Settings')}
-			on:keydown={() => {}}
-			class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Settings'
-				? 'bg-sky-500 hover:bg-blue-600'
-				: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
-		>
-			<p
-				class=" my-auto  text-base font-semibold {SelectedPanel === 'Settings'
-					? 'text-gray-200'
-					: 'text-sky-500'}"
-			>
-				Settings
-			</p>
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+	<Navbar />
+	<div class="flex w-full flex-row justify-center   ">
+		
+		<!-- COLLECTIVE -->
+		<Collectives />
+		<!-- QUESTION LIST -->
+
+		<div class=" mt-2 flex max-h-full  min-h-screen w-[1100px] flex-col bg-[#2d2d2d]   ">
+			<!-- image & name & social media -->
+			<UserInfo />
+			<!-- Button : profile, activity, -->
+			<div class="  flex w-full flex-row items-center justify-start gap-5 pl-10 ">
+				<div
+					on:click={() => (SelectedPanel = 'Profile')}
+					on:keydown={() => {}}
+					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Profile'
+						? 'bg-sky-500 hover:bg-blue-600'
+						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
+				>
+					<p
+						class=" my-auto  text-base font-semibold {SelectedPanel === 'Profile'
+							? 'text-gray-200'
+							: 'text-sky-500'}"
+					>
+						Profile
+					</p>
+				</div>
+				<div
+					on:click={() => (SelectedPanel = 'Activity')}
+					on:keydown={() => {}}
+					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Activity'
+						? 'bg-sky-500 hover:bg-blue-600'
+						: 'border-2 border-blue-600 '}   flex items-center justify-center hover:cursor-pointer "
+				>
+					<p
+						class=" my-auto  text-base font-semibold {SelectedPanel === 'Activity'
+							? 'text-gray-200'
+							: 'text-sky-500'}"
+					>
+						Activity
+					</p>
+				</div>
+				<div
+					on:click={() => (SelectedPanel = 'Settings')}
+					on:keydown={() => {}}
+					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Settings'
+						? 'bg-sky-500 hover:bg-blue-600'
+						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
+				>
+					<p
+						class=" my-auto  text-base font-semibold {SelectedPanel === 'Settings'
+							? 'text-gray-200'
+							: 'text-sky-500'}"
+					>
+						Settings
+					</p>
+				</div>
+			</div>
+			<!-- details about me -->
+			{#if SelectedPanel === 'Profile'}
+				<div class="mt-5 flex h-full w-full flex-row ">
+					<div class="flex h-full w-[300px] flex-col ">
+						<Stats />
+						<!-- <TopTags /> -->
+						<GroupList />
+						<HashList/>
+					</div>
+					<!-- Stats and Tags -->
+					<!-- About -->
+					<div class="flex h-full w-9/12 flex-col  ">
+						<Abouts />
+						<Badges />
+					</div>
+				</div>
+				<!-- content here -->
+			{:else if SelectedPanel === 'Activity'}
+				<div class="">Activity</div>
+			{:else}
+				<div class="">Settings</div>
+				<!-- else content here -->
+			{/if}
 		</div>
 	</div>
-	<!-- details about me -->
-	{#if SelectedPanel === 'Profile'}
-		<div class="mt-5 flex h-full w-full flex-row ">
-			<div class="flex h-full w-[300px] flex-col ">
-				<Stats />
-				<!-- <TopTags /> -->
-				<GroupList />
-				<HashList/>
-			</div>
-			<!-- Stats and Tags -->
-			<!-- About -->
-			<div class="flex h-full w-9/12 flex-col  ">
-				<Abouts />
-				<Badges />
-			</div>
-		</div>
-		<!-- content here -->
-	{:else if SelectedPanel === 'Activity'}
-		<div class="">Activity</div>
-	{:else}
-		<div class="">Settings</div>
-		<!-- else content here -->
-	{/if}
+	<Footer />
 </div>
+
 
 <style>
 	/* your styles go here */

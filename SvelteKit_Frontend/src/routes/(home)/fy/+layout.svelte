@@ -25,18 +25,7 @@ import { afterUpdate } from 'svelte';
 </svelte:head>
 
 {#if loadingState}
-<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
-	<Navbar />
-	<div class="flex w-full flex-row justify-center   ">
-		
-		<!-- COLLECTIVE -->
-		<Collectives />
-		<!-- QUESTION LIST -->
-
-		<slot></slot>
-	</div>
-	<Footer />
-</div>
+<slot/>
 	<!-- ////////////////////////////// -->
 
     
