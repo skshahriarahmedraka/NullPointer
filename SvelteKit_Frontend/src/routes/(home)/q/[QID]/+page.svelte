@@ -66,7 +66,12 @@
 
 
 // }
+import type { PageData } from './$types';
+	import type { QuestionDataType } from "$lib/store/types";
 
+export let data: PageData;
+  let QuestionData:QuestionDataType 
+  QuestionData =  data.QuestionData
 
   
 </script>
@@ -98,7 +103,7 @@
 
 {#if true}
 <!-- content here -->
-<Ques  />
+<Ques  QuestionData={QuestionData} />
 {:else}
 <!-- else content here -->
 <LoadingSVG/>

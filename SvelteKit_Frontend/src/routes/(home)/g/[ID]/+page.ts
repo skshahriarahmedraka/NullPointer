@@ -24,7 +24,8 @@ export const load = (async () => {
 	UserData.subscribe((value) => {
 		UserDataValue = value;
 	});
-	if (UserDataValue.UserID == null) {
+	if (UserDataValue.ID != InfoCookieData.UUID) {
+
 		const GetUserData = await fetchUserData(InfoCookieData.UUID);
 		console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 		UserData.update(() => GetUserData);

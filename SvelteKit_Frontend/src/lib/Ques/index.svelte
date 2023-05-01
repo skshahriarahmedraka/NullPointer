@@ -1,11 +1,13 @@
 
 <script lang="ts">
-    import {QuestionData} from "../store/store"
+    // import {QuestionData} from "../store/store"
     import RelatedQues from "$lib/RelatedQues/index.svelte"
     import Ans from "$lib/Ans/index.svelte"
     import MarkDownWriter from "$lib/Write/index.svelte"
 	import AvatarDefault from "$lib/icons/avatarDefault.svg";
-    
+	import type { QuestionDataType } from "$lib/store/types";
+
+    export let QuestionData:QuestionDataType
     // export let RelatedQuestionList:any
     // export let RelatedQuestionListLoading:boolean
     // export let QuestionData:any
@@ -55,6 +57,12 @@
 			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
 		Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 }
 	};
+
+//     var isoTimestamp = new Date().toISOString();
+// var localTimestamp = new Date(isoTimestamp).toLocaleString();
+
+// console.log(localTimestamp);
+
 </script>
 
 <style>
@@ -65,16 +73,16 @@
     <div class=" h-[150px] w-[1050px]  ml-3 mt-3  flex flex-col text-[#e7e9eb] ">
         <!-- QUESTION TITLE -->
         <div class=" flex flex-row ">
-            <p class=" text-2xl line-clamp-3 basis-10/12 font-raleway ">{$QuestionData.QuesTitle}</p>
+            <p class=" text-2xl line-clamp-3 basis-10/12 font-raleway ">{QuestionData.QuesTitle}</p>
             <div class="ml-3  h-12  basis-2/12  rounded-md bg-[#0964aa] hover:bg-blue-600 flex justify-center items-center ">
                 <p class="  my-auto text-gray-200 font-semibold text-xl ">Ask Question</p>
             </div>
 
         </div>
         <div class="flex flex-row space-x-3 mt-2 ml-3">
-            <div class=""><p class="text-[#959ba0] inline-flex ">Asked</p> {$QuestionData.QuesAskedTime}</div>
-            <div class=""><p class="text-[#959ba0] inline-flex ">Modified</p> {$QuestionData.QuesEditedTime}</div>
-            <div class=""><p class="text-[#959ba0] inline-flex ">Viewed</p> {$QuestionData.QuesViewed}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Asked</p> {QuestionData.QuesAskedTime}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Modified</p> {QuestionData.QuesEditedTime}</div>
+            <div class=""><p class="text-[#959ba0] inline-flex ">Viewed</p> {QuestionData.QuesViewed}</div>
         </div>
         
     </div>
@@ -92,8 +100,8 @@
                         <svg  class="  h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
                         </svg>
-                        <div class=" text-xl mx-2 text-center {($QuestionData.QuesUpvote - $QuestionData.QuesDownvote)<0 ? " text-red-500" :" text-green-500" }">
-                            {$QuestionData.QuesUpvote - $QuestionData.QuesDownvote}
+                        <div class=" text-xl mx-2 text-center {(QuestionData.QuesUpvote - QuestionData.QuesDownvote)<0 ? " text-red-500" :" text-green-500" }">
+                            {QuestionData.QuesUpvote - QuestionData.QuesDownvote}
                         </div>
                         <!-- DOWN -->
                         <svg class=" h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400 " xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
@@ -103,11 +111,11 @@
                     <!-- Question Detail  -->
                     <div class="w-full text-[#e7e9eb] font-sf-pro ">
                         <div class="">
-                            {$QuestionData.QuesDescription}
+                            {QuestionData.QuesDescription}
                         </div>
                         <!-- Question Tag -->
                         <div class="  min-h-10 max-h-20  w-full mt-2 flex flex-row flex-wrap">
-                            {#each $QuestionData.QuesTags as tag}
+                            {#each QuestionData.QuesTags as tag}
                                 <div class="text-[#9bc0da] bg-[#3d4951] hover:text-teal-200 hover:bg-slate-600 hover:cursor-pointer m-1 px-2 py-1 rounded-md">
                                     {tag}
                                 </div>
@@ -121,10 +129,10 @@
                             <!-- Gap -->
                             <div class="grow"></div>
                             <!-- MODIFIED BY -->
-                            {#if $QuestionData.QuesEditedTime != ''}
+                            {#if QuestionData.QuesEditedTime != ''}
 				<!-- content here -->
 				<div class=" flex h-20  w-60 flex-col overflow-hidden px-2 ">
-					<p class="text-sm text-white ">Edited : {$QuestionData.QuesEditedTime}</p>
+					<p class="text-sm text-white ">Edited : {QuestionData.QuesEditedTime}</p>
 					<div class="flex  h-12 w-full flex-row  ">
                         {#if ModifiedBy.UserImage != "" }
                              <img
@@ -255,7 +263,7 @@
                 </div>
                 <!-- Number of ANSWER -->
                 <div class=" h-14  rounded-lg m-4 mr-2 border-[1px] border-gray-600 text-[#e7e9eb] text-2xl flex flex-row place-content-center place-items-center">
-                    <div class="ml-3">{$QuestionData.Answers.length} Answers</div>
+                    <div class="ml-3">{QuestionData.Answers.length} Answers</div>
                     <!-- write answer button -->
                     <div on:click={()=>{writeAns=!writeAns}} on:keypress={()=>{}} class="ml-3 px-2 cursor-pointer rounded-md  border-2 border-gray-600 bg-gray-500 bg-opacity-25 hover:bg-gray-800">Write Answer</div>
                     <div class="grow"></div>
@@ -283,7 +291,7 @@
                      <MarkDownWriter/>
                     {/if}
                 </div>
-                <!-- {#each $QuestionData.Answers as ans }
+                <!-- {#each QuestionData.Answers as ans }
                     <Ans {ans} />
                 {/each} -->
             

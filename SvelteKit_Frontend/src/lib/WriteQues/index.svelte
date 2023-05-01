@@ -571,7 +571,7 @@
 		QuesAskedTime: new Date().toISOString(),
 
 		QuesEditedBy: '',
-		QuesEditedTime: '',
+		QuesEditedTime: new Date().toISOString(),
 
 		QuesDescription: markdown ,
 		QuesComment: [] as string[],
@@ -616,7 +616,7 @@
 		QuesAskedTime: new Date().toISOString(),
 
 		QuesEditedBy: '',
-		QuesEditedTime: '',
+		QuesEditedTime: new Date().toISOString(),
 
 		QuesDescription: markdown ,
 		QuesComment: [] as string[],
@@ -650,11 +650,14 @@
 		}
 		
 		if (!ErrorMsg.QuesTitle[0] && !ErrorMsg.QuesTags[0] && !ErrorMsg.QuesDescription[0]) {
-			console.log("🚀 ~ file: index.svelte:648 ~ OnSubmitQuestion ~ /api/register:")
+			
 
-			const SubmittedQuesData: QuestionDataType = await fetchAskQuestion(QuestionData)
-			console.log("🚀 ~ file: index.svelte:648 ~ OnSubmitQuestion ~ SubmittedQuesData:", SubmittedQuesData)
-			goto('/q/'+SubmittedQuesData.ID)
+			const res:{"InsertedID":string} = await fetchAskQuestion(QuestionData)
+			console.log("🚀 ~ file: index.svelte:656 ~ OnSubmitQuestion ~ res:", res)
+			if (res.InsertedID!==''){
+				goto('/q/'+res.InsertedID)
+
+			}
 			// await fetch('/api/register', {
 			// 	// credentials: 'same-origin',
 			// 	method: 'POST',
@@ -1040,11 +1043,11 @@
 				{@html marked(markdown)}
 			</div>
 			<!-- post button -->
-			<button
+			<!-- <button
 				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
 			>
 				<p class="my-auto text-xl font-semibold text-gray-200">Post Your Question</p>
-			</button>
+			</button> -->
 		{/if}
 		<!-- Tags -->
 		<div class=" mx-5 mt-5 text-left text-lg font-semibold text-gray-300   ">Tags :</div>

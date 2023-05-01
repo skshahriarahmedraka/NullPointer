@@ -135,7 +135,7 @@ async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<User
 	return UpdatedData;
 }
 
-async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<QuestionDataType> {
+async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<{"InsertedID":string}> {
 	const response = await fetch(`/api/q/askquestion`,{
 		method: 'POST',
 		body: JSON.stringify(QuestionData),
@@ -145,10 +145,23 @@ async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<Questi
 	  });
 	if (!response.ok) {
 		console.log(`Failed to fetch /api/q/askquestion QuestionData`);
+		return {} as {"InsertedID":string};
+	}
+	const res:{"InsertedID":string}= await response.json();
+	console.log("🚀 ~ file: fetch.ts:151 ~ fetchAskQuestion ~ res:", res)
+	return res;
+}
+
+async function fetchQuestionData(QID: string) : Promise<QuestionDataType> {
+	const response = await fetch(`/api/q/${QID}`,{
+		method: 'GET',
+	  });
+	if (!response.ok) {
+		console.log(`Failed to fetch /api/q/${QID} QuestionData`);
 		return {} as QuestionDataType;
 	}
 	const QuestionDataResponse:QuestionDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:119 ~ fetchAskQuestion ~ QuestionDataResponse:", QuestionDataResponse)
+	console.log("🚀 ~ file: fetch.ts:164 ~ fetchQuestionData ~ QuestionDataResponse:", QuestionDataResponse)
 	return QuestionDataResponse;
 }
 
@@ -160,5 +173,6 @@ export {
 	fetchFavouriteHashList,
 	fetchBlogData,
 	fetchUpdateUserData,
-	fetchAskQuestion
+	fetchAskQuestion,
+	fetchQuestionData
 };

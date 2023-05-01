@@ -4,9 +4,9 @@ export const prerender = false; // if true whole page will be generated as a htm
 export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
 
 // import { fetchUserData } from '$lib/Store/fetch';
-import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
-import { fetchUserData } from '$lib/store/fetch';
-import { UserData } from '$lib/store/store';
+import type { CookieInfo1Type, QuestionDataType, UserDataType } from '$lib/store/types';
+import { fetchQuestionData, fetchUserData } from '$lib/store/fetch';
+import {  UserData } from '$lib/store/store';
 import { getCookieValue } from '$lib/store/utils';
 // async function InitializeData() {
 
@@ -15,7 +15,7 @@ import { getCookieValue } from '$lib/store/utils';
 
 import type { PageLoad } from './$types';
 
-export const load = (async () => {
+export const load = (async ({params}) => {
 	const CookieValueInfo1: string = getCookieValue('Info1');
 
 	const InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
@@ -24,13 +24,26 @@ export const load = (async () => {
 	UserData.subscribe((value) => {
 		UserDataValue = value;
 	});
-	if (UserDataValue.UserID == null) {
-		const GetUserData = await fetchUserData(InfoCookieData.UUID);
-		console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
-		UserData.update(() => GetUserData);
+	let QuestionData:QuestionDataType = {} as QuestionDataType;
+	if (UserDataValue.ID != InfoCookieData.UUID) {
+
+		const fetch1 = async () => {
+			const GetUserData = await fetchUserData(InfoCookieData.UUID);
+			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
+			UserData.update(() => GetUserData);
+		}
+		const fetch2 = async () => {
+			QuestionData= await fetchQuestionData(params.QID) 
+		}
+		fetch1()
+		fetch2()
+		
+		
 	}
 
+
 	return {
-		InfoCookieData
+		InfoCookieData,
+		QuestionData
 	};
 }) satisfies PageLoad;

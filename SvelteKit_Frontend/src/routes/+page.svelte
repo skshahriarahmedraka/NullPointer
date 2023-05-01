@@ -31,7 +31,7 @@
 	});
 </script>
 
-{#if loadingState}
+<!-- {#if loadingState} -->
 	<div class="   flex   w-full flex-col  justify-start overflow-x-hidden overflow-y-hidden bg-[#181818] min-h-screen ">
 		<Navbar />
 		<div class="flex w-full flex-row justify-center   ">
@@ -126,9 +126,9 @@
 		</div>
 		<Footer />
 	</div>
-{:else}
+<!-- {:else}
 	<LoadingSVG />
-{/if}
+{/if} -->
 
 <style>
 </style>

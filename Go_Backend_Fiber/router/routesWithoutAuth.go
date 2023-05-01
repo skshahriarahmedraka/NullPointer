@@ -28,7 +28,10 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/uploadimage",H.UploadImage)
 	r.Post("/q/askquestion",H.QuesAsk)
 
-
+	r.Get("/q/:ID",H.QuesData)
+	
+	// /////////////////////////////////////////////////////
+	r.Get("/q/answer/:ID",H.QuesAsk)
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)
@@ -37,7 +40,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/favchannel",H.FavChannelList)
 	r.Get("/channel/:ID",H.Channel)
 
-	r.Get("/q/:ID",H.Ques)
+	// r.Get("/q/:ID",H.QuesData)
 	r.Get("/hotQues", H.HotQues)
 	r.Post("/related",H.RelatedQues)
 

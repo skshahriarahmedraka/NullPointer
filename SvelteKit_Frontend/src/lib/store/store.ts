@@ -219,6 +219,7 @@ const SampleQuestionData:QuestionDataType ={
         "Concatination",
         "go"
     ],
+    "QuesGroup": ["golang", "webdev" ],
     "QuesAskedBy":  "UserID",
     "QuesAnsAccepted" : "answerIDNumber",
     "QuesAskedTime" : new Date().toISOString(),

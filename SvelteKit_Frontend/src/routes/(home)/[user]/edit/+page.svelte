@@ -44,9 +44,7 @@
 		Twitter : [false, 'Twitter is not Valid'],
 		Linkedin : [false, 'Linkedin is not Valid'],
 	};
-	let 
-	: 
-	 | null = null;
+	let file: File | null = null;
 	// let FileInput: HTMLInputElement;
 
 	const handleFileChange = (event: Event) => {
