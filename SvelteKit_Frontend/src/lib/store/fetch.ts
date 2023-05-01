@@ -153,9 +153,7 @@ async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<{"Inse
 }
 
 async function fetchQuestionData(QID: string) : Promise<QuestionDataType> {
-	const response = await fetch(`/api/q/${QID}`,{
-		method: 'GET',
-	  });
+	const response = await fetch(`/api/q/${QID}`);
 	if (!response.ok) {
 		console.log(`Failed to fetch /api/q/${QID} QuestionData`);
 		return {} as QuestionDataType;

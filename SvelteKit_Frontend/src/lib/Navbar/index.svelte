@@ -21,6 +21,7 @@
 	import StediaRed from '$lib/icons/stediaRed.svelte';
 	import Stediablue from '$lib/icons/stediablue.svelte';
 	import { UserData } from '$lib/store/store';
+	console.log("🚀 ~ file: navBar.svelte:24 ~ UserData:", UserData)
 
 	let UserdataLoading: boolean = true;
 
@@ -210,10 +211,10 @@
 	// 		'I am dockerized a golang application and i am trying to access the application.'
 	// 	]
 	// ];
-	let MyUserData : UserDataType 
-	UserData.subscribe((data) => {
-		MyUserData = data;
-	});
+	// let $UserData : UserDataType 
+	// UserData.subscribe((data) => {
+	// 	$UserData = data;
+	// });
 	import type { NotificationDataType, UserDataType } from '$lib/store/types';
 	import UserAnonymous from '$lib/icons/UserAnonymous.svelte';
 	const NotificationData: NotificationDataType[] = [
@@ -344,25 +345,25 @@
 			</div>
 		</div>
 		<!-- User Profile data -->
-		{#if MyUserData.ID != ""}
+		{#if $UserData.ID != ""}
 			<div
 				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
 				on:click={() => {
-					goto(`/${MyUserData.ID}`);
+					goto(`/${$UserData.ID}`);
 				}}
 				on:keydown={(e) => {}}
 			>
 				<!-- User -->
 				<img
-					src={MyUserData.UserImage}
+					src={$UserData.UserImage}
 					alt=""
 					class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
 				/>
 				<!-- user Credit -->
 				<div class="max-w-36   flex h-fit  min-w-min flex-row items-center justify-center">
-					{#if MyUserData.Badges.Reputation !=0}
+					{#if $UserData.Badges.Reputation !=0}
 					<p class="mx-1 font-semibold text-white">
-						{ShortenNumber(MyUserData.Badges.Reputation )}
+						{ShortenNumber($UserData.Badges.Reputation )}
 					</p>
 					{:else}
 					<p class="mx-1 font-semibold text-white">
@@ -370,17 +371,17 @@
 					</p>
 					{/if}
 
-					{#if MyUserData.Badges.Gold !== 0}
+					{#if $UserData.Badges.Gold !== 0}
 						<GoldDot />
-						<p class="mx-1   text-[#ffcc01]">{ShortenNumber(MyUserData.Badges.Gold)}</p>
+						<p class="mx-1   text-[#ffcc01]">{ShortenNumber($UserData.Badges.Gold)}</p>
 					{/if}
-					{#if MyUserData.Badges.Silver !== 0}
+					{#if $UserData.Badges.Silver !== 0}
 						<SilverDot />
-						<p class="mx-1 my-4 text-[#b4b8bc]">{ShortenNumber(MyUserData.Badges.Silver)}</p>
+						<p class="mx-1 my-4 text-[#b4b8bc]">{ShortenNumber($UserData.Badges.Silver)}</p>
 					{/if}
-					{#if MyUserData.Badges.Bronze !== 0}
+					{#if $UserData.Badges.Bronze !== 0}
 						<BronzeDot />
-						<p class="mx-1 my-4 text-[#d1a684]">{ShortenNumber(MyUserData.Badges.Bronze)}</p>
+						<p class="mx-1 my-4 text-[#d1a684]">{ShortenNumber($UserData.Badges.Bronze)}</p>
 					{/if}
 				</div>
 			</div>
@@ -502,15 +503,15 @@
 				>
 					<div class="mt-3 ml-2 mb-1 flex flex-row">
 						<img
-							src={MyUserData['UserImage']}
+							src={$UserData['UserImage']}
 							alt=""
 							class=" aspect-square active:ring-offset-base-50 mx-2  h-16 w-16  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
 						/>
 						<div class="flex flex-col items-center justify-center">
-							<div class=" text-2xl font-light line-clamp-1 ">{MyUserData.UserName}</div>
+							<div class=" text-2xl font-light line-clamp-1 ">{$UserData.UserName}</div>
 							<p class=" font-semibold">
-								{ShortenNumber(MyUserData.Badges.Reputation)} Reputation <WhiteDot />
-								{ShortenNumber(MyUserData.Follower.length)} Follower
+								{ShortenNumber($UserData.Badges.Reputation)} Reputation <WhiteDot />
+								{ShortenNumber($UserData.Follower.length)} Follower
 							</p>
 						</div>
 					</div>

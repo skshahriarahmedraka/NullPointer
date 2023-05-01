@@ -27,7 +27,7 @@ import { afterUpdate } from 'svelte';
 {#if loadingState}
 
 	<!-- ////////////////////////////// -->
-
+	<slot/>
     
 {:else}
 	<LoadingSVG/>

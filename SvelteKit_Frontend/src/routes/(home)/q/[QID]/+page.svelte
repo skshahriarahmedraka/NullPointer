@@ -72,12 +72,17 @@
 // }
 import type { PageData } from './$types';
 	import type { QuestionDataType } from "$lib/store/types";
+	import { afterUpdate } from "svelte";
 
 export let data: PageData;
   let QuestionData:QuestionDataType 
   QuestionData =  data.QuestionData
+  console.log("🚀 ~ file: +page.svelte:79 ~ QuestionData:", QuestionData)
 
-  
+  let loadingState: boolean = false;
+	afterUpdate(() => {
+		loadingState = true;
+	});
 </script>
 
 <style>
@@ -105,18 +110,27 @@ export let data: PageData;
 {:else}
 {/if} -->
 
-<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
-	<Navbar />
-	<div class="flex w-full flex-row justify-center   ">
-		
-		<!-- COLLECTIVE -->
-		<Collectives />
-		<!-- QUESTION LIST -->
+{#if loadingState}
 
-        <Ques  QuestionData={QuestionData} />
-	</div>
-	<Footer />
-</div>
+	<!-- ////////////////////////////// -->
+
+    
+    <div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+        <Navbar />
+        <div class="flex w-full flex-row justify-center   ">
+            
+            <!-- COLLECTIVE -->
+            <Collectives />
+            <!-- QUESTION LIST -->
+    
+            <Ques  QuestionData={QuestionData} />
+        </div>
+        <Footer />
+    </div>
+{:else}
+	<LoadingSVG/>
+{/if}
+
 <!-- content here -->
 
 

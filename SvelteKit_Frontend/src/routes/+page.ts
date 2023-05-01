@@ -7,7 +7,7 @@ export const csr = true; // the component will only be rendered on the client-si
 import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 import { fetchUserData } from '$lib/store/fetch';	
 import { UserData } from '$lib/store/store';
-// import { getCookieValue } from '$lib/store/utils';
+import { getCookieValue } from '$lib/store/utils';
 // async function InitializeData() {
 
 // 	return UserData;
@@ -37,21 +37,21 @@ export const load = (async () => {
 
 
 
-function getCookieValue(cookieName:string) {
-	// Split the cookies into an array
-	const cookies:string[] = document.cookie.split(';');
+// function getCookieValue(cookieName:string) {
+// 	// Split the cookies into an array
+// 	const cookies:string[] = document.cookie.split(';');
 	
-	// Loop through the array to find the cookie with the given name
-	for (let i = 0; i < cookies.length; i++) {
-	  const cookie:string = cookies[i].trim();
+// 	// Loop through the array to find the cookie with the given name
+// 	for (let i = 0; i < cookies.length; i++) {
+// 	  const cookie:string = cookies[i].trim();
 	  
-	  // Check if the cookie name matches the given name
-	  if (cookie.indexOf(cookieName + '=') == 0) {
-		// Return the cookie value
-		return cookie.substring(cookieName.length + 1, cookie.length);
-	  }
-	}
+// 	  // Check if the cookie name matches the given name
+// 	  if (cookie.indexOf(cookieName + '=') == 0) {
+// 		// Return the cookie value
+// 		return cookie.substring(cookieName.length + 1, cookie.length);
+// 	  }
+// 	}
 	
-	// If the cookie is not found, return null
-	return "";
-  }
+// 	// If the cookie is not found, return null
+// 	return "";
+//   }

@@ -23,11 +23,11 @@ const HeadLogo = new URL("../../../../lib/icons/favicon.png", import.meta.url).h
 	<link rel="icon"  href={HeadLogo} />
 </svelte:head>
 
-{#if loadingState}
+<!-- {#if loadingState} -->
 
 	<!-- ////////////////////////////// -->
 	<slot />
     
-{:else}
-	<LoadingSVG/>
-{/if}
+<!-- {:else} -->
+	<!-- <LoadingSVG/> -->
+<!-- {/if} -->

@@ -20,27 +20,26 @@ export const load = (async ({params}) => {
 
 	const InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
 	console.log('🚀 ~ file: +page.ts:24 ~ load ~ InfoCookieData:', InfoCookieData);
-	let UserDataValue = {} as UserDataType;
-	UserData.subscribe((value) => {
-		UserDataValue = value;
-	});
+	// let UserDataValue = {} as UserDataType;
+	// UserData.subscribe((value) => {
+	// 	UserDataValue = value;
+	// });
 	let QuestionData:QuestionDataType = {} as QuestionDataType;
-	if (UserDataValue.ID != InfoCookieData.UUID) {
+	// if (UserDataValue.ID != InfoCookieData.UUID) {
 
-		const fetch1 = async () => {
-			const GetUserData = await fetchUserData(InfoCookieData.UUID);
-			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
+		
+			const GetUserData:UserDataType = await fetchUserData(InfoCookieData.UUID);
+			console.log("🚀 ~ file: +page.ts:32 ~ fetch1 ~ GetUserData:", GetUserData)
+			// console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
-		}
-		const fetch2 = async () => {
-			QuestionData= await fetchQuestionData(params.QID) 
-		}
-		fetch1()
-		fetch2()
 		
 		
-	}
+		
+	// }
 
+		QuestionData= await fetchQuestionData(params.QID) 
+	
+	
 
 	return {
 		InfoCookieData,
