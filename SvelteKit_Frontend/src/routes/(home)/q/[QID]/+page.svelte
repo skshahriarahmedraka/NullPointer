@@ -89,26 +89,7 @@ export let data: PageData;
     /* your styles go here */
 </style>
 
-<!-- markup (zero or more items) goes here -->
 
-<!-- 
-{#if $Loading}
-    
-    <div class="bg-[#181818]   w-full flex flex-row justify-center   ">
-        
-        <Navbar {UserData}/>
-        <!-- COLLECTIVE -->
-        <!-- <Collectives {FavoriteHash} {SpaceList} />  -->
-        <!-- QUESTION LIST -->
-        <!-- <Ques/> -->
-        
-
-        <!-- RELATED QUESTION -->
-        <!-- <RelatedQues/> -->
-<!-- 
-    </div>
-{:else}
-{/if} -->
 
 {#if loadingState}
 
@@ -131,7 +112,7 @@ export let data: PageData;
 	<LoadingSVG/>
 {/if}
 
-<!-- content here -->
+
 
 
 

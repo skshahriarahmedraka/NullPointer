@@ -1,17 +1,14 @@
-export const ssr = false; // all the code will be executed in client side
+export const ssr = false; 
 
-export const prerender = true; // if true whole page will be generated as a html page in server side
-export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
+export const prerender = true; 
+export const csr = true; 
 
-// import { fetchUserData } from '$lib/Store/fetch';
+
 import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 import { fetchUserData } from '$lib/store/fetch';	
 import { UserData } from '$lib/store/store';
 import { getCookieValue } from '$lib/store/utils';
-// async function InitializeData() {
 
-// 	return UserData;
-// }
 
 import type { PageLoad } from './$types';
 
@@ -37,21 +34,3 @@ export const load = (async () => {
 
 
 
-// function getCookieValue(cookieName:string) {
-// 	// Split the cookies into an array
-// 	const cookies:string[] = document.cookie.split(';');
-	
-// 	// Loop through the array to find the cookie with the given name
-// 	for (let i = 0; i < cookies.length; i++) {
-// 	  const cookie:string = cookies[i].trim();
-	  
-// 	  // Check if the cookie name matches the given name
-// 	  if (cookie.indexOf(cookieName + '=') == 0) {
-// 		// Return the cookie value
-// 		return cookie.substring(cookieName.length + 1, cookie.length);
-// 	  }
-// 	}
-	
-// 	// If the cookie is not found, return null
-// 	return "";
-//   }

@@ -22,6 +22,7 @@ func RouteWithoutAuth(app *fiber.App) {
 
 	
 	r.Get("/user/:ID",H.UserData)
+	r.Get("/user/flair/:ID",H.UserDataFlair)
 	r.Post("/updateuser",H.UpdateUserData)
 	
 	
@@ -29,6 +30,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/q/askquestion",H.QuesAsk)
 
 	r.Get("/q/:ID",H.QuesData)
+	
 	
 	// /////////////////////////////////////////////////////
 	r.Get("/q/answer/:ID",H.QuesAsk)
