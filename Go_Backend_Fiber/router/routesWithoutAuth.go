@@ -32,8 +32,8 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/q/:ID",H.QuesData)
 	
 	
+	r.Get("/q/answer/:ID",H.AnsData)
 	// /////////////////////////////////////////////////////
-	r.Get("/q/answer/:ID",H.QuesAsk)
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)

@@ -163,6 +163,17 @@ async function fetchQuestionData(QID: string) : Promise<QuestionDataType> {
 	return QuestionDataResponse;
 }
 
+async function fetchPublicQuestionDataArr(type: string,num:number) : Promise<QuestionDataType[]> {
+	const response = await fetch(`/api/public/q?type=${type}&num=${num}`);
+	if (!response.ok) {
+		console.log(`Failed to fetch /api/public/q?type=${type}&num=${num}`);
+		return {} as QuestionDataType[];
+	}
+	const QuestionDataResponseArr:QuestionDataType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:173 ~ fetchPublicQuestionData ~ QuestionDataResponseArr:", QuestionDataResponseArr)
+	return QuestionDataResponseArr;
+}
+
 export {
 	fetchUserData,
 	fetchNotificationData,
