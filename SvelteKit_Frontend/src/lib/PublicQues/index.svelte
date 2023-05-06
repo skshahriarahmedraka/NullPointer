@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { fetchPublicQuestionDataArr } from "$lib/store/fetch";
+	import type { QuestionDataType } from "$lib/store/types";
+
 	// import { toggle_class } from "svelte/internal";
 	// import {PublicQuesData} from "../store/store"
 
@@ -70,7 +73,7 @@
     
     let d = new Date()
     // console.log("🚀 ~ file: index.svelte:121 ~ d:", d)
-	let QuestionList: {
+	let QuestionList2: {
 		ID: string;
 		QuesTitle: string;
 		QuesitonAskedTime: string | Date;
@@ -119,6 +122,14 @@
 			Answers: ['4215', '5524']
 		}
 	];
+	let QuestionList:QuestionDataType[] = [] as QuestionDataType[]
+	let fetchData = async () => {
+		
+		QuestionList = await fetchPublicQuestionDataArr("all",20)
+	}
+	fetchData()
+	console.log("🚀 ~ file: index.svelte:126 ~ QuestionList:", QuestionList)
+	
 </script>
 
 <div class="h-full w-full ">

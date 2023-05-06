@@ -183,5 +183,6 @@ export {
 	fetchBlogData,
 	fetchUpdateUserData,
 	fetchAskQuestion,
-	fetchQuestionData
+	fetchQuestionData,
+	fetchPublicQuestionDataArr
 };

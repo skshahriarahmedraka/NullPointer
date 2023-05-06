@@ -16,7 +16,7 @@ type QuesData struct {
 	QuesBookmark    int      `json:"QuesBookmark" bson:"QuesBookmark" validate:"omitempty"`
 	QuesTags        []string `json:"QuesTags" bson:"QuesTags" validate:"omitempty"`
 	QuesGroup 	 []string `json:"QuesGroup" bson:"QuesGroup" validate:"omitempty"`
-	QuesAnsAccepted string   `json:"QuesAnsAccepted" bson:"QuesAnsAccepted" validate:"required"`
+	QuesAnsAccepted string   `json:"QuesAnsAccepted" bson:"QuesAnsAccepted" validate:"required"` // accepted answer id
 	
 	
 	QuesAskedBy     string   `json:"QuesAskedBy" bson:"QuesAskedBy" validate:"required"`

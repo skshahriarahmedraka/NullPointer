@@ -49,7 +49,7 @@ export type QuestionDataType = {
 	QuesBookmark: number;
 	QuesTags: string[];
 	QuesGroup : string[];
-	QuesAnsAccepted: string;
+	QuesAnsAccepted: string; // accepted answer ID
 
 	QuesAskedBy: string;
 	QuesAskedTime: string;
