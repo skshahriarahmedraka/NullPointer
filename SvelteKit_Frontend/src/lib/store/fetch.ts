@@ -163,10 +163,10 @@ async function fetchQuestionData(QID: string) : Promise<QuestionDataType> {
 	return QuestionDataResponse;
 }
 
-async function fetchPublicQuestionDataArr(type: string,num:number) : Promise<QuestionDataType[]> {
-	const response = await fetch(`/api/public/q?type=${type}&num=${num}`);
+async function fetchPublicQuestionDataArr(type: string,start:number, stop :number ,order:number) : Promise<QuestionDataType[]> {
+	const response = await fetch(`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 	if (!response.ok) {
-		console.log(`Failed to fetch /api/public/q?type=${type}&num=${num}`);
+		console.log(`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 		return {} as QuestionDataType[];
 	}
 	const QuestionDataResponseArr:QuestionDataType[] = await response.json();

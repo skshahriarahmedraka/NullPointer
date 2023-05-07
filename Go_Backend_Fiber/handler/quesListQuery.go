@@ -69,6 +69,10 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
 			// case "bounty":
 			// 	opts.SetSort(bson.D{{Key :"QuesAskedTime", Value:  1}})
+		default:
+			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
+			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+
 		}
 		// opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
 		limit , _ :=strconv.Atoi(c.Query("stop"))

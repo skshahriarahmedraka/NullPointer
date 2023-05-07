@@ -71,61 +71,61 @@
 		]
 	];
     
-    let d = new Date()
+    // let d = new Date()
     // console.log("🚀 ~ file: index.svelte:121 ~ d:", d)
-	let QuestionList2: {
-		ID: string;
-		QuesTitle: string;
-		QuesitonAskedTime: string | Date;
-		QuesModified: string;
-		QuesViewed: number;
-		QuesUpvote: number;
-		QuesDownvote: number;
-		QuesBookmark: number;
-		QuesTags: string[];
-		QuesAskedBy: string;
-		QuesAnsAccepted: string;
+	// let QuestionList2: {
+	// 	ID: string;
+	// 	QuesTitle: string;
+	// 	QuesitonAskedTime: string | Date;
+	// 	QuesModified: string;
+	// 	QuesViewed: number;
+	// 	QuesUpvote: number;
+	// 	QuesDownvote: number;
+	// 	QuesBookmark: number;
+	// 	QuesTags: string[];
+	// 	QuesAskedBy: string;
+	// 	QuesAnsAccepted: string;
 
-		QuesAskedTimeExact: string;
-		QuesAskedByImage: string;
+	// 	QuesAskedTimeExact: string;
+	// 	QuesAskedByImage: string;
 
-		QuesEditedBy: string;
+	// 	QuesEditedBy: string;
 
-		QuesEditedTime: string | Date;
-		QuesDescription: string;
-		QuesComment: string[][];
-		Answers: string[];
-	}[] = [
-		{
-			ID: '1',
-			QuesTitle: 'How to check if a map contains a key in Go?',
-			QuesitonAskedTime: new Date(),
-			QuesModified: 'youKnowWho',
-			QuesViewed: 2,
-			QuesUpvote: 5,
-			QuesDownvote: 6,
-			QuesBookmark: 23,
-			QuesTags: ['go', 'rust',"python"],
-			QuesAskedBy: 'Sk Shahriar Ahmed raka',
-			QuesAnsAccepted: '', // Id of excepted ans
+	// 	QuesEditedTime: string | Date;
+	// 	QuesDescription: string;
+	// 	QuesComment: string[][];
+	// 	Answers: string[];
+	// }[] = [
+	// 	{
+	// 		ID: '1',
+	// 		QuesTitle: 'How to check if a map contains a key in Go?',
+	// 		QuesitonAskedTime: new Date(),
+	// 		QuesModified: 'youKnowWho',
+	// 		QuesViewed: 2,
+	// 		QuesUpvote: 5,
+	// 		QuesDownvote: 6,
+	// 		QuesBookmark: 23,
+	// 		QuesTags: ['go', 'rust',"python"],
+	// 		QuesAskedBy: 'Sk Shahriar Ahmed raka',
+	// 		QuesAnsAccepted: '', // Id of excepted ans
 
-			QuesAskedTimeExact: '',
-			QuesAskedByImage: '',
-			QuesEditedBy: '',
+	// 		QuesAskedTimeExact: '',
+	// 		QuesAskedByImage: '',
+	// 		QuesEditedBy: '',
 
-			QuesEditedTime: new Date(),
-			QuesDescription: '185I know I can iterate over a map m by,for k, v := range m and look for a key but is there a more efficient way of testing a keys existence in a map?I couldnt find the answer in the language spec',
-			QuesComment: [
-				['raka', 'no comment'],
-				['ssar', 'hello']
-			],
-			Answers: ['4215', '5524']
-		}
-	];
+	// 		QuesEditedTime: new Date(),
+	// 		QuesDescription: '185I know I can iterate over a map m by,for k, v := range m and look for a key but is there a more efficient way of testing a keys existence in a map?I couldnt find the answer in the language spec',
+	// 		QuesComment: [
+	// 			['raka', 'no comment'],
+	// 			['ssar', 'hello']
+	// 		],
+	// 		Answers: ['4215', '5524']
+	// 	}
+	// ];
 	let QuestionList:QuestionDataType[] = [] as QuestionDataType[]
 	let fetchData = async () => {
 		
-		QuestionList = await fetchPublicQuestionDataArr("all",20)
+		QuestionList = await fetchPublicQuestionDataArr("time",0,20,-1)
 	}
 	fetchData()
 	console.log("🚀 ~ file: index.svelte:126 ~ QuestionList:", QuestionList)
@@ -177,7 +177,7 @@
 
 						<p class="h-6 w-36 text-center mt-2 mr-1 text-sky-600 hover:text-blue-600 hover:cursor-pointer line-clamp-1">{"Ques Asked By Name"}</p>
 						<p class="text-[#e7e9eb] mt-2 mr-1">{"146k"}</p>
-						<p class=" w-80 text-[#959ba0] mt-2 ">{d.toDateString()+" "+d.toLocaleTimeString()}</p>
+						<p class=" w-80 text-[#959ba0] mt-2 ?">{i.QuesAskedTime.toString()}</p>
 					</div>
 				</div>
 			</div>

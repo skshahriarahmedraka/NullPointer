@@ -39,9 +39,12 @@ type UserDataFlair struct {
 	UserName string             `json:"UserName" bson:"UserName" validate:"omitempty,min=4,max=64,UserName"`
 	UserImage string `json:"UserImage" bson:"UserImage" validate:"omitempty" `
 	Badges    struct {
-		Reputation int `json:Reputation bson:"Reputation" validate:"omitempty,numeric"`
+		Reputation int `json:Reputation bson:"Reputation" validate:"omitempty, numeric"`
 		Gold       int `json:"Gold" bson:"Gold" validate:"omitempty,numeric"`
 		Silver     int `json:"Silver" bson:"Silver" validate:"omitempty,numeric"`
 		Bronze     int `json:"Bronze" 		bson:"Bronze" validate:"omitempty,numeric"`
 	} `json:"Badges" bson:"Badges"`
+	Location       string              `json:"Location" bson:"Location" validate:"omitempty"`
+	Aboutme        string              `json:"Aboutme" bson:"Aboutme" validate:"omitempty"`
+
 }
