@@ -63,8 +63,8 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		RegData.Following = []string{}
 		// Badges map[string]int
 		RegData.Location = ""
-		RegData.MembershipTime = primitive.Timestamp{T: uint32(time.Now().Unix())}
-		RegData.LastSeen = primitive.Timestamp{T: uint32(time.Now().Unix())}
+		RegData.MembershipTime =time.Now().UTC()
+		RegData.LastSeen = time.Now().UTC()
 		RegData.Aboutme = ""
 		RegData.Mysite = ""
 		RegData.Github = ""
@@ -127,7 +127,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		}
 		c.Cookie(&fiber.Cookie{
 			Name:     "Info1",
-			Value:    tokenString,
+			Value:    tokenString2,
 			Path:     "/",
 			Domain:   os.Getenv("IP"),
 			Expires:  time.Now().Add(1000 * time.Hour),

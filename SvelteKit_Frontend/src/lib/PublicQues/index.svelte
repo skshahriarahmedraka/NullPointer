@@ -176,8 +176,8 @@
 						<div class="" />
 
 						<p class="h-6 w-36 text-center mt-2 mr-1 text-sky-600 hover:text-blue-600 hover:cursor-pointer line-clamp-1">{"Ques Asked By Name"}</p>
-						<p class="text-[#e7e9eb] mt-2 mr-1">{"146k"}</p>
-						<p class=" w-80 text-[#959ba0] mt-2 ?">{i.QuesAskedTime.toString()}</p>
+						<p class="text-[#e7e9eb] mt-2  font-bold mx-2">{"146k"}</p>
+						<p class=" w-80 text-[#959ba0] mt-2 ">{ new Date(i.QuesAskedTime ).toLocaleString()}</p>
 					</div>
 				</div>
 			</div>

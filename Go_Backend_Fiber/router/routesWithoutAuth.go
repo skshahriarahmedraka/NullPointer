@@ -22,7 +22,7 @@ func RouteWithoutAuth(app *fiber.App) {
 
 	
 	r.Get("/user/:ID",H.UserData)
-	r.Get("/user/flair/:ID",H.UserDataFlair)
+	r.Get("/user/flair/:ID",H.UserDataFlair) // working
 	r.Post("/updateuser",H.UpdateUserData)
 	
 	
@@ -31,12 +31,12 @@ func RouteWithoutAuth(app *fiber.App) {
 
 	r.Get("/q/:ID",H.QuesData)
 	r.Get("/public/q",H.QuesListQuery)
+	r.Get("/logout",H.Logout) // not complete
 	
-	
+	r.Get("/q/answer/:ID",H.AnsData) // working
 	
 	
 	// /////////////////////////////////////////////////////
-	r.Get("/q/answer/:ID",H.AnsData)
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)

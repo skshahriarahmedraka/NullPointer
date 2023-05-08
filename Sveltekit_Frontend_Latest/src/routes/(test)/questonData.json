@@ -1,0 +1,68 @@
+{
+	"ID": 1,
+	"Title": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
+	"AskedTime": " Aug 7, 2011 at 2:14 ",
+	"Modified": " Aug 7, 2011 at 2:14 ",
+	"Viewed": 577000,
+
+	"Upvote": 4,
+	"Downvote": 32,
+	"Bookmark": 23,
+
+	"Tags": [
+		"go",
+		"string",
+		"Concatination",
+		"go"
+	],
+	"AskedBy": { "UserID": 154123 },
+	"EditedBy": { "UserID": 154123 },
+
+	"Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+	"Comment": [
+		{
+			"ID": 1,
+			"Upvote": 4,
+			"Downvote": 1,
+			"UserID": 154123,
+			"UserName": "sk shahriar ahmed raka",
+			"Time": " Aug 7, 2011 at 2:14",
+			"Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
+		}
+	],
+	"Answers": [
+		{
+			"ID": 1,
+			"AnsweredTime": " Aug 7, 2011 at 2:14 ",
+			"Modified": " Aug 7, 2011 at 2:14 ",
+
+			"Upvote": 4,
+			"Downvote": 32,
+			"Bookmark": 23,
+            "Accepted": true,
+
+			"AnsweredBy": { "UserID": 154123 },
+			"EditedBy": { "UserID": 154123 },
+
+
+			"Description": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+			"Comment": [
+				{
+					"ID": 1,
+					"Upvote": 4,
+					"Downvote": 1,
+					"UserID": 154123,
+					"UserName": "sk shahriar ahmed raka",
+					"Time": " Aug 7, 2011 at 2:14",
+					"Comment": "no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this."
+				}
+			]
+		}
+	]
+}
+// id, upvote, downvote,userid,username, time,Comment
+// ["994New Way: From Go 1.10 there is a strings.Builder type, please take a look at this answer for more detail. Old Way: Use the bytes package. It has a Buffer type which implements io.Writer. package main import ( \"bytes\" \"fmt\" ) func main() { var buffer bytes.Buffer for i := 0; i < 1000; i++ { buffer.WriteString("a") } fmt.Println(buffer.String()) } This does it in O(n) time.`,123,true,inancramsay\",\"Dec 12, 2019 at 7:30"],
+// ["n Go 1.10+ there is strings.Builder, here.A Builder is used to efficiently build a string using Write methods. It minimizes memory copying. The zero value is ready to use.`,43,false,\"luffy\",\"icza\", \"Dec 4, 2015 at 8:01"]
+
+// id, upvote, downvote,userid,username, time,Comment
+// ["ans(string)","vote(int)","accepted(bool)","user(string)","time(string)"]
