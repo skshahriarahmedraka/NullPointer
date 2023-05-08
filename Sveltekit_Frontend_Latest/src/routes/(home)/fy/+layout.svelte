@@ -24,11 +24,7 @@ import { afterUpdate } from 'svelte';
 	<!-- <link rel="icon"  sizes="any" type="image/svg+xml" href={HeadLogo} /> -->
 </svelte:head>
 
-{#if loadingState}
+
 <slot/>
 	<!-- ////////////////////////////// -->
 
-    
-{:else}
-	<LoadingSVG/>
-{/if}

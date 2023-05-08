@@ -9,7 +9,12 @@
 	import HashList from '$lib/UserInfo/HashList.svelte';
 	import Navbar from '$lib/Navbar/index.svelte';
 	import Footer from '$lib/Footer/footer.svelte';
-	import Collectives from "$lib/Collectives/index.svelte"
+	import Collectives from '$lib/Collectives/index.svelte';
+	import { onMount } from 'svelte';
+	import { getCookieValue } from '$lib/store/utils';
+	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
+	import { fetchUserData } from '$lib/store/fetch';
+	import { UserData } from '$lib/store/store';
 	// import { UserData } from '$lib/store/store';
 
 	// let UserData: {
@@ -82,32 +87,59 @@
 
 	// export let UserData:any
 	// console.log("🚀 ~ file: index@root.svelte ~ line 47 ~ UserData", UserData)
+	let loadingState: boolean = false;
+	onMount(async () => {
+		const CookieValueInfo1: string = getCookieValue('Info1');
+
+		const InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
+		console.log('🚀 ~ file: +page.ts:24 ~ load ~ InfoCookieData:', InfoCookieData);
+		let UserDataValue = {} as UserDataType;
+		UserData.subscribe((value) => {
+			UserDataValue = value;
+		});
+		
+		const GetUserData = await fetchUserData(InfoCookieData.UUID);
+		console.log("🚀 ~ file: +page.svelte:102 ~ onMount ~ GetUserData:", GetUserData)
+		UserData.update(() => GetUserData);
+		
+		loadingState = true;
+	});
+
 	let SelectedPanel = 'Profile';
+	import LoadingSVG from '$lib/Loading/index.svelte';
+	// const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
+	import { afterUpdate } from 'svelte';
+	// import Footer from '$lib/Footer/footer.svelte';
+
+	afterUpdate(() => {
+	});
 </script>
 
 <!-- settings -->
-<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+{#if loadingState}
+<div
+	class="   flex w-full flex-col justify-center overflow-x-hidden overflow-y-hidden bg-[#181818]"
+>
 	<Navbar />
-	<div class="flex w-full flex-row justify-center   ">
-		
+	<div class="flex w-full flex-row justify-center">
 		<!-- COLLECTIVE -->
 		<Collectives />
 		<!-- QUESTION LIST -->
 
-		<div class=" mt-2 flex max-h-full  min-h-screen w-[1100px] flex-col bg-[#2d2d2d]   ">
+		<div class=" mt-2 flex max-h-full min-h-screen w-[1100px] flex-col bg-[#2d2d2d]">
 			<!-- image & name & social media -->
 			<UserInfo />
 			<!-- Button : profile, activity, -->
-			<div class="  flex w-full flex-row items-center justify-start gap-5 pl-10 ">
+			<div class="  flex w-full flex-row items-center justify-start gap-5 pl-10">
 				<div
 					on:click={() => (SelectedPanel = 'Profile')}
 					on:keydown={() => {}}
-					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Profile'
+					class="-mr-3 ml-3 h-9 w-24 rounded-xl {SelectedPanel === 'Profile'
 						? 'bg-sky-500 hover:bg-blue-600'
-						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
+						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer"
 				>
 					<p
-						class=" my-auto  text-base font-semibold {SelectedPanel === 'Profile'
+						class=" my-auto text-base font-semibold {SelectedPanel === 'Profile'
 							? 'text-gray-200'
 							: 'text-sky-500'}"
 					>
@@ -117,12 +149,12 @@
 				<div
 					on:click={() => (SelectedPanel = 'Activity')}
 					on:keydown={() => {}}
-					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Activity'
+					class="-mr-3 ml-3 h-9 w-24 rounded-xl {SelectedPanel === 'Activity'
 						? 'bg-sky-500 hover:bg-blue-600'
-						: 'border-2 border-blue-600 '}   flex items-center justify-center hover:cursor-pointer "
+						: 'border-2 border-blue-600 '}   flex items-center justify-center hover:cursor-pointer"
 				>
 					<p
-						class=" my-auto  text-base font-semibold {SelectedPanel === 'Activity'
+						class=" my-auto text-base font-semibold {SelectedPanel === 'Activity'
 							? 'text-gray-200'
 							: 'text-sky-500'}"
 					>
@@ -132,12 +164,12 @@
 				<div
 					on:click={() => (SelectedPanel = 'Settings')}
 					on:keydown={() => {}}
-					class="ml-3 -mr-3 h-9 w-24 rounded-xl {SelectedPanel === 'Settings'
+					class="-mr-3 ml-3 h-9 w-24 rounded-xl {SelectedPanel === 'Settings'
 						? 'bg-sky-500 hover:bg-blue-600'
-						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer "
+						: 'border-2 border-blue-600 '}  flex items-center justify-center hover:cursor-pointer"
 				>
 					<p
-						class=" my-auto  text-base font-semibold {SelectedPanel === 'Settings'
+						class=" my-auto text-base font-semibold {SelectedPanel === 'Settings'
 							? 'text-gray-200'
 							: 'text-sky-500'}"
 					>
@@ -147,16 +179,16 @@
 			</div>
 			<!-- details about me -->
 			{#if SelectedPanel === 'Profile'}
-				<div class="mt-5 flex h-full w-full flex-row ">
-					<div class="flex h-full w-[300px] flex-col ">
+				<div class="mt-5 flex h-full w-full flex-row">
+					<div class="flex h-full w-[300px] flex-col">
 						<Stats />
 						<!-- <TopTags /> -->
 						<GroupList />
-						<HashList/>
+						<HashList />
 					</div>
 					<!-- Stats and Tags -->
 					<!-- About -->
-					<div class="flex h-full w-9/12 flex-col  ">
+					<div class="flex h-full w-9/12 flex-col">
 						<Abouts />
 						<Badges />
 					</div>
@@ -172,8 +204,9 @@
 	</div>
 	<Footer />
 </div>
-
-
+{:else}
+	<LoadingSVG />
+{/if}
 <style>
 	/* your styles go here */
 </style>

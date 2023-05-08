@@ -6,15 +6,7 @@
 	// import Ans from "$lib/Ans/index.svelte"
 	// // import {UserData,QuestionData,Loading} from "$lib/store/store"
 
-	import LoadingSVG from '$lib/Loading/index.svelte';
-	// const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
-	import { afterUpdate } from 'svelte';
-	// import Footer from '$lib/Footer/footer.svelte';
-
-	let loadingState: boolean = false;
-	afterUpdate(() => {
-		loadingState = true;
-	});
+	
 </script>
 
 <!-- <slot /> -->

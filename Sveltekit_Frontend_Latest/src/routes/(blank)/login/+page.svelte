@@ -5,6 +5,8 @@ import { goto } from "$app/navigation";
 	import Github from "$lib/icons/Github.svelte";
 	import Google from "$lib/icons/google.svelte";
 	import Twitter from "$lib/icons/Twitter.svelte";
+	import LoadingSVG from '$lib/Loading/index.svelte';
+	import { afterUpdate, onMount } from "svelte";
 
 
 	let LoginData = {
@@ -68,9 +70,19 @@ import { goto } from "$app/navigation";
 	
 		}
 	}
+	let loadingState: boolean = false;
+	
+	afterUpdate(() => {
+		loadingState = true;
+	});
+	import Bg1 from "$lib/images/planetWal.webp"
+	const RegBg = new URL(Bg1, import.meta.url).href;
 </script>
 
-<div class="grid h-screen w-full  place-items-center bg-[#181818] ">
+{#if loadingState }
+	
+
+<div class="grid h-screen w-full  place-items-center object-cover " style="background-image: url('{RegBg}');">
 	<a
 		href="/register"
 		on:click={() => {
@@ -86,7 +98,7 @@ import { goto } from "$app/navigation";
 		</button>
 	</a>
 	<div class="">
-		<div class=" flex h-[420px] w-[500px] flex-col space-y-4 rounded-xl bg-[#2d2d2d]">
+		<div class=" flex h-[420px] w-[500px] flex-col space-y-4 rounded-xl bg-[#2d2d2d] bg-opacity-90">
 			<div
 				class="mt-5 flex w-full items-center justify-center text-3xl font-semibold text-gray-200"
 			>
@@ -177,7 +189,10 @@ import { goto } from "$app/navigation";
 		</div>
 	</div>
 </div>
+{:else}
 
+	<LoadingSVG />
+{/if}
 <style>
 	/* your styles go here */
 	input:-webkit-autofill,

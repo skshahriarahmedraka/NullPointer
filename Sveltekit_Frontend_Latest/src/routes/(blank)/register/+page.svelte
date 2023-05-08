@@ -1,6 +1,7 @@
 
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import LoadingSVG from '$lib/Loading/index.svelte';
 
 	let RegisterData = {
 		UserName: '',
@@ -77,9 +78,20 @@
 				});
 		}
 	}
+	let loadingState: boolean = false;
+	
+	afterUpdate(() => {
+		loadingState = true;
+	});
+
+	import Bg1 from "$lib/images/planetWal.webp"
+	import { afterUpdate, onMount } from 'svelte';
+	const RegBg = new URL(Bg1, import.meta.url).href;
 </script>
 
-<div class="grid h-screen w-full  place-items-center bg-[#181818] ">
+{#if loadingState }
+	
+<div class="grid h-screen w-full  place-items-center bg-[#181818] " style="background-image: url('{RegBg}');">
 	<a
 		href="/login"
 		on:click={() => {
@@ -319,9 +331,12 @@
 		</div>
 	</div>
 </div>
+{:else}
 
+	<LoadingSVG />
+{/if}
 <style>
-	/* your styles go here */
+	
 	input:-webkit-autofill,
 	input:-webkit-autofill:hover,
 	input:-webkit-autofill:focus,

@@ -7,9 +7,8 @@
 	// import Ans from "$lib/Ans/index.svelte"
 	// // import {UserData,QuestionData,Loading} from "$lib/store/store"
 
-	import LoadingSVG from '$lib/Loading/index.svelte';
-const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
-import { afterUpdate } from 'svelte';
+	const HeadLogo = new URL("../../../lib/icons/gPodcast.svg", import.meta.url).href;
+	import { afterUpdate } from 'svelte';
 	import Footer from '$lib/Footer/footer.svelte';
 
 	let loadingState: boolean = false;
@@ -24,11 +23,4 @@ import { afterUpdate } from 'svelte';
 	<title>Null Pointer</title>
 	<!-- <link rel="icon"  sizes="any" type="image/svg+xml" href={HeadLogo} /> -->
 </svelte:head>
-{#if loadingState}
 <slot/>
-	<!-- ////////////////////////////// -->
-
-    
-{:else}
-	<LoadingSVG/>
-{/if}
