@@ -146,14 +146,14 @@
 					<!-- VoteNumber -->
 					<div class="  {i.QuesUpvote-i.QuesDownvote > 0 ? 'text-[#e7e9eb]' : 'text-[#959ba0]'} ">{i.QuesUpvote-i.QuesDownvote} Votes</div>
 					<!-- Answer Number -->
-					{#if i.Answers.length ==0}
+					{#if i.Answers.length != 0}
 						<!-- acceped ans -->
-						<div class=" rounded-md bg-green-500 px-2 text-white">{i.Answers.length} Answers</div>
-					{:else if i.QuesAnsAccepted != ""}
-						<!-- Many ans but No accepted -->
 						<div class="rounded-md border-2 border-green-500 px-2 text-[#e7e9eb]">
 							{i.Answers.length} Answers
 						</div>
+						{:else if i.QuesAnsAccepted != ""}
+						<!-- Many ans but No accepted -->
+						<div class=" rounded-md bg-green-500 px-2 text-white">{i.Answers.length} Answers</div>
 					{:else}
 						<!-- No answer -->
 						<div class="text-[#959ba0]">{i.Answers.length} Answers</div>
@@ -172,11 +172,19 @@
 					<!-- tag ans user -->
 					<div class="flex flex-row  items-center justify-center ">
 						<div class="  min-h-10 mt-2  flex max-h-20 w-full flex-row flex-wrap">
-							<!-- {#each i[5] as tag} -->
-                                  <div class="text-[#9bc0da] hover:text-teal-200 hover:bg-slate-600 bg-[#3d4951] m-1 px-2 py-1 rounded-md hover:cursor-pointer">
-                                      {"tag"}
-                                  </div>
-                              <!-- {/each}    -->
+							{#if i.QuesTags.length !=0 }
+								
+								 {#each i.QuesTags as tag}
+									   <div class="text-[#9bc0da] hover:text-teal-200 hover:bg-slate-600 bg-[#3d4951] m-1 px-2 py-1 rounded-md hover:cursor-pointer">
+										   {tag}
+									   </div>
+								   {/each}   
+							{:else}
+							<div class="text-[#9bc0da] hover:text-teal-200 hover:bg-slate-600 bg-[#3d4951] bg-opacity-70 m-1 px-2 py-1 rounded-md hover:cursor-pointer">
+								{"No Tag"}
+							</div>
+								 
+							{/if}
 						</div>
 						<div class="" />
 
