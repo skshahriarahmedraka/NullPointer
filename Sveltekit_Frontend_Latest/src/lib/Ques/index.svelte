@@ -5,7 +5,10 @@
     // import Ans from "$lib/Ans/index.svelte"
     import MarkDownWriter from "$lib/Write/index.svelte"
 	import AvatarDefault from "$lib/icons/avatarDefault.svg";
-	import type { QuestionDataType } from "$lib/store/types";
+	import { fetchUserFlairData } from "$lib/store/fetch";
+	import type { QuestionDataType, UserFlairDataType } from "$lib/store/types";
+	import Down from "./svgs/Down.svelte";
+	import Up from "./svgs/Up.svelte";
 
     export let QuestionData:QuestionDataType
     // export let RelatedQuestionList:any
@@ -41,23 +44,17 @@
 			return String(x);
 		}
 	}
-	let AskedBy = {
-		UserID: 'skraka',
-		UserName: 'Sk Shahriar Ahmed Raka',
 
-		UserImage:
-			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-		Badges: { Reputation: 66813, Gold: 999025, Silver: 8880324, Bronze: 77789423 }
-	};
-	let ModifiedBy = {
-		UserID: 'skraka',
-		UserName: ' sheikh Ahmed Raka',
 
-		UserImage:
-			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-		Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 }
-	};
+	let AskedBy:UserFlairDataType 
+	let EditedBy :UserFlair
 
+    async function GetAskbyData(ID:stirng ){
+        AskedBy = await fetchUserFlairData()
+    }
+    async function GetEditedByData (ID:string){
+        EditedBy =  await fetchUserFlairData()
+    }
 //     var isoTimestamp = new Date().toISOString();
 // var localTimestamp = new Date(isoTimestamp).toLocaleString();
 
@@ -97,16 +94,12 @@
                     <!-- Ratings -->
                     <div class=" w-14 flex flex-col ">
                         <!-- UP -->
-                        <svg  class="  h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                        </svg>
+                        <Up/>
                         <div class=" text-xl mx-2 text-center {(QuestionData.QuesUpvote - QuestionData.QuesDownvote)<0 ? " text-red-500" :" text-green-500" }">
                             {QuestionData.QuesUpvote - QuestionData.QuesDownvote}
                         </div>
                         <!-- DOWN -->
-                        <svg class=" h-8 w-8 mx-2 fill-[#696f75] hover:fill-gray-400 " xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
+                       <Down/>
                     </div>
                     <!-- Question Detail  -->
                     <div class="w-full text-[#e7e9eb] font-sf-pro ">
@@ -130,13 +123,13 @@
                             <div class="grow"></div>
                             <!-- MODIFIED BY -->
                             {#if QuestionData.QuesEditedTime != ''}
-				<!-- content here -->
+			
 				<div class=" flex h-20  w-60 flex-col overflow-hidden px-2 ">
 					<p class="text-sm text-white ">Edited : {QuestionData.QuesEditedTime}</p>
 					<div class="flex  h-12 w-full flex-row  ">
-                        {#if ModifiedBy.UserImage != "" }
+                        {#if EditedBy.UserImage != "" }
                              <img
-                                 src="{ModifiedBy.UserImage}"
+                                 src="{EditedBy.UserImage}"
                                  alt="Modified By UserImage"
                                  class=" aspect-square  active:ring-offset-base-50 mt-1 h-10  w-10 cursor-pointer rounded-3xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
                              />
@@ -146,12 +139,12 @@
                         alt="Modified By UserImage"
                         class=" aspect-square  active:ring-offset-base-50 mt-1 h-10  w-10 cursor-pointer rounded-full object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
                     />
-                             <!-- else content here -->
+                            
                         {/if}
 						<div class=" flex flex-col ">
-							<div class=" ml-2  line-clamp-1">{ModifiedBy.UserName}</div>
+							<div class=" ml-2  line-clamp-1">{EditedBy.UserName}</div>
 							<div class=" ml-2  flex flex-row ">
-								{#if ModifiedBy.Badges.Reputation != 0}
+								{#if EditedBy.Badges.Reputation != 0}
 									<svg
 										class="mt-2 ml-1 h-2 w-2 place-content-center  fill-white  "
 										viewBox="0 0 512 512"
@@ -162,7 +155,7 @@
 									>
 									<p class="mx-1   text-white">{ RoundNum(ModifiedBy.Badges.Reputation)}</p>
 								{/if}
-                                {#if ModifiedBy.Badges.Gold != 0}
+                                {#if EditedBy.Badges.Gold != 0}
 									<svg
 										class="mt-2 ml-1 h-2 w-2 place-content-center  fill-[#ffcc01]  "
 										viewBox="0 0 512 512"
@@ -173,7 +166,7 @@
 									>
 									<p class="mx-1   text-[#ffcc01]">{ RoundNum(ModifiedBy.Badges.Gold)}</p>
 								{/if}
-								{#if  ModifiedBy.Badges.Silver != 0}
+								{#if  EditedBy.Badges.Silver != 0}
 									<svg
 										class="mt-2 ml-1 h-2 w-2  place-content-center fill-[#b4b8bc]  "
 										viewBox="0 0 512 512"
@@ -184,7 +177,7 @@
 									>
 									<p class="mx-1  text-[#b4b8bc]">{ RoundNum(ModifiedBy.Badges.Silver)}</p>
 								{/if}
-								{#if  ModifiedBy.Badges.Bronze != 0}
+								{#if  EditedBy.Badges.Bronze != 0}
 									<svg
 										class="mt-2 ml-1 h-2 w-2 place-content-center fill-[#d1a684]  "
 										viewBox="0 0 512 512"

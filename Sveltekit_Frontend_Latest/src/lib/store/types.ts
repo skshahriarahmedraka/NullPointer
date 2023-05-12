@@ -108,7 +108,7 @@ export type RegistrationType = {
     Password: string;
 }
 
-export type UserDataFlairType = {
+export type UserFlairDataType = {
 	ID    : string             
 	UserID :  string           
 	UserName : string             

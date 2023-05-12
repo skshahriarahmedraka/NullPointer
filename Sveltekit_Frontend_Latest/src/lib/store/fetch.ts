@@ -175,15 +175,15 @@ async function fetchPublicQuestionDataArr(type: string,start:number, stop :numbe
 	return QuestionDataResponseArr;
 }
 
-async function fetchUserFlairData(UUID: string): Promise<UserDataFlairType> {
+async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	const response = await fetch(`/api/user/flair/${UUID}`);
 	if (!response.ok) {
 		console.log("❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UUID}:")
 	
 
-		return {} as UserDataFlairType;
+		return {} as UserFlairDataType;
 	}
-	const userFlairData: UserDataFlairType = await response.json();
+	const userFlairData: UserFlairDataType = await response.json();
 	console.log("🚀 ~ file: fetch.ts:187 ~ fetchUserFlairData ~ userFlairData:", userFlairData)
 	return userFlairData;
 	
