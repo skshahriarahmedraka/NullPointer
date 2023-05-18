@@ -71,23 +71,53 @@
 
 // }
 import type { PageData } from './$types';
-	import type { QuestionDataType } from "$lib/store/types";
-	import { afterUpdate } from "svelte";
+	import type { CookieInfo1Type, QuestionDataType, UserDataType } from "$lib/store/types";
+	import { afterUpdate, onMount } from "svelte";
+	import { getCookieValue } from "$lib/store/utils";
+	import { fetchUserData } from "$lib/store/fetch";
+	import { UserData } from "$lib/store/store";
 
 export let data: PageData;
   let QuestionData:QuestionDataType 
   QuestionData =  data.QuestionData
   console.log("🚀 ~ file: +page.svelte:79 ~ QuestionData:", QuestionData)
 
-  let loadingState: boolean = false;
-	afterUpdate(() => {
+//   let loadingState: boolean = false;
+// 	afterUpdate(() => {
+// 		loadingState = true;
+// 	});
+
+
+    let loadingState: boolean = false;
+	onMount(async () => {
+		let CookieValueInfo1: string = getCookieValue('Info1');
+		console.log('🚀 ~ file: +page.svelte:30 ~ onMount ~ CookieValueInfo1:', CookieValueInfo1);
+		let InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
+
+		// let InfoCookieData = JSON.parse(Buffer.from(CookieValueInfo1, 'base64').toString('utf-8')) as CookieInfo1Type;
+		console.log('🚀 ~ file: +page.ts:24 ~ load ~ InfoCookieData:', InfoCookieData);
+		let UserDataValue = {} as UserDataType;
+		UserData.subscribe((value) => {
+			UserDataValue = value;
+		});
+		if (UserDataValue.ID != InfoCookieData.UUID) {
+			const GetUserData = await fetchUserData(InfoCookieData.UUID);
+			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
+			UserData.update(() => GetUserData);
+		}
 		loadingState = true;
 	});
+const HeadLogo = new URL("../../../../lib/icons/favicon.png", import.meta.url).href;
+
 </script>
 
 <style>
     /* your styles go here */
 </style>
+<svelte:head>
+	<title>{QuestionData.QuesTitle}</title>
+	<link rel="icon"  href={HeadLogo} />
+</svelte:head>
 
 
 

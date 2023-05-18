@@ -1,7 +1,6 @@
 <script>
     // your script goes here
     import LoadingSVG from '$lib/Loading/index.svelte';
-	import Skeleton1 from '$lib/Loading/skeleton1.svelte';
 
 </script>
 
@@ -12,4 +11,4 @@
 <!-- markup (zero or more items) goes here -->
 
 
-<Skeleton1/>
+<LoadingSVG/>

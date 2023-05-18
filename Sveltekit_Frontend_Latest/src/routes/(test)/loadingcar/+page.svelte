@@ -1,7 +1,7 @@
 <script>
     // your script goes here
-    import LoadingSVG from '$lib/Loading/index.svelte';
-	import Skeleton1 from '$lib/Loading/skeleton1.svelte';
+    import Car from '$lib/Loading/Car.svelte';
+import LoadingSVG from '$lib/Loading/index.svelte';
 
 </script>
 
@@ -12,4 +12,4 @@
 <!-- markup (zero or more items) goes here -->
 
 
-<Skeleton1/>
+ <Car />

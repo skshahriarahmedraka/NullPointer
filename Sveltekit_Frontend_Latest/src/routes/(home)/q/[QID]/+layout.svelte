@@ -14,14 +14,10 @@
 	});
 	import LoadingSVG from '$lib/Loading/index.svelte';
 	// import Footer from '$lib/Footer/footer.svelte';
-const HeadLogo = new URL("../../../../lib/icons/favicon.png", import.meta.url).href;
 </script>
 
 <!-- <slot /> -->
-<svelte:head>
-	<title>Null Pointer</title>
-	<link rel="icon"  href={HeadLogo} />
-</svelte:head>
+
 
 <!-- {#if loadingState} -->
 

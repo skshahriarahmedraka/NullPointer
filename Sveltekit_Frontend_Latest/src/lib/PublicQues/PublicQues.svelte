@@ -2,6 +2,8 @@
 	import { goto } from "$app/navigation";
 	import { fetchPublicQuestionDataArr } from "$lib/store/fetch";
 	import type { QuestionDataType } from "$lib/store/types";
+	import { fetchUserFlairData } from '$lib/store/fetch';
+	// import type { QuestionDataType, UserFlairDataType } from '$lib/store/types';
 
 	// import { toggle_class } from "svelte/internal";
 	// import {PublicQuesData} from "../store/store"
@@ -131,6 +133,8 @@
 	fetchData()
 	console.log("🚀 ~ file: index.svelte:126 ~ QuestionList:", QuestionList)
 	
+			// GetEditedByData(QuestionData.QuesEditedBy);
+		
 </script>
 
 <div class="h-full w-full ">
@@ -187,9 +191,15 @@
 							{/if}
 						</div>
 						<div class="" />
-
-						<p class="h-6 w-36 text-center mt-2 mr-1 text-sky-600 hover:text-blue-600 hover:cursor-pointer line-clamp-1">{"Ques Asked By Name"}</p>
-						<p class="text-[#e7e9eb] mt-2  font-bold mx-2">{"146k"}</p>
+						{#await fetchUserFlairData(i.QuesAskedBy)}
+							<p class=" text-white "  >...waiting</p>
+						{:then flairUserData}
+							<!-- <p>The number is {number}</p> -->
+							<p class="h-6 w-36 text-center mt-2 mr-1 text-sky-600 hover:text-blue-600 hover:cursor-pointer line-clamp-1">{flairUserData.UserName}</p>
+							<p class="text-[#e7e9eb] mt-2  font-bold mx-2">{flairUserData.Badges.Reputation}</p>
+						{:catch error}
+							<p style="color: red">{error.message}</p>
+						{/await}
 						<p class=" w-80 text-[#959ba0] mt-2 ">{ new Date(i.QuesAskedTime ).toLocaleString()}</p>
 					</div>
 				</div>

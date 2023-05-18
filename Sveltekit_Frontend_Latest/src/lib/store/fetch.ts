@@ -38,7 +38,7 @@ import type {
 	GroupListType,
 	FavouriteHashListType,
 	QuestionDataType,
-	UserDataFlairType
+	UserFlairDataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -178,10 +178,23 @@ async function fetchPublicQuestionDataArr(type: string,start:number, stop :numbe
 async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	const response = await fetch(`/api/user/flair/${UUID}`);
 	if (!response.ok) {
-		console.log("❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UUID}:")
+		console.log("❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UUID}:", UUID)
 	
 
-		return {} as UserFlairDataType;
+		return { ID    : "",             
+				UserID :  "",           
+				UserName : "",             
+				UserImage : "" ,
+				Badges  :   {
+					Reputation : 0 ,
+					Gold       : 0,
+					Silver    : 0,
+					Bronze     : 0,
+				} ,
+				Location   :    ""  ,           
+				Aboutme     :   ""  ,            
+			
+		 } as UserFlairDataType;
 	}
 	const userFlairData: UserFlairDataType = await response.json();
 	console.log("🚀 ~ file: fetch.ts:187 ~ fetchUserFlairData ~ userFlairData:", userFlairData)

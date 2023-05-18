@@ -262,7 +262,7 @@ body .dribbble img {
 
 
 
-<div class="loader scale-150">
+<div class="loader scale-125 ">
     <div>
       <ul>
         <li>
@@ -296,6 +296,6 @@ body .dribbble img {
           </svg>
         </li>
       </ul>
-    </div><span>Loading</span>
+    </div><span class=" text-xl font-poppins " >Loading</span>
   </div>
   
