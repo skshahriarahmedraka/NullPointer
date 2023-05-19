@@ -7,15 +7,15 @@
 	import LoadingSVG from '$lib/Loading/index.svelte';
 
 	import { goto } from '$app/navigation';
-	import { afterUpdate, onMount } from 'svelte';
+	import {  onMount } from 'svelte';
 	import Footer from '$lib/Footer/footer.svelte';
 	import PageNum from '$lib/PageNum/pageNum.svelte';
-	import type { PageData } from './$types';
+	// import type { PageData } from './$types';
 	import { getCookieValue } from '$lib/store/utils';
 	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 	import { fetchUserData } from '$lib/store/fetch';
 	import { UserData } from '$lib/store/store';
-	import Filter from '$lib/SpaceCom/svgs/Filter.svelte';
+	// import Filter from '$lib/SpaceCom/svgs/Filter.svelte';
 	import QuesFilter from '$lib/QuesFilter/QuesFilter.svelte';
 	// import { Buffer } from 'buffer';
 	// export let data: PageData;
@@ -26,6 +26,8 @@
 	// async function Necessary() {
 
 	// }
+	const HeadLogo = new URL("../../static/favicon.png", import.meta.url).href;
+
 	let loadingState: boolean = false;
 	onMount(async () => {
 		let CookieValueInfo1: string = getCookieValue('Info1');
@@ -46,8 +48,13 @@
 		loadingState = true;
 	});
 
-	afterUpdate(() => {});
+	
 </script>
+
+<svelte:head>
+	<title>Null Pointer</title>
+	<link rel="icon"  href={HeadLogo} />
+</svelte:head>
 
 {#if loadingState}
 	<div

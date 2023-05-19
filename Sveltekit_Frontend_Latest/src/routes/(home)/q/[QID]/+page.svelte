@@ -72,7 +72,7 @@
 // }
 import type { PageData } from './$types';
 	import type { CookieInfo1Type, QuestionDataType, UserDataType } from "$lib/store/types";
-	import { afterUpdate, onMount } from "svelte";
+	import {  onMount } from "svelte";
 	import { getCookieValue } from "$lib/store/utils";
 	import { fetchUserData } from "$lib/store/fetch";
 	import { UserData } from "$lib/store/store";
@@ -107,7 +107,7 @@ export let data: PageData;
 		}
 		loadingState = true;
 	});
-const HeadLogo = new URL("../../../../lib/icons/favicon.png", import.meta.url).href;
+const HeadLogo = new URL("$lib/icons/favicon.png", import.meta.url).href;
 
 </script>
 
