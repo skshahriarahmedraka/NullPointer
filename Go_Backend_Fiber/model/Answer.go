@@ -1,6 +1,10 @@
 package model
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 
 
@@ -8,22 +12,23 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 type AnswerData struct {
 
 	ID        primitive.ObjectID `json:"ID" bson:"_id"`
-	AnsweredBy  string `json:"AnsweredBy" bson:"AnsweredBy"`
-	AnsweredTime string
-	EditedBy string
-	EditedTime string;
-	Upvote int
-	Downvote int
-	Bookmark int
-	Accepted bool
-	Description string
+	QuesID   primitive.ObjectID `json:"QuesID" bson:"QuesID"`
+	AnsweredBy  primitive.ObjectID `json:"AnsweredBy" bson:"AnsweredBy"`
+	AnsweredTime time.Time `json:"AnsweredTime" bson:"AnsweredTime"`
+	EditedBy string `json:"EditedBy" bson:"EditedBy"`
+	EditedTime time.Time	`json:"EditedTime" bson:"EditedTime"`
+	Upvote int `json:"Upvote" bson:"Upvote"`
+	Downvote int `json:"Downvote" bson:"Downvote"`
+	Bookmark int 	`json:"Bookmark" bson:"Bookmark"`
+	Accepted bool `json:"Accepted" bson:"Accepted"`
+	Description string `json:"Description" bson:"Description"`
 	Comment []struct {
 		ID primitive.ObjectID `json:"ID" bson:"_id"`
-		Upvote int
-		Downvote int
-		UserID string 
-		UserName string;
-		CommentTime string;
+		Upvote int `json:"Upvote" bson:"Upvote"`
+		Downvote int `json:"Downvote" bson:"Downvote"`
+		UserID primitive.ObjectID  `json:"UserID" bson:"UserID"`
+		UserName string `json:"UserName" bson:"UserName"`
+		CommentTime time.Time `json:"CommentTime" bson:"CommentTime"`
 		Comment string;
 	}
 };

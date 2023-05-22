@@ -14,8 +14,8 @@ func GenerateHttpOnlyJWT(UserData model.UserData) string {
 			claims := model.JwtAuth1{
 				Email:        UserData.Email,
 				Name:         UserData.UserName,
-				UserID:       UserData.UserID,
-				UUID : 	  UserData.ID.Hex(),
+				UserURL:       UserData.UserURL,
+				UserID : 	  UserData.UserID.Hex(),
 				AccountType:  UserData.AccountType,
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: expirationTime.Unix(),

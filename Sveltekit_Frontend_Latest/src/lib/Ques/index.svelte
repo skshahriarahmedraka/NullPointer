@@ -6,8 +6,8 @@
 	import Ans from "$lib/Ans/index.svelte"
 	import MarkDownWriter from '$lib/Write/index.svelte';
 	import AvatarDefault from '$lib/icons/avatarDefault.svg';
-	import { fetchUserFlairData } from '$lib/store/fetch';
-	import type { QuestionDataType, UserFlairDataType } from '$lib/store/types';
+	import { fetchPostAnsData, fetchUserFlairData } from '$lib/store/fetch';
+	import type { AnswerDataType, QuestionDataType, UserFlairDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import Down from './svgs/Down.svelte';
 	import Up from './svgs/Up.svelte';
@@ -17,6 +17,7 @@
 	import RoundDot from './svgs/RoundDot.svelte';
 	import Filter from './svgs/Filter.svelte';
 	import Book from '$lib/Loading/book.svelte';
+	import { UserData } from '$lib/store/store';
 
 	export let QuestionData: QuestionDataType;
 	// export let RelatedQuestionList:any
@@ -77,6 +78,29 @@
 	// var localTimestamp = new Date(isoTimestamp).toLocaleString();
 
 	// console.log(localTimestamp);
+	let UserWrittenAns: AnswerDataType =  {
+		ID: "",
+		QuesID : QuestionData.ID,
+		AnsweredTime: new Date().toISOString(),
+		EditedTime: new Date().toISOString(),
+
+		Upvote: 0,
+		Downvote: 0,
+		Bookmark: 0,
+		Accepted: false,
+
+		AnsweredBy: $UserData.ID,
+		EditedBy: '',
+
+		Description:"",
+		Comment: []
+	};
+	async function PostMyAns() {
+		console.log("🚀 ~ file: index.svelte:97 ~ UserWrittenAns:", UserWrittenAns)
+		let PostedAns:AnswerDataType = await fetchPostAnsData(QuestionData.ID,UserWrittenAns)
+    console.log("🚀 ~ file: index.svelte:100 ~ PostMyAns ~ PostedAns:", PostedAns)
+    
+  }
 </script>
 
 {#if Loading}
@@ -307,12 +331,13 @@
 					</div>
 					<div class=" m-5 w-[95%]">
 						{#if writeAns}
-							<MarkDownWriter />
+							<MarkDownWriter markdown={UserWrittenAns.Description} on:PostMyAns={PostMyAns} />
 						{/if}
 					</div>
 				
 				</div>
 				<!-- answers -->
+				<Ans/>
 				<Ans/>
 
 			</div>

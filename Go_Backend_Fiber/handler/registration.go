@@ -43,7 +43,8 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 	} else {
 		// Check if the password is correct
 
-		RegData.ID = primitive.NewObjectID()
+		RegData.UserID = primitive.NewObjectID()
+		RegData.UserURL = "/"+RegData.UserID.Hex()
 		hash, err := bcrypt.GenerateFromPassword([]byte(RegData.Password), bcrypt.DefaultCost)
 		RegData.Password = string(hash)
 		// UserTitle string `json:"UserTitle"`
@@ -84,23 +85,7 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		}
 		fmt.Println("🚀 inserted UserData : ", res)
 
-		// expirationTime := time.Now().Add(1000 * time.Hour)
-		// claims := model.JwtAuth1{
-		// 	Email:       dbUser.Email,
-		// 	Name:        dbUser.UserName,
-		// 	UserID:      dbUser.UserID,
-		// 	AccountType: dbUser.AccountType,
-		// 	StandardClaims: jwt.StandardClaims{
-		// 		ExpiresAt: expirationTime.Unix(),
-		// 	},
-		// }
-		// token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		// tokenString, err := token.SignedString([]byte(os.Getenv("COOKIE_SECRET_JWT_AUTH1")))
-		// if err != nil {
-		// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-		// 		"message": "Error while creating token",
-		// 	})
-		// }
+	
 		tokenString := utils.GenerateHttpOnlyJWT(RegData)
 		if tokenString == "" {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

@@ -1,5 +1,5 @@
 export type UserDataType = {
-	ID : string;
+	ID: string;
 	UserID: string;
 	UserName: string;
 	UserTitle: string;
@@ -48,7 +48,7 @@ export type QuestionDataType = {
 	QuesDownvote: number;
 	QuesBookmark: number;
 	QuesTags: string[];
-	QuesGroup : string[];
+	QuesGroup: string[];
 	QuesAnsAccepted: string; // accepted answer ID
 
 	QuesAskedBy: string;
@@ -61,10 +61,35 @@ export type QuestionDataType = {
 	QuesComment: string[];
 	Answers: {
 		ID: string;
-		Vote: number;
+		UpVote: number;
+		DownVote: number;
+		AnsweredBy: string 
 		Comment: string[];
 	}[];
 };
+
+export type AnswerDataType= {
+    ID: string;
+	QuesID : string 
+    AnsweredBy: string;
+    AnsweredTime: string;
+    EditedBy: string;
+    EditedTime: string;
+    Upvote: number;
+    Downvote: number;
+    Bookmark: number;
+    Accepted: boolean;
+    Description: string;
+    Comment: {
+        ID: string;
+        UserID: string;
+        UserName: string;
+        Upvote: number;
+        Downvote: number;
+        CommentTime: string;
+        Comment: string;
+    }[];
+}
 
 export type CookieInfo1Type = {
 	Email: string;
@@ -101,25 +126,23 @@ export type HotQuesListType = {
 	ImageUrl: string;
 };
 
-
 export type RegistrationType = {
-    UserName: string;
-    Email: string;
-    Password: string;
-}
+	UserName: string;
+	Email: string;
+	Password: string;
+};
 
 export type UserFlairDataType = {
-	ID    : string             
-	UserID :  string           
-	UserName : string             
-	UserImage : string 
-	Badges  :   {
-		Reputation : number 
-		Gold       : number
-		Silver    : number
-		Bronze     : number
-	} 
-	Location   :    string             
-	Aboutme     :   string              
-
-}
+	ID: string;
+	UserID: string;
+	UserName: string;
+	UserImage: string;
+	Badges: {
+		Reputation: number;
+		Gold: number;
+		Silver: number;
+		Bronze: number;
+	};
+	Location: string;
+	Aboutme: string;
+};

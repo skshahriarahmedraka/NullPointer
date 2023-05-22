@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/minio/minio-go/v7 v7.0.52
+	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.2
 	go.mongodb.org/mongo-driver v1.11.4
 	golang.org/x/crypto v0.8.0

@@ -2,11 +2,12 @@
 
     import {marked} from 'marked'
     import TextArea from './TextArea.svelte'
-    
+    import { createEventDispatcher } from 'svelte'
+
 
     
   
-    let markdown:string=""
+  export let markdown:string=""
 
     
    let minRows = 1;
@@ -15,7 +16,11 @@
 	$: minHeight = `${1 + minRows * 1.2}em`;
 	$: maxHeight = maxRows ? `${1 + maxRows * 1.2}em` : `auto`;
         
-   
+  const dispatch = createEventDispatcher()
+  function PostAnswer(){
+    dispatch('PostMyAns', {
+    })
+  }
   </script>
   
   <!-- <h1>Markdown Editor</h1> -->
@@ -63,7 +68,9 @@
      prose-blockquote:border-sky-400
      prose-li:marker:text-white
                  mt-5 p-5 bg-inherit min-w-full max-w-full  overflow-hidden break-words  ">{@html marked(markdown)}</div>
-    <div class=" h-12 w-fit px-3 my-5   rounded-md bg-sky-500 hover:bg-blue-600 flex justify-center items-center ">
+    <div on:click={()=>{PostAnswer()}} 
+      on:keypress={()=>{}}
+        class=" h-12 w-fit px-3 my-5   rounded-md bg-sky-500 hover:bg-blue-600 flex justify-center items-center ">
       <p class="  my-auto text-gray-200 font-semibold text-xl ">Post Your Answer</p>
     </div>
   {/if}

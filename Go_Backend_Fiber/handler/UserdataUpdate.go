@@ -42,7 +42,7 @@ func (H *DatabaseCollections) UpdateUserData(c *fiber.Ctx) error {
 		filter := bson.D{{Key: "Email", Value: reqUserData.Email}}
 		
 		update := bson.D{
-			{Key: "$set", Value: bson.D{{Key: "UserID", Value: reqUserData.UserID}}},
+			{Key: "$set", Value: bson.D{{Key: "UserURL", Value: reqUserData.UserURL}}},
 			{Key: "$set", Value: bson.D{{Key: "UserName", Value: reqUserData.UserName}}},
 			{Key: "$set", Value: bson.D{{Key: "Email", Value: reqUserData.Email}}},
 			{Key: "$set", Value: bson.D{{Key: "Password", Value: reqUserData.Password}}},

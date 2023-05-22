@@ -7,8 +7,8 @@ import (
 )
 
 type UserData struct {
-	ID        primitive.ObjectID `json:"ID" bson:"_id"`
-	UserID    string             `json:"UserID" bson:"UserID" validate:"omitempty,min=4,max=64,UserIDcontainsany=~!@#$%^&*()_=+[]{}\|;:‘“,./<>?"`
+	UserID        primitive.ObjectID `json:"UserID" bson:"_id"`
+	UserURL    string             `json:"UserURL" bson:"UserURL" validate:"omitempty,min=4,max=64,UserIDcontainsany=~!@#$%^&*()_=+[]{}\|;:‘“,./<>?"`
 	UserName  string             `json:"UserName" bson:"UserName" validate:"omitempty,min=4,max=64,UserName"`
 	Email     string             `json:"Email" bson:"Email" validate:"required,min=4,max=100,Email"`
 	Password  string             `json:"Password"	bson:"Password" validate:"omitempty,min=4,max=100"`
@@ -38,8 +38,8 @@ type UserData struct {
 }
 
 type UserDataFlair struct {
-	ID        primitive.ObjectID `json:"ID" bson:"_id"`
-	UserID    string             `json:"UserID" bson:"UserID" validate:"omitempty,min=4,max=64,UserIDcontainsany=~!@#$%^&*()–_=+[]{}\|;:‘“,./<>?"`
+	UserID        primitive.ObjectID `json:"UserID" bson:"_id"`
+	UserURL   string             `json:"UserURL" bson:"UserURL" validate:"omitempty,min=4,max=64,UserIDcontainsany=~!@#$%^&*()–_=+[]{}\|;:‘“,./<>?"`
 	UserName  string             `json:"UserName" bson:"UserName" validate:"omitempty,min=4,max=64,UserName"`
 	UserImage string             `json:"UserImage" bson:"UserImage" validate:"omitempty" `
 	Badges    struct {

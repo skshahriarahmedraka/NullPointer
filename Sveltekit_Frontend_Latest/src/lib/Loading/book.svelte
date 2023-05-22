@@ -1,6 +1,4 @@
-<script lang="ts">
-    // your script goes here
-</script>
+
 
 <style lang="css">
     /* your styles go here */
@@ -226,10 +224,10 @@
     transform: rotateY(0deg);
   }
 }
-html {
+/* html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-}
+} */
 
 * {
   box-sizing: inherit;
@@ -238,15 +236,15 @@ html {
   box-sizing: inherit;
 }
 
-body {
+/* body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #1C212E;
   font-family: "Roboto", Arial;
-}
-body .dribbble {
+} */
+/* body .dribbble {
   position: fixed;
   display: block;
   right: 24px;
@@ -255,7 +253,7 @@ body .dribbble {
 body .dribbble img {
   display: block;
   width: 76px;
-}
+} */
 </style>
 
 <!-- markup (zero or more items) goes here -->

@@ -38,7 +38,8 @@ import type {
 	GroupListType,
 	FavouriteHashListType,
 	QuestionDataType,
-	UserFlairDataType
+	UserFlairDataType,
+	AnswerDataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -203,6 +204,22 @@ async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	
 }
 
+async function fetchPostAnsData(QuesID:string,PostAnsData : AnswerDataType): Promise<AnswerDataType> {
+	const response = await fetch(`/api/q/${QuesID}/answer`,{
+		method: 'POST',
+		body: JSON.stringify(PostAnsData),
+		headers:{
+		  'Content-Type': 'application/json'
+		}
+	  });
+	if (!response.ok) {
+		console.log(`Failed to fetch /api/q/answer/${QuesID} AnswerDataType`);
+		return {} as AnswerDataType;
+	}
+	const UpdatedData:AnswerDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:220 ~ fetchPostAnsData ~ UpdatedData:", UpdatedData)
+	return UpdatedData;
+}
 
 
 export {
@@ -216,5 +233,6 @@ export {
 	fetchAskQuestion,
 	fetchQuestionData,
 	fetchPublicQuestionDataArr,
-	fetchUserFlairData
+	fetchUserFlairData,
+	fetchPostAnsData
 };

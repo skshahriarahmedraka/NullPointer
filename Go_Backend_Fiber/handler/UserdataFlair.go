@@ -35,8 +35,8 @@ func (H *DatabaseCollections)UserDataFlair(c *fiber.Ctx) error  {
 		}
 		dbUserData.Password = ""
 		var userFlair model.UserDataFlair
-		userFlair.ID = dbUserData.ID
 		userFlair.UserID = dbUserData.UserID
+		userFlair.UserURL = dbUserData.UserURL
 		userFlair.UserName = dbUserData.UserName
 		userFlair.UserImage = dbUserData.UserImage
 		userFlair.Badges = dbUserData.Badges

@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
-import type {QuestionDataType,UserDataType} from './types'
+import type {UserDataType} from './types'
 
-const  Loading=writable(false)
+// const  Loading=writable(false)
 
 // let UserData = writable({})
 // let QuestionData = writable({})
@@ -142,45 +142,45 @@ const  Loading=writable(false)
 // // export default dataStore
 
 // // USER DATA
-const SampleUserData :UserDataType =  {
-    ID : "132143",
-    UserID: 'skraka',
-    UserName: 'Sk Shahriar Ahmed Raka',
-    Email: 'skshahra@gmail.com',
-    Password: '123456',
-    UserTitle : 'Full-Stack Web Developer',
-    UserImage:
-        'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-    Badges: {
-        Reputation: 13452543,
-        Gold: 999,
-        Silver: 888,
-        Bronze: 777
-    },
-    Follower: ['RKA', 'SHAHRIAR	'],
-    Following: ['RKA', 'SHAHRIAR'],
-    // Badges map[string]int
-    Location: 'Dhaka, Bangladesh',
-    MembershipTime: '3 year 5 Month',
-    LastSeen: 'This Week',
-    Aboutme:
-        'A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ',
-    Mysite: 'www.shahriarraka.me',
-    Github: 'www.github.com/skshahriarahmedraka',
-    Twitter: 'www.twitter.com/shahriarraka7',
-    Linkedin: 'www.linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/',
-    // "TopTags"    : ["Go","Rust","Python","Svelte","PostgreSQL"],
-    TopTags: [
-        { Name: 'Go', Score: 12, NumberOfPost: 4 },
-        { Name: 'Rust', Score: 10, NumberOfPost: 6 },
-        { Name: 'Python', Score: 7, NumberOfPost: 4 },
-        { Name: 'Svelte', Score: 12, NumberOfPost: 4 },
-        { Name: 'PostgreSQL', Score: 12, NumberOfPost: 4 }
-    ],
-    SelectedPanel: 'Profile',
-    AccountType: 'regular'
-}
-SampleUserData
+// const SampleUserData :UserDataType =  {
+//     ID : "132143",
+//     UserID: 'skraka',
+//     UserName: 'Sk Shahriar Ahmed Raka',
+//     Email: 'skshahra@gmail.com',
+//     Password: '123456',
+//     UserTitle : 'Full-Stack Web Developer',
+//     UserImage:
+//         'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
+//     Badges: {
+//         Reputation: 13452543,
+//         Gold: 999,
+//         Silver: 888,
+//         Bronze: 777
+//     },
+//     Follower: ['RKA', 'SHAHRIAR	'],
+//     Following: ['RKA', 'SHAHRIAR'],
+//     // Badges map[string]int
+//     Location: 'Dhaka, Bangladesh',
+//     MembershipTime: '3 year 5 Month',
+//     LastSeen: 'This Week',
+//     Aboutme:
+//         'A Curious Learner, Full-Stack Web Developer, Security Researcher\nHere are my skills and strengths:\n✓ Expert in Golang\n ✓ Expert in Fiber framework (using Golang) \n ✓ Expert in WebAssembly (using Golang)  Expert in Golang     ✓ Expert in Fiber framework (using Golang)    ✓ Expert in WebAssembly (using Golang) ✓ Expert in database design, development, optimization, and migration    (PostgreSQL, MySQL, MongoDB , Redis) ✓ Expert in ( Grpc, protocol buffer ) ✓ Experienced in ( WebSocket, Socket.io, WebRTC ) for real-time client and server applications ✓ Experienced in ( Svelte.js ) and some knowledge in ( TypeScript ) ✓ Good understanding of ( Docker, Bash, PowerShell, Git,    Nginx, Kubernetes )        Github : github.com/skshahriarahmedraka    Upwork : upwork.com/o/profiles/users/~0107ef3405bffbe57e    Linkedin : linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/  Telegram : t.me/shahriarraka ',
+//     Mysite: 'www.shahriarraka.me',
+//     Github: 'www.github.com/skshahriarahmedraka',
+//     Twitter: 'www.twitter.com/shahriarraka7',
+//     Linkedin: 'www.linkedin.com/in/sk-shahriar-ahmed-raka-862a31193/',
+//     // "TopTags"    : ["Go","Rust","Python","Svelte","PostgreSQL"],
+//     TopTags: [
+//         { Name: 'Go', Score: 12, NumberOfPost: 4 },
+//         { Name: 'Rust', Score: 10, NumberOfPost: 6 },
+//         { Name: 'Python', Score: 7, NumberOfPost: 4 },
+//         { Name: 'Svelte', Score: 12, NumberOfPost: 4 },
+//         { Name: 'PostgreSQL', Score: 12, NumberOfPost: 4 }
+//     ],
+//     SelectedPanel: 'Profile',
+//     AccountType: 'regular'
+// }
+// SampleUserData
 const UserData = writable({} as UserDataType)
 // UserData.update(()=>SampleUserData)
   
@@ -202,39 +202,37 @@ const UserData = writable({} as UserDataType)
 
 // // QUESTION DATA
 
-const SampleQuestionData:QuestionDataType ={
-    "ID": "143",
-    "QuesTitle": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
+// const SampleQuestionData:QuestionDataType ={
+//     "ID": "143",
+//     "QuesTitle": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
    
-    "QuesEditedTime": new Date().toISOString(),
-    "QuesViewed": 577000,
+//     "QuesEditedTime": new Date().toISOString(),
+//     "QuesViewed": 577000,
 
-    "QuesUpvote": 4,
-    "QuesDownvote": 32,
-    "QuesBookmark": 23,
+//     "QuesUpvote": 4,
+//     "QuesDownvote": 32,
+//     "QuesBookmark": 23,
 
-    "QuesTags": [
-        "go",
-        "string",
-        "Concatination",
-        "go"
-    ],
-    "QuesGroup": ["golang", "webdev" ],
-    "QuesAskedBy":  "UserID",
-    "QuesAnsAccepted" : "answerIDNumber",
-    "QuesAskedTime" : new Date().toISOString(),
-    "QuesEditedBy": "154123",
+//     "QuesTags": [
+//         "go",
+//         "string",
+//         "Concatination",
+//         "go"
+//     ],
+//     "QuesGroup": ["golang", "webdev" ],
+//     "QuesAskedBy":  "UserID",
+//     "QuesAnsAccepted" : "answerIDNumber",
+//     "QuesAskedTime" : new Date().toISOString(),
+//     "QuesEditedBy": "154123",
     
-    "QuesDescription": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
-    "QuesComment": [
-        "82567384","887874","72643"
-    ],
-    "Answers": [
-        {"ID": "1","Vote":12,"Comment":["234234","234234","234234"]},
-    ]
-}
-const QuestionData=writable({} as QuestionDataType )
-QuestionData.update(()=>SampleQuestionData)
+//     "QuesDescription": "In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+//     "QuesComment": [
+//         "82567384","887874","72643"
+//     ],
+  
+// }
+// const QuestionData=writable({} as QuestionDataType )
+// QuestionData.update(()=>SampleQuestionData)
     // {
     //     "ID": 1,
     //     "Title": "How to efficiently concatenate strings in go How to efficiently concatenate strings in go How to efficiently concatenate strings in goHow to efficiently concatenate strings in goHow to efficiently concatenate strings in go goHow to efficiently concatenate strings in goHow to",
@@ -440,6 +438,6 @@ const BlogList = writable([
 
 
 
-export {UserData,QuestionData,RelatedQuestionList,SpaceList,FavoriteHash,HotQues,BlogList,Loading}
+export {UserData,RelatedQuestionList,SpaceList,FavoriteHash,HotQues,BlogList}
 // export { SpaceList,FavoriteHash}
 
