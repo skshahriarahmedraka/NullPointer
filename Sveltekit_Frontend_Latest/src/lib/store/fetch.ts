@@ -170,7 +170,7 @@ async function fetchPublicQuestionDataArr(type: string,start:number, stop :numbe
 	const response = await fetch(`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 	if (!response.ok) {
 		console.log(`❌ /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
-		return {} as QuestionDataType[];
+		return [] as QuestionDataType[];
 	}
 	const QuestionDataResponseArr:QuestionDataType[] = await response.json();
 	console.log("🚀 ~ file: fetch.ts:173 ~ fetchPublicQuestionData ~ QuestionDataResponseArr:", QuestionDataResponseArr)
@@ -183,8 +183,9 @@ async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 		console.log("❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UUID}:", UUID)
 	
 
-		return { ID    : "",             
-				UserID :  "",           
+		return { 
+			UserID :  "",           
+			UserURL    : "",             
 				UserName : "",             
 				UserImage : "" ,
 				Badges  :   {

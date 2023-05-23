@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	// "go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,7 +22,6 @@ import (
 
 func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
-	
 	fmt.Println("🚀 ~ file: quesListQuery.go ~ line 25 ~ ifc.Query ~ c.Query(\"order\") : ", c.Query("order"))
 	fmt.Println("🚀 ~ file: quesListQuery.go ~ line 25 ~ ifc.Query ~ c.Query(\"stop\") : ", c.Query("stop"))
 	fmt.Println("🚀 ~ file: quesListQuery.go ~ line 25 ~ ifc.Query ~ c.Query(\"start\") : ", c.Query("start"))
@@ -33,88 +33,129 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
 		dbQuesData := []model.QuesData{}
 		opts := options.Find()
+		order, _ := strconv.Atoi((c.Query("order")))
+		var cursor *mongo.Cursor
+		var err error
+		var limit int
+
+
 		var filter primitive.D
-		//  type : time , views , unanswered  , bounty
+		//  type : time , views , unanswered  , vote
 		switch c.Query("type") {
 		case "time":
-			if c.Query("order") == "1" {
-				opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
-			} else {
 
-				opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: -1}})
-			}
+			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
+
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
-			
+			limit, _ = strconv.Atoi(c.Query("stop"))
+			opts.SetLimit(int64(limit))
+			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding ques data", err)
+
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Internal Server Error while fetching ques data",
+				})
+			}
+
 		case "views":
-			if c.Query("order") == "1" {
 
-				opts.SetSort(bson.D{{Key: "QuesViewed", Value: 1}})
-			} else {
-				
-				opts.SetSort(bson.D{{Key: "QuesViewed", Value: -1}})
-			}
+			opts.SetSort(bson.D{{Key: "QuesViewed", Value: order}})
+
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
-			
+			limit, _ = strconv.Atoi(c.Query("stop"))
+			opts.SetLimit(int64(limit))
+			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding ques data", err)
+
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Internal Server Error while fetching ques data",
+				})
+			}
+
 		case "unanswered":
-			if c.Query("order") == "1" {
 
-				opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
-			} else {
-				opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: -1}})
+			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
 
-			}
 			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: 0}}}}
+			limit, _ = strconv.Atoi(c.Query("stop"))
+			opts.SetLimit(int64(limit))
+			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding ques data", err)
+
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Internal Server Error while fetching ques data",
+				})
+			}
+		case "votes":
+
+			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
+			projectStage := bson.D{{Key: "$project", Value: bson.D{
+				{Key: "_id", Value: 0},
+				{Key: "QuesUpvote", Value: 1},
+				{Key: "QuesDownvote", Value: 1},
+				{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$QuesUpvote", "$QuesDownvote"}}}},
+			}}}
+
+			sortStage := bson.D{{Key: "$sort", Value: bson.D{
+				{Key: "Difference", Value: order},
+			}}}
+
+			// Aggregation pipeline
+			pipeline := mongo.Pipeline{matchStage, projectStage, sortStage}
+
+			// Execute the aggregation query
+			cursor, err = H.MongoQuestionCol.Aggregate(context.Background(), pipeline)
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Internal Server Error while fetching ques data",
+				})
+			}
 			
-			// opts.Set(bson.D{{Key: "QuestionID", Value: bson.D{{Key: "$ne", Value: 0}}}})
-
-			// case "bounty":
-			// 	opts.SetSort(bson.D{{Key :"QuesAskedTime", Value:  1}})
 		default:
-			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
+			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
+
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			limit, _ = strconv.Atoi(c.Query("stop"))
+			opts.SetLimit(int64(limit))
+			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding ques data", err)
+
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message": "Internal Server Error while fetching ques data",
+				})
+			}
 
 		}
-		// opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: 1}})
-		limit , _ :=strconv.Atoi(c.Query("stop"))
-		opts.SetLimit(int64(limit))
-		cursor, err := H.MongoQuestionCol.Find(ctx, filter, opts)
-		logs.Error("Error while finding ques data", err)
 
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"message": "Internal Server Error while fetching ques data",
-			})
-		}
 		defer cursor.Close(ctx)
-		start ,_ := strconv.Atoi(c.Query("start"))
+		start, _ := strconv.Atoi(c.Query("start"))
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {
-				fmt.Println("skipping",i)
+				fmt.Println("skipping", i)
 			}
 		}
-	
+
 		for i := start; i < limit; i++ {
 			if !cursor.Next(context.Background()) {
 				fmt.Println("🚀 ~ file: quesListQuery.go ~ line 100 ~ if!cursor.Next ~ dbQuesData : ", dbQuesData)
 				return c.Status(fiber.StatusOK).JSON(dbQuesData)
 			}
-	
+
 			var ques model.QuesData
 			if err := cursor.Decode(&ques); err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 					"message": "Internal Server Error while decoding question",
 				})
 			}
-	
-			// questions = append(questions, q)
+
 			dbQuesData = append(dbQuesData, ques)
 		}
-	
 
-		// for cursor.Next(ctx) {
-		// 	var ques model.QuesData
-		// 	cursor.Decode(&ques)
-		// }
+		
 		fmt.Println("🚀 ~ file: quesListQuery.go ~ line 46 ~ forcursor.Next ~ dbQuesData : ", dbQuesData)
 
 		return c.Status(fiber.StatusOK).JSON(dbQuesData)

@@ -98,7 +98,7 @@
 			UserDataValue = value;
 		});
 		
-		const GetUserData = await fetchUserData(InfoCookieData.UUID);
+		const GetUserData = await fetchUserData(InfoCookieData.UserID);
 		console.log("🚀 ~ file: +page.svelte:102 ~ onMount ~ GetUserData:", GetUserData)
 		UserData.update(() => GetUserData);
 		

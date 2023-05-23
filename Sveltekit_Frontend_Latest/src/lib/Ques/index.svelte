@@ -89,7 +89,7 @@
 		Bookmark: 0,
 		Accepted: false,
 
-		AnsweredBy: $UserData.ID,
+		AnsweredBy: $UserData.UserID,
 		EditedBy: '',
 
 		Description:"",

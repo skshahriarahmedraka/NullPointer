@@ -1,7 +1,7 @@
 <script lang="ts">
-	let pageNumStart = 1;
-	let pageNumNow = 1;
-	let pageNumEnd = 30;
+	export let pageNumStart = 1;
+	export let pageNumNow = 1;
+	export let pageNumEnd = 30;
 	// let PresentArray = Array.from(Array(6).keys()).slice(1);
 	// let func = function () {
 	// 	if (pageNumNow < 3) {

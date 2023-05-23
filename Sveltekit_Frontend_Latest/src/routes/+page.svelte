@@ -40,8 +40,8 @@
 		UserData.subscribe((value) => {
 			UserDataValue = value;
 		});
-		if (UserDataValue.ID != InfoCookieData.UUID) {
-			const GetUserData = await fetchUserData(InfoCookieData.UUID);
+		if (UserDataValue.UserID != InfoCookieData.UserID) {
+			const GetUserData = await fetchUserData(InfoCookieData.UserID);
 			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
 		}
@@ -84,11 +84,11 @@
 							</div>
 						</div>
 						<!-- filter -->
-						<QuesFilter/>
+						<!-- <QuesFilter/> -->
 
 						<!-- all Question list -->
 						<PublicQues />
-						<PageNum />
+						<!-- <PageNum /> -->
 					</div>
 					<!-- right sidebar -->
 					<div class="flex h-full w-[350px] flex-col">

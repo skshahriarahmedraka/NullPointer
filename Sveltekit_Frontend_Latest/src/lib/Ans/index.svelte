@@ -60,8 +60,8 @@
 		}
 	}
 	let AnsGivenBy: UserFlairDataType = {
-		ID: '56654653',
-		UserID: 'skraka',
+		UserID: '56654653',
+		UserURL: 'skraka',
 		UserName: ' sheikh Ahmed Raka',
 
 		UserImage:
@@ -73,8 +73,8 @@
 
 	// let AskedBy: UserFlairDataType;
 	let EditedBy: UserFlairDataType = {
-		ID: '56654653',
-		UserID: 'skraka',
+		UserID: '56654653',
+		UserURL: 'skraka',
 		UserName: ' sheikh Ahmed Raka',
 
 		UserImage:

@@ -1,6 +1,6 @@
 export type UserDataType = {
-	ID: string;
 	UserID: string;
+	UserURL: string;
 	UserName: string;
 	UserTitle: string;
 	Email: string;
@@ -95,7 +95,7 @@ export type CookieInfo1Type = {
 	Email: string;
 	Name: string;
 	UserID: string;
-	UUID: string;
+	UserURL: string;
 	AccountType: string;
 };
 
@@ -133,8 +133,8 @@ export type RegistrationType = {
 };
 
 export type UserFlairDataType = {
-	ID: string;
 	UserID: string;
+	UserURL: string;
 	UserName: string;
 	UserImage: string;
 	Badges: {
