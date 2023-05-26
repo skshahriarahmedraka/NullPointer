@@ -3,10 +3,10 @@
 	import RelatedQues from '$lib/RelatedQues/index.svelte';
 	import { marked } from 'marked';
 
-	import Ans from "$lib/Ans/index.svelte"
+	import Ans from '$lib/Ans/index.svelte';
 	import MarkDownWriter from '$lib/Write/index.svelte';
 	import AvatarDefault from '$lib/icons/avatarDefault.svg';
-	import { fetchPostAnsData, fetchUserFlairData } from '$lib/store/fetch';
+	import { fetchAnsData, fetchPostAnsData, fetchUserFlairData } from '$lib/store/fetch';
 	import type { AnswerDataType, QuestionDataType, UserFlairDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import Down from './svgs/Down.svelte';
@@ -18,6 +18,8 @@
 	import Filter from './svgs/Filter.svelte';
 	import Book from '$lib/Loading/book.svelte';
 	import { UserData } from '$lib/store/store';
+	import WriteAns from '$lib/WriteAns/index.svelte';
+	import Emptybox from '$lib/errors/emptybox.svelte';
 
 	export let QuestionData: QuestionDataType;
 	// export let RelatedQuestionList:any
@@ -61,14 +63,14 @@
 	// }
 	// async function GetEditedByData(ID: string) {
 	// }
-	
+
 	let Loading = false;
 	onMount(async () => {
-		if (QuestionData.QuesAskedBy != '') {
+		if (parseInt(QuestionData.QuesAskedBy) != 0) {
 			AskedBy = await fetchUserFlairData(QuestionData.QuesAskedBy);
 			// GetAskbyData(QuestionData.QuesAskedBy);
 		}
-		if (QuestionData.QuesEditedBy != '') {
+		if (parseInt(QuestionData.QuesEditedBy) != 0) {
 			EditedBy = await fetchUserFlairData(QuestionData.QuesEditedBy);
 			// GetEditedByData(QuestionData.QuesEditedBy);
 		}
@@ -78,9 +80,9 @@
 	// var localTimestamp = new Date(isoTimestamp).toLocaleString();
 
 	// console.log(localTimestamp);
-	let UserWrittenAns: AnswerDataType =  {
-		ID: "",
-		QuesID : QuestionData.ID,
+	let UserWrittenAns: AnswerDataType = {
+		ID: '',
+		QuesID: QuestionData.ID,
 		AnsweredTime: new Date().toISOString(),
 		EditedTime: new Date().toISOString(),
 
@@ -92,15 +94,14 @@
 		AnsweredBy: $UserData.UserID,
 		EditedBy: '',
 
-		Description:"",
+		Description: '',
 		Comment: []
 	};
 	async function PostMyAns() {
-		console.log("🚀 ~ file: index.svelte:97 ~ UserWrittenAns:", UserWrittenAns)
-		let PostedAns:AnswerDataType = await fetchPostAnsData(QuestionData.ID,UserWrittenAns)
-    console.log("🚀 ~ file: index.svelte:100 ~ PostMyAns ~ PostedAns:", PostedAns)
-    
-  }
+		console.log('🚀 ~ file: index.svelte:97 ~ UserWrittenAns:', UserWrittenAns);
+		let PostedAns: AnswerDataType = await fetchPostAnsData(QuestionData.ID, UserWrittenAns);
+		console.log('🚀 ~ file: index.svelte:100 ~ PostMyAns ~ PostedAns:', PostedAns);
+	}
 </script>
 
 {#if Loading}
@@ -118,11 +119,11 @@
 			<div class="ml-3 mt-2 flex flex-row space-x-3">
 				<div class="">
 					<p class="inline-flex text-[#959ba0]">Asked</p>
-					{ new Date(QuestionData.QuesAskedTime ).toLocaleString()  }
+					{new Date(QuestionData.QuesAskedTime).toLocaleString()}
 				</div>
 				<div class="">
 					<p class="inline-flex text-[#959ba0]">Modified</p>
-					{new Date(QuestionData.QuesEditedTime ).toLocaleString() }
+					{new Date(QuestionData.QuesEditedTime).toLocaleString()}
 				</div>
 				<div class="">
 					<p class="inline-flex text-[#959ba0]">Viewed</p>
@@ -134,7 +135,7 @@
 		<div class=" ml-3 h-[1px] w-[1050px] overflow-hidden bg-stone-400" />
 		<div class=" flex flex-row">
 			<!-- QUESTION DESCRIPTION CONTAINER  -->
-			<div class="w-[850px] ">
+			<div class="w-[850px]">
 				<!-- QUESTION DESCRIPTION -->
 				<div class="">
 					<div class=" my-3 flex w-full flex-row pt-2">
@@ -156,13 +157,12 @@
 						</div>
 						<!-- Question Detail  -->
 						<div class="w-full font-sf-pro text-[#e7e9eb]">
-						
 							<div
-								class=" prose mt-5 min-w-full max-w-full overflow-hidden break-words bg-inherit p-5 text-[#e7e9eb] prose-headings:text-[#e7e9eb] prose-p:text-[#e7e9eb] prose-a:text-blue-500 prose-blockquote:border-sky-400 prose-blockquote:text-[#e7e9eb] prose-figure:text-white prose-figcaption:text-[#e7e9eb]   prose-strong:text-[#e7e9eb] prose-em:text-[#e7e9eb] prose-code:text-[#e7e9eb] prose-pre:text-[#e7e9eb] prose-ol:text-[#e7e9eb] prose-ul:text-[#e7e9eb] prose-li:text-[#e7e9eb] prose-li:marker:text-white prose-table:text-[#e7e9eb] prose-thead:text-[#e7e9eb] prose-tr:border-4 prose-tr:border-gray-300 prose-tr:text-[#e7e9eb] prose-th:border-2 prose-th:border-gray-300 prose-th:text-[#e7e9eb] prose-td:border-2 prose-td:border-gray-300 prose-td:text-[#e7e9eb] prose-img:text-[#e7e9eb] prose-video:text-[#e7e9eb]  prose-hr:bg-gray-500 prose-hr:text-[#e7e9eb]  "
+								class=" prose mt-5 min-w-full max-w-full overflow-hidden break-words bg-inherit p-5 text-[#e7e9eb] prose-headings:text-[#e7e9eb] prose-p:text-[#e7e9eb] prose-a:text-blue-500 prose-blockquote:border-sky-400 prose-blockquote:text-[#e7e9eb] prose-figure:text-white prose-figcaption:text-[#e7e9eb] prose-strong:text-[#e7e9eb] prose-em:text-[#e7e9eb] prose-code:text-[#e7e9eb] prose-pre:text-[#e7e9eb] prose-ol:text-[#e7e9eb] prose-ul:text-[#e7e9eb] prose-li:text-[#e7e9eb] prose-li:marker:text-white prose-table:text-[#e7e9eb] prose-thead:text-[#e7e9eb] prose-tr:border-4 prose-tr:border-gray-300 prose-tr:text-[#e7e9eb] prose-th:border-2 prose-th:border-gray-300 prose-th:text-[#e7e9eb] prose-td:border-2 prose-td:border-gray-300 prose-td:text-[#e7e9eb] prose-img:text-[#e7e9eb] prose-video:text-[#e7e9eb] prose-hr:bg-gray-500 prose-hr:text-[#e7e9eb]"
 							>
-								{@html marked(QuestionData.QuesDescription)} 
+								{@html marked(QuestionData.QuesDescription)}
 							</div>
-							
+
 							<!-- Question Tag -->
 							<div class="  min-h-10 mt-2 flex max-h-20 w-full flex-row flex-wrap">
 								{#each QuestionData.QuesTags as tag}
@@ -174,25 +174,24 @@
 								{/each}
 							</div>
 							<!-- share edit askedBy modifiedBy -->
-							<div class="mt-2 flex flex-row ">
-								<button class="" on:click={()=>{}} >
+							<div class="mt-2 flex flex-row">
+								<button class="" on:click={() => {}}>
 									<Share />
-									
 								</button>
-								<button class="" on:click={()=>{}} >
-
+								<button class="" on:click={() => {}}>
 									<Edit />
 								</button>
-								<button class="" on:click={()=>{}} >
-
+								<button class="" on:click={() => {}}>
 									<Follow />
 								</button>
 								<!-- Gap -->
 								<div class="grow" />
 								<!-- MODIFIED BY -->
-								{#if QuestionData.QuesEditedBy.trim() != ''}
+								{#if parseInt(QuestionData.QuesEditedBy) != 0}
 									<div class=" flex h-20 w-60 flex-col overflow-hidden px-2">
-										<p class="text-sm text-white">Edited : {new Date(QuestionData.QuesEditedTime ).toLocaleString() }</p>
+										<p class="text-sm text-white">
+											Edited : {new Date(QuestionData.QuesEditedTime).toLocaleString()}
+										</p>
 										<div class="flex h-12 w-full flex-row">
 											{#if EditedBy.UserImage != ''}
 												<img
@@ -218,19 +217,25 @@
 												<!-- <div class=" ml-2 line-clamp-1">{EditedBy.UserName}</div> -->
 												<div class=" ml-2 flex flex-row">
 													{#if EditedBy.Badges.Reputation != 0}
-														<RoundDot class ="ml-1 mt-2 h-2 w-2 place-content-center fill-white" />
+														<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-white" />
 														<p class="mx-1 text-white">{RoundNum(EditedBy.Badges.Reputation)}</p>
 													{/if}
 													{#if EditedBy.Badges.Gold != 0}
-														<RoundDot class ="ml-1 mt-2 h-2 w-2 place-content-center fill-[#ffcc01]" />
+														<RoundDot
+															class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#ffcc01]"
+														/>
 														<p class="mx-1 text-[#ffcc01]">{RoundNum(EditedBy.Badges.Gold)}</p>
 													{/if}
 													{#if EditedBy.Badges.Silver != 0}
-														<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#b4b8bc]" />
+														<RoundDot
+															class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#b4b8bc]"
+														/>
 														<p class="mx-1 text-[#b4b8bc]">{RoundNum(EditedBy.Badges.Silver)}</p>
 													{/if}
 													{#if EditedBy.Badges.Bronze != 0}
-														<RoundDot class ="ml-1 mt-2 h-2 w-2 place-content-center fill-[#d1a684]"  />
+														<RoundDot
+															class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#d1a684]"
+														/>
 														<p class="mx-1 text-[#d1a684]">{RoundNum(EditedBy.Badges.Bronze)}</p>
 													{/if}
 												</div>
@@ -240,7 +245,9 @@
 								{/if}
 								<!-- Asked BY -->
 								<div class=" ml-2 flex h-20 w-56 flex-col overflow-hidden px-2">
-									<p class="text-sm text-white">Asked : {new Date(QuestionData.QuesAskedTime ).toLocaleString()}</p>
+									<p class="text-sm text-white">
+										Asked : {new Date(QuestionData.QuesAskedTime).toLocaleString()}
+									</p>
 									<div class="flex h-12 w-full flex-row">
 										{#if AskedBy.UserImage != ''}
 											<!-- svelte-ignore a11y-img-redundant-alt -->
@@ -266,19 +273,17 @@
 											{/if}
 											<div class=" flex flex-row">
 												{#if AskedBy.Badges.Gold != 0}
+													<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#ffcc01]" />
 
-												<RoundDot class ="ml-1 mt-2 h-2 w-2 place-content-center fill-[#ffcc01]" />
-
-													
 													<p class="mx-1 text-[#ffcc01]">{RoundNum(AskedBy.Badges.Gold)}</p>
 												{/if}
 												{#if AskedBy.Badges.Silver != 0}
-												<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#b4b8bc]" />
+													<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#b4b8bc]" />
 
 													<p class="mx-1 text-[#b4b8bc]">{RoundNum(AskedBy.Badges.Silver)}</p>
 												{/if}
 												{#if AskedBy.Badges.Bronze != 0}
-												<RoundDot class ="ml-1 mt-2 h-2 w-2 place-content-center fill-[#d1a684]"  />
+													<RoundDot class="ml-1 mt-2 h-2 w-2 place-content-center fill-[#d1a684]" />
 
 													<p class="mx-1 text-[#d1a684]">{RoundNum(AskedBy.Badges.Bronze)}</p>
 												{/if}
@@ -331,15 +336,36 @@
 					</div>
 					<div class=" m-5 w-[95%]">
 						{#if writeAns}
-							<MarkDownWriter markdown={UserWrittenAns.Description} on:PostMyAns={PostMyAns} />
+							<WriteAns
+								bind:markdown={UserWrittenAns.Description}
+								on:PostMyAns={PostMyAns}
+								on:CancelAnswer={() => {
+									UserWrittenAns.Description = '';
+									writeAns = !writeAns;
+								}}
+							/>
 						{/if}
 					</div>
-				
 				</div>
 				<!-- answers -->
-				<Ans/>
-				<Ans/>
-
+				{#if QuestionData.Answers.length != 0}
+					{#each QuestionData.Answers as ans}
+						{#await fetchAnsData(ans.ID)}
+							<p>...waiting</p>
+						{:then AnsData}
+							<Ans ans={AnsData} />
+						{:catch error}
+							<p style="color: red">{error.message}</p>
+						{/await}
+					{/each}
+				{:else}
+					<div class=" flex h-full w-full items-center justify-center text-xl text-white">
+						<div class="flex flex-col items-center justify-center">
+							<Emptybox class="h-20 " />
+							<p class=" font-raleway">No Answer Yet</p>
+						</div>
+					</div>
+				{/if}
 			</div>
 
 			<!--List of Answers -->
@@ -351,8 +377,9 @@
 		</div>
 	</div>
 {:else}
-	<div class=" mt-2 max-h-full min-h-screen w-[1100px] bg-[#2d2d2d] pl-5 flex justify-center items-center">
-		
+	<div
+		class=" mt-2 flex max-h-full min-h-screen w-[1100px] items-center justify-center bg-[#2d2d2d] pl-5"
+	>
 		<Book />
 	</div>
 {/if}

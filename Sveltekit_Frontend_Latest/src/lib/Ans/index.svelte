@@ -14,35 +14,36 @@
 	import Book from '$lib/Loading/book.svelte';
 	import { fetchUserFlairData } from '$lib/store/fetch';
 
-	let ans: AnswerDataType= {
-		ID: "78667896",
-		QuesID: "78667896",
-		AnsweredTime: new Date().toISOString(),
-		EditedTime: new Date().toISOString(),
+	export let ans: AnswerDataType
+	//  {
+	// 	ID: "78667896",
+	// 	QuesID: "78667896",
+	// 	AnsweredTime: new Date().toISOString(),
+	// 	EditedTime: new Date().toISOString(),
 
-		Upvote: 4,
-		Downvote: 32,
-		Bookmark: 23,
-		Accepted: true,
+	// 	Upvote: 4,
+	// 	Downvote: 32,
+	// 	Bookmark: 23,
+	// 	Accepted: true,
 
-		AnsweredBy: '46262554',
-		EditedBy: '46262554',
+	// 	AnsweredBy: '1111111111111111',
+	// 	EditedBy: '1111111111111111111',
 
-		Description:
-			"In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
-		Comment: [
-			{
-				ID: '1',
-				Upvote: 4,
-				Downvote: 1,
-				UserID: '154123',
-				UserName: 'sk shahriar ahmed raka',
-				CommentTime: new Date().toISOString(),
-				Comment:
-					'no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this.'
-			}
-		]
-	};
+	// 	Description:
+	// 		"In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.    In Go, a string is a primitive type, which means it is read-only, and every manipulation of it will create a new string. So if I want to concatenate strings many times without knowing the length of the resulting string, what's the best way to do it? The naive way would be: var s string for i := 0; i < 1000; i++ { s += getShortStringFromSomewhere() } return s but that does not seem very efficient.   ",
+	// 	Comment: [
+	// 		{
+	// 			ID: '1',
+	// 			Upvote: 4,
+	// 			Downvote: 1,
+	// 			UserID: '154123',
+	// 			UserName: 'sk shahriar ahmed raka',
+	// 			CommentTime: new Date().toISOString(),
+	// 			Comment:
+	// 				'no Comment bossNote: This question and most answers seem to have been written before append() came into the language, which is a good solution for this.'
+	// 		}
+	// 	]
+	// };
 	function RoundNum(x: number) {
 		if (x === null) {
 			return 0;
@@ -59,30 +60,32 @@
 			return String(x);
 		}
 	}
-	let AnsGivenBy: UserFlairDataType = {
-		UserID: '56654653',
-		UserURL: 'skraka',
-		UserName: ' sheikh Ahmed Raka',
+	let AnsGivenBy: UserFlairDataType
+	//  = {
+	// 	UserID: '111111111111111',
+	// 	UserURL: 'skraka',
+	// 	UserName: ' sheikh Ahmed Raka',
 
-		UserImage:
-			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-		Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 },
-		Location: '',
-		Aboutme: ''
-	};
+	// 	UserImage:
+	// 		'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
+	// 	Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 },
+	// 	Location: '',
+	// 	Aboutme: ''
+	// };
 
 	// let AskedBy: UserFlairDataType;
-	let EditedBy: UserFlairDataType = {
-		UserID: '56654653',
-		UserURL: 'skraka',
-		UserName: ' sheikh Ahmed Raka',
+	let EditedBy: UserFlairDataType 
+	// = {
+	// 	UserID: '11111111111111',
+	// 	UserURL: 'skraka',
+	// 	UserName: ' sheikh Ahmed Raka',
 
-		UserImage:
-			'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
-		Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 },
-		Location: '',
-		Aboutme: ''
-	};
+	// 	UserImage:
+	// 		'https://res.cloudinary.com/dqo0ssnti/image/upload/v1653060640/samples/jpeg_1_qlbtcn.jpg',
+	// 	Badges: { Reputation: 681385285, Gold: 8893785, Silver: 646234, Bronze: 77455345 },
+	// 	Location: '',
+	// 	Aboutme: ''
+	// };
 
 	// async function GetAskbyData(ID: string) {
 	// }
@@ -91,11 +94,11 @@
 
 	let Loading = false;
 	onMount(async () => {
-		if (ans.AnsweredBy != '') {
+		if ( parseInt(ans.AnsweredBy) != 0) {
 			AnsGivenBy = await fetchUserFlairData(ans.AnsweredBy);
 			// GetAskbyData(QuestionData.QuesAskedBy);
 		}
-		if (ans.EditedBy != '') {
+		if ( parseInt(ans.EditedBy) != 0) {
 			EditedBy = await fetchUserFlairData(ans.EditedBy);
 			// GetEditedByData(QuestionData.QuesEditedBy);
 		}
@@ -136,7 +139,7 @@
 				<!-- Gap -->
 				<div class="grow" />
 				<!-- MODIFIED BY -->
-				{#if ans.EditedBy != ''}
+				{#if parseInt(ans.EditedBy) != 0}
 					<!-- content here -->
 					<div class=" flex h-20 w-60 flex-col overflow-hidden px-2">
 						<p class="text-sm text-white">Edited : {ans.EditedBy}</p>

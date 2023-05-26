@@ -345,11 +345,11 @@
 			</div>
 		</div>
 		<!-- User Profile data -->
-		{#if $UserData.ID != ""}
+		{#if $UserData.UserID != ""}
 			<div
 				class="flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 "
 				on:click={() => {
-					goto(`/${$UserData.ID}`);
+					goto(`/${$UserData.UserID}`);
 				}}
 				on:keydown={(e) => {}}
 			>

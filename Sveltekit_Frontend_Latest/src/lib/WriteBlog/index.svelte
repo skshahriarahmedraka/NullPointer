@@ -730,6 +730,7 @@
 		GroupsObj.List.splice(s, 1);
 		ThisGroupInput.focus();
 	}
+	
 </script>
 
 <!-- <h1>Markdown Editor</h1> -->

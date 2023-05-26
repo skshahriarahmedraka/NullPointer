@@ -5,6 +5,7 @@ import (
 	"app/model"
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"time"
 
@@ -17,6 +18,7 @@ import (
 )
 
 func (H *DatabaseCollections) AnsPost(c *fiber.Ctx) error {
+fmt.Println("🚀🚀 ~ file: ansPost.go ~ line 20 ~ func  AnsPost : ")
 
 	if c.Params("ID") != "" {
 
@@ -29,10 +31,12 @@ func (H *DatabaseCollections) AnsPost(c *fiber.Ctx) error {
 				"message": "Bad Request while unmarshalling data",
 			})
 		}
+		fmt.Println("🚀 ~ file: ansPost.go ~ line 80 ~ ifc.Params ~ reqAnsData : ", reqAnsData)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		count, err := H.MongoQuestionCol.CountDocuments(ctx, bson.M{"_id": c.Params("ID")})
+		count, err := H.MongoQuestionCol.CountDocuments(ctx, bson.M{"_id": reqAnsData.QuesID})
+        fmt.Println("🚀 ~ H.MongoQuestionCol.CountDocuments(ctx, bson.M{\"_id\": reqAnsData.QuesID}) count : ", count)
 
 		if err != nil {
 			logs.Error("🚀 ~ file: ansPost.go ~ line 35 ~ ifc.Params ~ err : ", err)
@@ -42,10 +46,20 @@ func (H *DatabaseCollections) AnsPost(c *fiber.Ctx) error {
 		}
 
 		if count > 0 {
-
-			count, err := H.MongoAnswerCol.CountDocuments(ctx, bson.M{"$or": []bson.M{
-				{"$and": []bson.M{{"AnsweredBy": reqAnsData.AnsweredBy}, {"QuestionID": c.Params("ID")}}},
-				{"Description": reqAnsData.Description}}})
+			reqAnsData.ID = primitive.NewObjectID()
+			filter:= bson.M{
+				"$or": []bson.M{
+					{
+						"$and": []bson.M{
+							{"AnsweredBy": reqAnsData.AnsweredBy},
+							{"QuesID": reqAnsData.QuesID},
+						},
+					},
+					{"Description": reqAnsData.Description},
+				},
+			}
+			count, err := H.MongoAnswerCol.CountDocuments(ctx, filter)
+            fmt.Println("🚀 ~ file: ansPost.go ~ line 52 ~ ifc.Params ~ count : ", count)
 
 			logs.Error("🚀 ~ file: ansPost.go ~ line 47 ~ ifc.Params ~ err : ", err)
 			if count > 0 {
@@ -58,8 +72,21 @@ func (H *DatabaseCollections) AnsPost(c *fiber.Ctx) error {
 				reqAnsData.QuesID, _ = primitive.ObjectIDFromHex(c.Params("ID"))
 				// reqAnsData.AnsweredBy, _ = reqAnsData.AnsweredBy
 
+
 				_, err := H.MongoAnswerCol.InsertOne(ctx,reqAnsData)
                 logs.Error("🚀 ~ file: ansPost.go ~ line 62 ~ ifc.Params ~ err : ", err)
+				if err == nil {
+					var quesAnsIndicator model.QuesAnsIndicatorData
+					quesAnsIndicator.ID = reqAnsData.ID 
+					quesAnsIndicator.UpVote = 0
+					quesAnsIndicator.DownVote = 0
+					quesAnsIndicator.AnsweredBy = reqAnsData.AnsweredBy
+					quesAnsIndicator.Comment = []string{}
+					res,err:=H.MongoQuestionCol.UpdateOne(ctx, bson.M{"_id": reqAnsData.QuesID}, bson.M{"$push": bson.M{"Answers": quesAnsIndicator}})
+                    logs.Error("🚀 ~ file: ansPost.go ~ line 78 ~ ifc.Params ~ err : ", err)
+                    fmt.Println("🚀 ~ Updated quesdata with answer id : ", res)
+					
+				}
 
 				return c.Status(fiber.StatusOK).JSON(reqAnsData)
 			}
@@ -69,34 +96,11 @@ func (H *DatabaseCollections) AnsPost(c *fiber.Ctx) error {
 				"message": "Question does not exists",
 			})
 		}
-
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Bad Request",
 		})
 	}
 
-	// if  c.Params("ID")!= "" {
-	// 	ctx , cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	// 	defer cancel()
-
-	// 	dbQuesData := model.QuesData{}
-	//     fmt.Println("🚀  c.Query(\"ID\") : ", c.Params("ID"))
-	// 	id,_:=primitive.ObjectIDFromHex(c.Params("ID"))
-	//     fmt.Println("🚀 ~ file: quesData.go ~ line 26 ~ ifc.Params ~ id : ", id)
-	// 	err := H.MongoQuestionCol.FindOne(ctx, bson.M{"_id": id}).Decode(&dbQuesData)
-	// 	logs.Error("Error while finding ques data", err)
-	// 	if err != nil {
-	// 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-	// 			"message": "Internal Server Error while fetching ques data",
-	// 		})
-	// 	}
-
-	// 	fmt.Println("🚀 ~ file: quesData.go ~ line 28 ~ ifc.Params ~ dbQuesData : ", dbQuesData)
-	// 	return c.Status(fiber.StatusOK).JSON(dbQuesData)
-	// }else {
-	// 	return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-	// 		"message": "Bad Request",
-	// 	})
-	// }
+	
 }

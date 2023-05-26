@@ -1,4 +1,5 @@
 <script lang="ts">
+	// import { Ans } from '$lib/Ans/index.svelte';
 	
 	import { UserData } from '$lib/store/store';
 	import { marked } from 'marked';
@@ -22,66 +23,21 @@
 	import AlignLeft from '$lib/icons/writtingIcon/AlignLeft.svelte';
 	import AlignRight from '$lib/icons/writtingIcon/AlignRight.svelte';
 	import AlignCenter from '$lib/icons/writtingIcon/AlignCenter.svelte';
-	import type { QuestionDataType } from '$lib/store/types';
+	import type { AnswerDataType, QuestionDataType } from '$lib/store/types';
 	import { fetchAskQuestion } from '$lib/store/fetch';
 	import { goto } from '$app/navigation';
+    import { createEventDispatcher } from 'svelte'
+
 
 	// export let HotQues: any;
 	let ShowLinkedText: boolean = false;
 	let ShowLinkedImage: boolean = false;
-	let markdown: string = '';
-	let QuestionTitle: string = '';
-	// let obj;
-	let TagObj: { Input: string; Focus: boolean; List: string[]; Suggested: string[] } = {
-		Input: '' as string,
-		Focus: false as boolean,
-		List: [] as string[],
-		Suggested: [] as string[]
-	};
-	// console.log('🚀 ~ file: index.svelte ~ line 27 ~ TagObj.Input : ', TagObj.Input);
-
-	let GroupsObj: { Input: string; Focus: boolean; List: string[]; Suggested: string[] } = {
-		Input: '' as string,
-		Focus: false as boolean,
-		List: [] as string[],
-		Suggested: [] as string[]
-	};
-
-	// TAGS
-	function onKeyPressTags(e: { keyCode: any }) {
-		switch (e.keyCode) {
-			case 32:
-				onKeyTag();
-				break;
-			case 13:
-				onKeyTag();
-				break;
-		}
-	}
-	function onKeyTag() {
-		if (TagObj.Input.trim() != ('' as String)) {
-			TagObj.List = [...TagObj.List, TagObj.Input.trim()];
-			TagObj.Input = '' as string;
-		}
-	}
-
-	// GROUP
-	function onKeyPressGroup(e: { keyCode: any }) {
-		switch (e.keyCode) {
-			case 32:
-				onKeyGroup();
-				break;
-			case 13:
-				onKeyGroup();
-				break;
-		}
-	}
-	function onKeyGroup() {
-		if (GroupsObj.Input.trim() != '') {
-			GroupsObj.List = [...GroupsObj.List, GroupsObj.Input.trim()];
-			GroupsObj.Input = '';
-		}
-	}
+	// let markdown: string = '';
+	// let QuestionTitle: string = '';
+	export let markdown:string=""
+	// export let QuesID:string=""
+    
+	
 	let CashedLink: string = 'https://';
 	let CashedLinkImage: string = 'https://';
 	let tArea: any = null;
@@ -556,198 +512,35 @@
 		}
 	}
 
-	let QuestionData: QuestionDataType = {
-		ID: '',
-		QuesTitle: QuestionTitle,
-		QuesViewed: 0,
-		QuesUpvote: 0,
-		QuesDownvote: 0,
-		QuesBookmark: 0,
-		QuesTags: TagObj.List,
-		QuesGroup : GroupsObj.List,
-		QuesAnsAccepted: "",
 
-		QuesAskedBy: $UserData.UserID,
-		QuesAskedTime: new Date().toISOString(),
-
-		QuesEditedBy: "",
-		QuesEditedTime: new Date().toISOString(),
-
-		QuesDescription: markdown ,
-		QuesComment: [] as string[],
-		Answers: [] as {
-    ID: string;
-    UpVote: number;
-    DownVote: number;
-    AnsweredBy: string;
-    Comment: string[];
-}[]
-	};
-	let ErrorMsg = {
-		QuesTitle: [false, 'QuesTitle is not Valid'],
-		QuesTags: [false, 'QuesTags are empty'],
-		QuesDescription: [false, 'QuesDescription is too short']
-	};
-	function ValidQuesTitle(s:string): boolean{
-		if (s.length < 5) {
-			return false;
-		} else {
-			return true
-		}
-	}
-	function ValidQuesDescription(s:string): boolean{
-		if (s.length < 15) {
-			return false;
-		} else {
-			return true
-		}
-	}
-	async function OnSubmitQuestion() {
-		QuestionData = {
-		ID: '',
-		QuesTitle: QuestionTitle,
-		QuesViewed: 0,
-		QuesUpvote: 0,
-		QuesDownvote: 0,
-		QuesBookmark: 0,
-		QuesTags: TagObj.List,
-		QuesGroup : GroupsObj.List,
-		QuesAnsAccepted: "",
-
-		QuesAskedBy: $UserData.UserID,
-		QuesAskedTime: new Date().toISOString(),
-
-		QuesEditedBy: "",
-		QuesEditedTime: new Date().toISOString(),
-
-		QuesDescription: markdown ,
-		QuesComment: [] as string[],
-		Answers: [] as {
-    ID: string;
-    UpVote: number;
-    DownVote: number;
-    AnsweredBy: string;
-    Comment: string[];
-}[]
-	}
-		if (QuestionData.QuesTitle.trim() === '') {
-			ErrorMsg.QuesTitle[1] = 'Title is empty';
-			ErrorMsg.QuesTitle[0] = true;
-		} else if (!ValidQuesTitle(QuestionData.QuesTitle)) {
-			ErrorMsg.QuesTitle[1] = 'Title is too small';
-			ErrorMsg.QuesTitle[0] = true;
-		} else {
-			ErrorMsg.QuesTitle[0] = false;
-		}
-		if (QuestionData.QuesTags.length <1) {
-			ErrorMsg.QuesTags[1] = 'Tags are atleast 1';
-			ErrorMsg.QuesTags[0] = true;
-		}else {
-			ErrorMsg.QuesTags[0] = false;
-		}
-		
-		 if (!ValidQuesDescription(QuestionData.QuesDescription)) {
-			ErrorMsg.QuesDescription[1] = 'Description is too short ';
-			ErrorMsg.QuesDescription[0] = true;
-		} else {
-			ErrorMsg.QuesDescription[0] = false;
-		}
-		
-		if (!ErrorMsg.QuesTitle[0] && !ErrorMsg.QuesTags[0] && !ErrorMsg.QuesDescription[0]) {
-			
-
-			const res:{"InsertedID":string} = await fetchAskQuestion(QuestionData)
-			console.log("🚀 TagObj~ file: index.svelte:656 ~ OnSubmitQuestion ~ res:", res)
-			if (res.InsertedID!==''){
-				goto('/q/'+res.InsertedID)
-
-			}
-			// await fetch('/api/register', {
-			// 	// credentials: 'same-origin',
-			// 	method: 'POST',
-			// 	// mode: 'cors',
-			// 	body: JSON.stringify(RegisterData)
-			// })
-			// 	.then((response) => response.json())
-			// 	.then((value) => {
-			// 		console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value : ", value)
-			// 		// console.log("🚀 ~ file: index.svelte ~ line 71 ~ .then ~ value.ID : ", value.ID)
-			// 		ErrorMsg.UserName[1] = 'Success';
-			// 		ErrorMsg.UserName[0] = true;
-			// 		RegisterData = {
-			// 			UserName: '',
-			// 			Email: '',
-			// 			Password: ''
-			// 		};
-		
-            //         // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s : ", s)
-            //         // console.log("🚀 ~ file: index.svelte ~ line 73 ~ .then ~ s typeof : ", typeof(s))
-			// 		goto("/");
-			// 	});
-		}
-	}
-	async function OnResetQuestion(){
-
-		QuestionData = {
-		ID: '',
-		QuesTitle: "",
-		QuesViewed: 0,
-		QuesUpvote: 0,
-		QuesDownvote: 0,
-		QuesBookmark: 0,
-		QuesTags: [] as string[],
-		QuesGroup : [] as string[],
-		QuesAnsAccepted: "",
 	
-		QuesAskedBy: $UserData.UserID,
-		QuesAskedTime: "",
+	async function OnResetAns() {
+		markdown = ''
 	
-		QuesEditedBy: '',
-		QuesEditedTime: '',
-	
-		QuesDescription: "" ,
-		QuesComment: [] as string[],
-		Answers: [] as {
-    ID: string;
-    UpVote: number;
-    DownVote: number;
-    AnsweredBy: string;
-    Comment: string[];
-}[]
-	};
 	}
-	async function OnCancelQuestion() {
-		OnResetQuestion()
-		goto('/');
-	}
-	let ThisTagInput: any;
-	function RemoveTagFromList(s: number) {
-		TagObj.List.splice(s, 1);
-		ThisTagInput.focus();
-	}
-	let ThisGroupInput: any;
-	function RemoveGroupFromList(s: number) {
-		GroupsObj.List.splice(s, 1);
-		ThisGroupInput.focus();
-	}
+
+
+  const dispatch = createEventDispatcher()
+  function PostAnswer(){
+    dispatch('PostMyAns', { })
+  }
+
+  const dispatch2 = createEventDispatcher()
+  function OnCancelAns(){
+    dispatch2('CancelAns', { })
+  }
+
+
 </script>
 
 <!-- <h1>Markdown Editor</h1> -->
 <!-- <TextArea bind:value={markdown} minRows={4} maxRows={40} /> -->
 
 <div class=" mt-12 flex max-h-full  min-h-screen w-[1100px]  flex-row bg-[#2d2d2d] ">
-	<!-- Question -->
+	<!-- Answer -->
 	<div class=" mt-5 flex  max-h-full min-h-screen w-9/12 flex-col  ">
-		<!-- Ques Title -->
-		<div class=" mx-5 text-left text-lg font-semibold text-gray-300   ">Title :</div>
-		<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
-			Be specific and imagine you're asking a question to another person
-		</div>
-		<input
-			bind:value={QuestionTitle}
-			type="text"
-			class=" mx-4 mt-3 h-12 w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none  focus:border-sky-500 active:border-gray-800 "
-		/>
+		
+		
 
 		<!-- Ques Description -->
 
@@ -872,19 +665,7 @@
 			>
 				<ImageIcon />
 			</button>
-			<!-- unlink -->
-			<!-- <button
-				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
-			>
-				<svg
-					class="h-9 w-9 fill-slate-400 p-2  hover:fill-gray-300"
-					viewBox="0 0 640 512"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						d="M485.1 354.9l113.5-113.5c55.21-55.21 55.21-144.7 0-199.9C570.1 13.8 534.8 0 498.6 0s-72.36 13.8-99.96 41.41l-43.36 43.36c15.11 8.012 29.47 17.58 41.91 30.02c3.146 3.146 5.898 6.518 8.742 9.838l37.96-37.96C458.5 72.05 477.1 64 498.6 64s40.1 8.047 54.71 22.66c14.61 14.61 22.66 34.04 22.66 54.71s-8.049 40.1-22.66 54.71l-119 119l-30.09-23.59c21.49-51.28 12.12-112.4-29.63-154.1C346.1 109.8 310.8 96 274.6 96c-29.6 0-58.93 9.752-83.83 28.23L38.81 5.109C34.41 1.672 29.19 0 24.03 0c-7.125 0-14.19 3.156-18.91 9.187c-8.188 10.44-6.375 25.53 4.062 33.7l591.1 463.1c10.5 8.203 25.56 6.328 33.69-4.078c8.188-10.44 6.375-25.53-4.062-33.7L485.1 354.9zM350.8 249.6L244.3 166.2C253.8 162.2 264 160 274.6 160c20.67 0 40.1 8.049 54.71 22.66c14.62 14.61 22.66 34.04 22.66 54.71C352 241.5 351.4 245.6 350.8 249.6zM234 387.4l-37.96 37.96C181.5 439.1 162 448 141.4 448c-20.67 0-40.1-8.047-54.71-22.66c-14.61-14.61-22.66-34.04-22.66-54.71s8.049-40.1 22.66-54.71l84.83-84.83L120.7 191.3L41.41 270.7c-55.21 55.21-55.21 144.7 0 199.9C69.01 498.2 105.2 512 141.4 512c36.18 0 72.36-13.8 99.96-41.41l43.36-43.36c-15.11-8.012-29.47-17.58-41.91-30.02C239.6 394.1 236.9 390.7 234 387.4zM265.4 374.6C293 402.2 329.2 416 365.4 416c11.98 0 23.84-2.082 35.51-5.111L224.6 272.7C223.9 309.5 237.3 346.5 265.4 374.6z"
-					/></svg
-				>
-			</button> -->
+			
 			<!-- Table -->
 			<button
 				on:click={() => {
@@ -915,42 +696,7 @@
 			>
 				<AlignCenter />
 			</button>
-			<!-- MOVE TO RIGHT -->
-			<!-- <button
-				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="h-9 w-9 fill-slate-400 p-2  hover:fill-gray-300"
-					viewBox="0 0 16 16"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"
-					/>
-				</svg>
-			</button> -->
-			<!-- MOVE TO LEFT  -->
-			<!-- <button
-				class="flex h-9 w-9 items-center justify-center rounded-lg border-[1px] border-gray-500 bg-inherit hover:bg-gray-500"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="h-9 w-9 fill-slate-400 p-2  hover:fill-gray-300"
-					viewBox="0 0 16 16"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"
-					/>
-				</svg>
-			</button> -->
+			
 		</div>
 		{#if ShowLinkedText}
 			<div in:fade out:fade class=" mt-3 ml-6 flex  h-20 w-[95%] flex-col gap-2 text-gray-300  ">
@@ -1058,145 +804,32 @@
 			>
 				{@html marked(markdown)}
 			</div>
-			<!-- post button -->
-			<!-- <button
-				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
-			>
-				<p class="my-auto text-xl font-semibold text-gray-200">Post Your Question</p>
-			</button> -->
+			
 		{/if}
-		<!-- Tags -->
-		<div class=" mx-5 mt-5 text-left text-lg font-semibold text-gray-300   ">Tags :</div>
-		<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
-			Add up to 5 tags to describe what your question is about
-		</div>
 
-		<div
-			class="mx-4 mt-3 h-fit w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-0   {TagObj.Focus
-				? 'border-sky-500'
-				: ''}  "
-		>
-			<ul class="flex flex-row flex-wrap gap-2">
-				{#each TagObj.List as t,i}
-					<li
-						class="m-1 rounded-md bg-[#3d4951] px-2 py-1 text-[#9bc0da] hover:cursor-pointer hover:bg-slate-600 hover:text-teal-200"
-					>
-						{t}
-						<svg
-						on:click={() => {
-							RemoveTagFromList(i);
-						}}
-						on:keypress={() => {}}
-						class="inline-flex h-6 w-6 hover:stroke-red-500"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/></svg
-					>
-					</li>
-				{/each}
-				<input
-				bind:this={ThisTagInput}
-					on:keypress={onKeyPressTags}
-					maxlength="20"
-					bind:value={TagObj.Input}
-					on:focus={() => {
-						TagObj.Focus = true;
-					}}
-					on:blur={() => {
-						TagObj.Focus = true;
-					}}
-					type="text"
-					class=" inline w-fit grow border-0  bg-inherit outline-0 focus:outline-none  "
-				/>
-			</ul>
-		</div>
 
-		<!-- <input
-			bind:value={QuestionTitle}
-			type="text"
-			class=" mx-4 mt-3 h-12 w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none  focus:border-sky-500 active:border-gray-800 "
-		/> -->
-
-		<!-- Groups -->
-		<div class=" mx-5 mt-5 text-left text-lg font-semibold text-gray-300   ">Group (Optional):</div>
-		<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
-			Add question to a group for like minded people to find
-		</div>
-		<div
-			class="mx-4 mt-3 h-fit w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none   {GroupsObj.Focus
-				? 'border-sky-500'
-				: ''} active:border-gray-800 "
-		>
-			<ul class="flex flex-row flex-wrap gap-2">
-				{#each GroupsObj.List as t,i}
-					<li
-						class="m-1 rounded-md bg-[#3d4951] px-2 py-1 text-[#9bc0da] hover:cursor-pointer hover:bg-slate-600 hover:text-teal-200"
-					>
-						{t}
-						<svg
-						on:click={() => {
-							RemoveGroupFromList(i);
-						}}
-						on:keypress={() => {}}
-						class="inline-flex h-6 w-6 hover:stroke-red-500"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/></svg
-					>
-					</li>
-				{/each}
-				<input
-					bind:this={ThisGroupInput}
-					on:keypress={onKeyPressGroup}
-					maxlength="20"
-					bind:value={GroupsObj.Input}
-					type="text"
-					on:focus={() => {
-						GroupsObj.Focus = true;
-					}}
-					on:blur={() => {
-						GroupsObj.Focus = false;
-					}}
-					class=" inline w-fit grow border-0  bg-inherit shadow-none outline-0 focus:border-0 focus:outline-none"
-				/>
-			</ul>
-		</div>
 		<div class=" flex flex-row  justify-center gap-5">
 			<button
-			on:click={() => {OnSubmitQuestion()}}
+			on:click={() => {PostAnswer()}}
 				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
 			>
-				<p class="my-auto text-xl font-semibold text-gray-200">Ask Question</p>
+				<p class="my-auto text-xl font-semibold text-gray-200">Post Answer</p>
 			</button>
 			<button
-			on:click={() => {OnResetQuestion()}}
+			on:click={() => {OnResetAns()}}
 				class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
 			>
 				<p class="my-auto text-xl font-semibold text-gray-200">Reset</p>
 			</button>
 			<button
-				on:click={() => {OnCancelQuestion()}}
+				on:click={() => {OnCancelAns()}}
 				class=" m-5 flex h-12 w-fit items-center justify-center  rounded-md border-2 border-red-600 bg-inherit px-3 text-red-600 hover:bg-red-500 hover:text-gray-200 active:bg-red-600 "
 			>
 				<p class="my-auto text-xl font-semibold  ">Discart</p>
 			</button>
 		</div>
 	</div>
-	<div class="max-h-full  min-h-screen w-3/12">
+	<!-- <div class="max-h-full  min-h-screen w-3/12">
 		<HotQuesCom />
-	</div>
+	</div> -->
 </div>

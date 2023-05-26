@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Title from './../../../../lib/UserInfo/Title.svelte';
+	// import Title from './../../../../lib/UserInfo/Title.svelte';
 	import Wyswyg from '$lib/WriteQues/wyswyg.svelte';
 	import { UserData } from '$lib/store/store';
 	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
@@ -12,8 +12,8 @@
 
 	// export let $UserData:any
 	let NewUserData: UserDataType = {
-		ID: $UserData.ID,
 		UserID: $UserData.UserID,
+		UserURL: $UserData.UserURL,
 		UserName: $UserData['UserName'],
 		Email: $UserData.Email,
 		Password: '',
@@ -35,7 +35,7 @@
 		Linkedin: $UserData['Linkedin']
 	};
 	let ErrorMsg = {
-		UserID: [false, 'UserID is not Valid'],
+		UserURL: [false, 'UserURL is not Valid'],
 		UserName: [false, 'UserName is not Valid'],
 		Email: [false, 'invalid/wrong email'],
 		Password: [false, 'Password is too short'],
@@ -117,8 +117,8 @@
 	async function UpdateUserData() {
 		fetchUpdateUserData(NewUserData);
 
-		if (NewUserData.ID != null) {
-			const GetUserData = await fetchUserData(NewUserData.ID);
+		if (NewUserData.UserID != null) {
+			const GetUserData = await fetchUserData(NewUserData.UserID);
 			console.log('🚀 ~ file: +page.svelte:119 ~ UpdateUserData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
 		}
@@ -126,8 +126,8 @@
 
 	function DiscartChanges() {
 		NewUserData = {
-			ID: $UserData.ID,
 			UserID: $UserData.UserID,
+			UserURL: $UserData.UserURL,
 			UserName: $UserData['UserName'],
 			Email: $UserData.Email,
 			Password: '',
@@ -161,7 +161,7 @@
 			UserDataValue = value;
 		});
 
-		const GetUserData = await fetchUserData(InfoCookieData.UUID);
+		const GetUserData = await fetchUserData(InfoCookieData.UserID);
 		console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 		UserData.update(() => GetUserData);
 
@@ -210,9 +210,9 @@
 				<div class="">
 					<div class=" flex flex-row">
 						<div class=" ml-8 mt-2 self-start text-left text-xl font-semibold text-gray-300">
-							UserID :
+							UserURL :
 						</div>
-						{#if ErrorMsg.UserID[0]}
+						{#if ErrorMsg.UserURL[0]}
 							<!-- content here -->
 							<div class=" ml-3 mt-2 inline-flex">
 								<svg
@@ -226,12 +226,12 @@
 										clip-rule="evenodd"
 									/></svg
 								>
-								<p class="text-red-300">{ErrorMsg.UserID[1]}</p>
+								<p class="text-red-300">{ErrorMsg.UserURL[1]}</p>
 							</div>
 						{/if}
 					</div>
 					<input
-						bind:value={NewUserData.UserID}
+						bind:value={NewUserData.UserURL}
 						type="text"
 						class=" ml-20 mt-2 h-12 w-[515px] self-center rounded-2xl border-2 border-[#24262b] bg-[#303338] p-2 text-lg font-medium text-[#98999e] outline-none focus:border-sky-500 active:border-gray-800"
 					/>

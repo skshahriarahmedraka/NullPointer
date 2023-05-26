@@ -33,9 +33,10 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/public/q",H.QuesListQuery)
 	r.Get("/logout",H.Logout) // not complete
 	
-	r.Post("/q/:ID/answer",H.AnsPost) // working
-	r.Get("/q/answer/:ID",H.AnsData) // working
+	r.Post("/q/:ID/answer",H.AnsPost) 
+	r.Get("/q/answer/:ID",H.AnsData) 
 	
+	r.Post("/b/write",H.BlogCreate) // working
 	// /////////////////////////////////////////////////////
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)

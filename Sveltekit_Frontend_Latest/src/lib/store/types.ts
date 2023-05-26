@@ -1,3 +1,15 @@
+export type RegistrationType = {
+	UserName: string;
+	Email: string;
+	Password: string;
+};
+export type CookieInfo1Type = {
+	Email: string;
+	Name: string;
+	UserID: string;
+	UserURL: string;
+	AccountType: string;
+};
 export type UserDataType = {
 	UserID: string;
 	UserURL: string;
@@ -31,13 +43,19 @@ export type UserDataType = {
 	SelectedPanel: string;
 	AccountType: string;
 };
-
-export type NotificationDataType = {
-	type: string;
-	time: string;
-	title: string;
-	description?: string;
-	point?: number;
+export type UserFlairDataType = {
+	UserID: string;
+	UserURL: string;
+	UserName: string;
+	UserImage: string;
+	Badges: {
+		Reputation: number;
+		Gold: number;
+		Silver: number;
+		Bronze: number;
+	};
+	Location: string;
+	Aboutme: string;
 };
 
 export type QuestionDataType = {
@@ -46,17 +64,28 @@ export type QuestionDataType = {
 	QuesViewed: number;
 	QuesUpvote: number;
 	QuesDownvote: number;
-	QuesBookmark: number;
+	QuesVotes: {
+		ID : string;
+		UserID : string;
+		Vote : number;
+		VoteTime : string;
+	}
+	QuesBookmark: {
+		ID : string;
+		UserID : string;
+		BookmarkTime : string;
+		
+	}
 	QuesTags: string[];
 	QuesGroup: string[];
 	QuesAnsAccepted: string; // accepted answer ID
-
+	
 	QuesAskedBy: string;
 	QuesAskedTime: string;
 
 	QuesEditedBy: string;
 	QuesEditedTime: string;
-
+	
 	QuesDescription: string;
 	QuesComment: string[];
 	Answers: {
@@ -77,11 +106,21 @@ export type AnswerDataType= {
     EditedTime: string;
     Upvote: number;
     Downvote: number;
-    Bookmark: number;
+	Votes: {
+		ID : string;
+		UserID : string;
+		Vote : number;
+		VoteTime : string;
+	}
+    Bookmark: {
+		ID : string;
+		UserID : string;
+		BookmarkTime : string;
+	}
     Accepted: boolean;
     Description: string;
     Comment: {
-        ID: string;
+		ID: string;
         UserID: string;
         UserName: string;
         Upvote: number;
@@ -91,13 +130,38 @@ export type AnswerDataType= {
     }[];
 }
 
-export type CookieInfo1Type = {
-	Email: string;
-	Name: string;
-	UserID: string;
-	UserURL: string;
-	AccountType: string;
-};
+
+export type BlogDataType = {
+	ID     : string 
+	Title     :  string 
+	MetaTitle : string 
+	Image :	 string 
+	Description : string 
+	WrittenBy : 	string[] 
+	WrittenTime : string 
+	EditedBy : string
+	EditedTime : string 
+	Tags 	:  string []
+	Comments : string []
+	Upvote 	 : number
+	Downvote  : number
+	Votes 	 : {
+		ID    : string 
+		UserID	 : string 
+		Vote : number 
+		VoteTime : string 
+	
+	}[]
+	Bookmark : {
+		ID 	: string 
+		UserID	  : string 
+		BookmarkTime : string 
+	}[]
+	Views 	 : number
+	ViewedBy  : string [] 
+}
+
+//////////////////////////////////////
 
 export type BlogListType = {
 	ID: string;
@@ -126,23 +190,14 @@ export type HotQuesListType = {
 	ImageUrl: string;
 };
 
-export type RegistrationType = {
-	UserName: string;
-	Email: string;
-	Password: string;
-};
 
-export type UserFlairDataType = {
-	UserID: string;
-	UserURL: string;
-	UserName: string;
-	UserImage: string;
-	Badges: {
-		Reputation: number;
-		Gold: number;
-		Silver: number;
-		Bronze: number;
-	};
-	Location: string;
-	Aboutme: string;
+
+
+
+export type NotificationDataType = {
+	type: string;
+	time: string;
+	title: string;
+	description?: string;
+	point?: number;
 };

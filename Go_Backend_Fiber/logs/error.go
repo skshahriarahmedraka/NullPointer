@@ -1,7 +1,7 @@
 package logs
 
 import (
-	"fmt"
+	// "fmt"
 	"os"
 	"runtime/debug"
 	"time"
@@ -31,7 +31,7 @@ func init() {
 func Error(s string,err error) {
     // log.Info().Msg("Info message")
 	if err != nil {
-		fmt.Println("❌🔥",s,err)
-		logger.Error().Msg("❌🔥Error message")
+		// fmt.Println("❌🔥",s,err)
+		logger.Error().Msg("❌🔥Error message :"+s+err.Error())
 	}
 }

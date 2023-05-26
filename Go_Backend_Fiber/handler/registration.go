@@ -50,11 +50,11 @@ func (H *DatabaseCollections) Register(c *fiber.Ctx) error {
 		// UserTitle string `json:"UserTitle"`
 		RegData.UserImage = ""
 		RegData.Badges = struct {
-			Reputation int `json:Reputation bson:"Reputation" validate:"omitempty, numeric"`
+			Reputation int `json:"Reputation" bson:"Reputation" validate:"omitempty, numeric"`
 			Gold       int `json:"Gold" bson:"Gold" validate:"omitempty,numeric"`
 			Silver     int `json:"Silver" bson:"Silver" validate:"omitempty,numeric"`
-			Bronze     int `json:"Bronze" 		bson:"Bronze" validate:"omitempty,numeric"`
-		}{
+			Bronze     int `json:"Bronze" bson:"Bronze" validate:"omitempty,numeric"`
+		} {
 			Reputation: 1,
 			Gold:       0,
 			Silver:     0,

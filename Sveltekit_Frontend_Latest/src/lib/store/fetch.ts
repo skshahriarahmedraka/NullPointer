@@ -50,7 +50,7 @@ async function fetchUserData(UUID: string): Promise<UserDataType> {
 		return {} as UserDataType;
 	}
 	const userData: UserDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:50 ~ fetchUserData ~ userData:", userData)
+	console.log('🚀 ~ file: fetch.ts:50 ~ fetchUserData ~ userData:', userData);
 	return userData;
 	// const response = await fetch(`/api/user/${UUID}`);
 	// if (!response.ok) {
@@ -62,7 +62,7 @@ async function fetchUserData(UUID: string): Promise<UserDataType> {
 	// console.log("🚀 ~ file: fetch.ts:50 ~ fetchUserData ~ userData:", userData)
 	// return new Promise<UserDataType>((resolve) => {
 	// 	setTimeout(() => {
-			
+
 	// 	  resolve(userData);
 	// 	}, 2000);
 	//   });
@@ -72,10 +72,13 @@ async function fetchNotificationData(UUID: string): Promise<NotificationDataType
 	const response = await fetch(`/api/user/${UUID}/notifications`);
 	if (!response.ok) {
 		console.log(`❌Failed to fetch /api/user/${UUID}/notifications`);
-		return  [] as NotificationDataType[];
+		return [] as NotificationDataType[];
 	}
 	const notificationData: NotificationDataType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:61 ~ fetchNotificationData ~ notificationData:", notificationData)
+	console.log(
+		'🚀 ~ file: fetch.ts:61 ~ fetchNotificationData ~ notificationData:',
+		notificationData
+	);
 	return notificationData;
 }
 
@@ -86,7 +89,7 @@ async function fetchBlogList(UUID: string): Promise<BlogListType[]> {
 		return [] as BlogListType[];
 	}
 	const BlogListData: BlogListType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:72 ~ fetchBlogList ~ BlogListData:", BlogListData)
+	console.log('🚀 ~ file: fetch.ts:72 ~ fetchBlogList ~ BlogListData:', BlogListData);
 	return BlogListData;
 }
 async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
@@ -96,7 +99,7 @@ async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 		return [] as GroupListType[];
 	}
 	const GroupListData: GroupListType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:82 ~ fetchGroupList ~ GroupListData:", GroupListData)
+	console.log('🚀 ~ file: fetch.ts:82 ~ fetchGroupList ~ GroupListData:', GroupListData);
 	return GroupListData;
 }
 async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListType[]> {
@@ -106,7 +109,10 @@ async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListTy
 		return [] as FavouriteHashListType[];
 	}
 	const FavouriteHashListData: FavouriteHashListType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:92 ~ fetchFavouriteHashList ~ FavouriteHashListData:", FavouriteHashListData)
+	console.log(
+		'🚀 ~ file: fetch.ts:92 ~ fetchFavouriteHashList ~ FavouriteHashListData:',
+		FavouriteHashListData
+	);
 	return FavouriteHashListData;
 }
 
@@ -117,112 +123,141 @@ async function fetchBlogData(BlogID: string): Promise<FavouriteHashListType[]> {
 		return [] as FavouriteHashListType[];
 	}
 	const BlogData: FavouriteHashListType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:", BlogData)
+	console.log('🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:', BlogData);
 	return BlogData;
 }
-async function fetchUpdateUserData(UpdatedUserData : UserDataType): Promise<UserDataType> {
-	const response = await fetch(`/api/updateuser`,{
+async function fetchUpdateUserData(UpdatedUserData: UserDataType): Promise<UserDataType> {
+	const response = await fetch(`/api/updateuser`, {
 		method: 'POST',
 		body: JSON.stringify(UpdatedUserData),
-		headers:{
-		  'Content-Type': 'application/json'
+		headers: {
+			'Content-Type': 'application/json'
 		}
-	  });
+	});
 	if (!response.ok) {
 		console.log(`Failed to fetch /api/updateuser UpdatedUserData`);
 		return {} as UserDataType;
 	}
-	const UpdatedData:UserDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:119 ~ fetchUpdateUserData ~ UpdatedData:", UpdatedData)
+	const UpdatedData: UserDataType = await response.json();
+	console.log('🚀 ~ file: fetch.ts:119 ~ fetchUpdateUserData ~ UpdatedData:', UpdatedData);
 	return UpdatedData;
 }
 
-async function fetchAskQuestion(QuestionData: QuestionDataType) : Promise<{"InsertedID":string}> {
-	const response = await fetch(`/api/q/askquestion`,{
+async function fetchAskQuestion(QuestionData: QuestionDataType): Promise<{ InsertedID: string }> {
+	const response = await fetch(`/api/q/askquestion`, {
 		method: 'POST',
 		body: JSON.stringify(QuestionData),
-		headers:{
-		  'Content-Type': 'application/json'
+		headers: {
+			'Content-Type': 'application/json'
 		}
-	  });
+	});
 	if (!response.ok) {
 		console.log(`❌ Failed to fetch /api/q/askquestion QuestionData`);
-		return {} as {"InsertedID":string};
+		return {} as { InsertedID: string };
 	}
-	const res:{"InsertedID":string}= await response.json();
-	console.log("🚀 ~ file: fetch.ts:151 ~ fetchAskQuestion ~ res:", res)
+	const res: { InsertedID: string } = await response.json();
+	console.log('🚀 ~ file: fetch.ts:151 ~ fetchAskQuestion ~ res:', res);
 	return res;
 }
 
-async function fetchQuestionData(QID: string) : Promise<QuestionDataType> {
+async function fetchQuestionData(QID: string): Promise<QuestionDataType> {
 	// const response = await (typeof event !== 'undefined' ? event.fetch : fetch)(`/api/q/${QID}`);
 	const response = await fetch(`/api/q/${QID}`);
 	if (!response.ok) {
 		console.log(`❌ Failed to fetch /api/q/${QID} QuestionData`);
 		return {} as QuestionDataType;
 	}
-	const QuestionDataResponse:QuestionDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:164 ~ fetchQuestionData ~ QuestionDataResponse:", QuestionDataResponse)
+	const QuestionDataResponse: QuestionDataType = await response.json();
+	console.log(
+		'🚀 ~ file: fetch.ts:164 ~ fetchQuestionData ~ QuestionDataResponse:',
+		QuestionDataResponse
+	);
 	return QuestionDataResponse;
 }
 
-async function fetchPublicQuestionDataArr(type: string,start:number, stop :number ,order:number) : Promise<QuestionDataType[]> {
-	const response = await fetch(`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+async function fetchPublicQuestionDataArr(
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<QuestionDataType[]> {
+	const response = await fetch(
+		`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
 	if (!response.ok) {
 		console.log(`❌ /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 		return [] as QuestionDataType[];
 	}
-	const QuestionDataResponseArr:QuestionDataType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:173 ~ fetchPublicQuestionData ~ QuestionDataResponseArr:", QuestionDataResponseArr)
+	const QuestionDataResponseArr: QuestionDataType[] = await response.json();
+	console.log(
+		'🚀 ~ file: fetch.ts:173 ~ fetchPublicQuestionData ~ QuestionDataResponseArr:',
+		QuestionDataResponseArr
+	);
 	return QuestionDataResponseArr;
 }
 
 async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	const response = await fetch(`/api/user/flair/${UUID}`);
 	if (!response.ok) {
-		console.log("❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UUID}:", UUID)
-	
+		console.log(
+			'❌ Failed ~ file: fetch.ts:180 ~ fetchUserFlairData ~ /api/user/flair/${UserID}:',
+			UUID
+		);
 
-		return { 
-			UserID :  "",           
-			UserURL    : "",             
-				UserName : "",             
-				UserImage : "" ,
-				Badges  :   {
-					Reputation : 0 ,
-					Gold       : 0,
-					Silver    : 0,
-					Bronze     : 0,
-				} ,
-				Location   :    ""  ,           
-				Aboutme     :   ""  ,            
-			
-		 } as UserFlairDataType;
+		return {
+			UserID: '',
+			UserURL: '',
+			UserName: '',
+			UserImage: '',
+			Badges: {
+				Reputation: 0,
+				Gold: 0,
+				Silver: 0,
+				Bronze: 0
+			},
+			Location: '',
+			Aboutme: ''
+		} as UserFlairDataType;
 	}
 	const userFlairData: UserFlairDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:187 ~ fetchUserFlairData ~ userFlairData:", userFlairData)
+	console.log('🚀 ~ file: fetch.ts:187 ~ fetchUserFlairData ~ userFlairData:', userFlairData);
 	return userFlairData;
-	
 }
 
-async function fetchPostAnsData(QuesID:string,PostAnsData : AnswerDataType): Promise<AnswerDataType> {
-	const response = await fetch(`/api/q/${QuesID}/answer`,{
+async function fetchPostAnsData(
+	QuesID: string,
+	PostAnsData: AnswerDataType
+): Promise<AnswerDataType> {
+	const response = await fetch(`/api/q/${QuesID}/answer`, {
 		method: 'POST',
 		body: JSON.stringify(PostAnsData),
-		headers:{
-		  'Content-Type': 'application/json'
+		headers: {
+			'Content-Type': 'application/json'
 		}
-	  });
+	});
 	if (!response.ok) {
-		console.log(`Failed to fetch /api/q/answer/${QuesID} AnswerDataType`);
+		console.log(`Failed to fetch /api/q/answer/${QuesID} AnswerDataType`,PostAnsData);
 		return {} as AnswerDataType;
 	}
-	const UpdatedData:AnswerDataType = await response.json();
-	console.log("🚀 ~ file: fetch.ts:220 ~ fetchPostAnsData ~ UpdatedData:", UpdatedData)
+	const UpdatedData: AnswerDataType = await response.json();
+	console.log('🚀 ~ file: fetch.ts:220 ~ fetchPostAnsData ~ UpdatedData:', UpdatedData);
 	return UpdatedData;
 }
 
+async function fetchAnsData(UUID: string): Promise<AnswerDataType> {
+	const response = await fetch(`/api/q/answer/${UUID}`);
+	if (!response.ok) {
+		console.log("🚀 ~ file: fetch.ts:250 ~ fetchAnsData ~ /api/q/answer/${UUID}:", UUID)
+		
 
+		return {
+			
+		} as AnswerDataType;
+	}
+	const AnsData: AnswerDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:258 ~ fetchAnsData ~ AnsData:", AnsData)
+	return AnsData;
+}
 export {
 	fetchUserData,
 	fetchNotificationData,
@@ -235,5 +270,6 @@ export {
 	fetchQuestionData,
 	fetchPublicQuestionDataArr,
 	fetchUserFlairData,
-	fetchPostAnsData
+	fetchPostAnsData,
+	fetchAnsData
 };
