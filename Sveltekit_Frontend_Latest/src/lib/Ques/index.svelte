@@ -88,7 +88,8 @@
 
 		Upvote: 0,
 		Downvote: 0,
-		Bookmark: 0,
+		Votes: [],
+		Bookmark: [],
 		Accepted: false,
 
 		AnsweredBy: $UserData.UserID,

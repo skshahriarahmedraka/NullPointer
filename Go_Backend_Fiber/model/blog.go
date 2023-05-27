@@ -13,9 +13,9 @@ type BlogData struct {
 	MetaTitle  string `json:"MetaTitle" bson:"MetaTitle" validate:"required"`
 	Image 	 string `json:"Image" bson:"Image" validate:"omitempty"`
 	Description string `json:"Description" bson:"Description" validate:"required"`
-	WrittenBy 	[]string  `json:"WrittenBy" bson:"WrittenBy" validate:"required"`  // vsn be written mode than one perosn
+	WrittenBy 	[]primitive.ObjectID  `json:"WrittenBy" bson:"WrittenBy" validate:"required"`  // vsn be written mode than one perosn
 	WrittenTime time.Time `json:"WrittenTime" bson:"WrittenTime" validate:"omitempty"`
-	EditedBy string
+	EditedBy string `json:"EditedBy" bson:"EditedBy" validate:"omitempty"`
 	EditedTime time.Time `json:"EditedTime" bson:"EditedTime" validate:"omitempty"`
 	Tags 	  []string `json:"Tags" bson:"Tags" validate:"omitempty"`
 	Comments  []Comment `json:"Comments" bson:"Comments" validate:"omitempty"`
@@ -30,7 +30,7 @@ type BlogData struct {
 type BlogVoteData struct {
 	ID          primitive.ObjectID   `json:"ID" bson:"_id" `
 	UserID	  primitive.ObjectID `json:"UserID" bson:"UserID" validate:"required"`
-	Vote int `json:"Vote" bson:"Vote" validate:"required"`
+	Vote int `json:"Vote" bson:"Vote" validate:"omitempty"`
 	VoteTime time.Time `json:"VoteTime" bson:"VoteTime" validate:"omitempty"`
 
 }

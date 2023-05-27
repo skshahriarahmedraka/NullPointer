@@ -33,7 +33,8 @@ func (H *DatabaseCollections) BlogCreate(c *fiber.Ctx) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	count, err := H.MongoBlogCol.CountDocuments(ctx, bson.M{ "$or ": []bson.M{ {"Title": reqBlogData.Title}, {"Description": reqBlogData.Description}}})
+	count, err := H.MongoBlogCol.CountDocuments(ctx, bson.M{ "$or": []bson.M{ {"Title": reqBlogData.Title},{"Description": reqBlogData.Description}}})
+    fmt.Println("🚀 ~ file: blogCreate.go ~ line 37 ~ func ~ count : ", count)
     logs.Error("🚀 ~ file: blogCreate.go ~ line 37 ~ func ~ err : ", err)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

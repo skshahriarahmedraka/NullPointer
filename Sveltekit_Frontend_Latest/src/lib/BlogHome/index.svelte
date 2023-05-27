@@ -11,7 +11,7 @@
 
 {#if Loading}
 	<div class=" mt-2 max-h-full min-h-screen w-[1100px] bg-[#2d2d2d] pl-5">
-		
+		<p class="text-white"> blogs</p>
 	</div>
 {:else}
 	<div

@@ -111,12 +111,12 @@ export type AnswerDataType= {
 		UserID : string;
 		Vote : number;
 		VoteTime : string;
-	}
+	}[]
     Bookmark: {
 		ID : string;
 		UserID : string;
 		BookmarkTime : string;
-	}
+	}[]
     Accepted: boolean;
     Description: string;
     Comment: {

@@ -10,14 +10,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (H *DatabaseCollections)Blog(c *fiber.Ctx) error  {
+func (H *DatabaseCollections)BlogGet(c *fiber.Ctx) error  {
 	c.Accepts("application/json")
-	if c.Query("ID") != "" {
+	if c.Params("ID") != "" {
 		ctx , cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 		defer cancel()
 		blog := model.BlogData{}
-		err := H.MongoBlogCol.FindOne(ctx, bson.D{ {"ID", c.Query("ID")}}).Decode(&blog)
+		err := H.MongoBlogCol.FindOne(ctx, bson.D{ {Key: "ID", Value: c.Params("ID")}}).Decode(&blog)
 		logs.Error("Error while finding blog", err)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

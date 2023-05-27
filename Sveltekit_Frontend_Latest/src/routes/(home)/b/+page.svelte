@@ -2,6 +2,7 @@
 
 
 <script lang="ts">
+	import BlogListCom from '$lib/BlogList/index.svelte';
     
     // import Navbar from "$lib/Navbar/index.svelte"
     // import Collectives from "$lib/Collectives/index.svelte"
@@ -23,7 +24,7 @@ import { onMount } from 'svelte';
 	import { getCookieValue } from '$lib/store/utils';
 	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 	import { fetchUserData } from '$lib/store/fetch';
-	import { UserData } from '$lib/store/store';
+	import { BlogList, UserData } from '$lib/store/store';
 
 let loadingState: boolean = false;
 onMount(async () => {
@@ -68,7 +69,7 @@ onMount(async () => {
 		<Collectives />
 		<!-- QUESTION LIST -->
 
-        <SpaceCom/>
+        <BlogListCom/>
 	</div>
 	<Footer />
 </div>

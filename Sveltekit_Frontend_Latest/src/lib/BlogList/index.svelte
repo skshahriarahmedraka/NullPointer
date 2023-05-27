@@ -32,7 +32,7 @@ onMount(async () => {
 {#if loadingState}
      
      <div class=" m-4 p-2 pr-2  h-full  flex flex-col border-2 border-[#393939] rounded-md text-[#e7e9eb]">
-         <div class=" text-lg text-indigo-500 font-semibold">Blogs</div>
+         <div on:click={()=>{goto("/b")}} on:keypress={()=>{}} class=" text-lg text-indigo-500 font-semibold hover:text-indigo-400 hover:cursor-pointer ">Blogs</div>
      
          {#if BlogList.length === 0}
            
