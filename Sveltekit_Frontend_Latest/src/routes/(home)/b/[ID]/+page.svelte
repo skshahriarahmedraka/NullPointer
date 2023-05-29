@@ -6,13 +6,14 @@
 	import Navbar from '$lib/Navbar/index.svelte';
 	import Collectives from '$lib/Collectives/index.svelte';
 	import Footer from '$lib/Footer/footer.svelte';
+	import Blog from "$lib/Blog/index.svelte"
 
 	// import Ans from "$lib/Ans/index.svelte"
 	// import {UserData,QuestionData,Loading} from "$lib/store/store"
 	import LoadingSVG from '$lib/Loading/index.svelte';
 
 	import type { PageData } from './$types';
-	import type { CookieInfo1Type, QuestionDataType, UserDataType } from '$lib/store/types';
+	import type { BlogDataType, CookieInfo1Type, QuestionDataType, UserDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import { getCookieValue } from '$lib/store/utils';
 	import { fetchUserData } from '$lib/store/fetch';
@@ -21,6 +22,8 @@
 
 	export let data: PageData;
 	console.log("🚀 ~ file: +page.svelte:23 ~ data:", data)
+	let BlogData:BlogDataType = {} as BlogDataType
+	BlogData =data.BlogData
 
     let Loading = false;
 
@@ -64,10 +67,10 @@
         <div class="flex w-full flex-row justify-center   ">
             
             <!-- COLLECTIVE -->
-            <Collectives />
+            <!-- <Collectives /> -->
             <!-- QUESTION LIST -->
-    
-            <Ques  QuestionData={QuestionData} />
+			<Blog BlogData={BlogData}/>
+            
         </div>
         <Footer />
     </div>

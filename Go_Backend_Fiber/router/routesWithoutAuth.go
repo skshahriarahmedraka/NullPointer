@@ -38,7 +38,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	
 	r.Post("/b/write",H.BlogCreate) 
 	r.Get("/b/:ID",H.BlogGet) 
-	r.Get("/b/list",H.BlogsList) // working
+	r.Get("/b/list",H.BlogsList) 
 	// /////////////////////////////////////////////////////
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)

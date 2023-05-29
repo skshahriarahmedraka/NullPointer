@@ -4,6 +4,7 @@ import (
 	"app/logs"
 	"app/model"
 	"context"
+	"fmt"
 	"strconv"
 
 	// "strings"
@@ -18,6 +19,10 @@ import (
 
 
 func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
+	fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"order\") : ", c.Query("order"))
+    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"stop\") : ", c.Query("stop"))
+    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"start\") : ", c.Query("start"))
+    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"type\") : ", c.Query("type"))
 	if c.Query("type") != "" && c.Query("start") != "" && c.Query("stop") != "" && c.Query("order") != "" {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -36,49 +41,49 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 		switch c.Query("type") {
 		case "time":
 
-			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
+			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
-			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding ques data", err)
+			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding blog data using time", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching ques data",
+					"message": "Internal Server Error while fetching blog time data",
 				})
 			}
 
 		case "views":
 
-			opts.SetSort(bson.D{{Key: "QuesViewed", Value: order}})
+			opts.SetSort(bson.D{{Key: "Views", Value: order}})
 
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
-			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding ques data", err)
+			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding blog data using view", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching ques data",
+					"message": "Internal Server Error while fetching blog view data",
 				})
 			}
 
-		case "unanswered":
+		case "uncommented":
 
-			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
+			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
-			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: 0}}}}
+			filter = bson.D{{Key: "Comments", Value: bson.D{{Key: "$not", Value: bson.D{{Key: "$size", Value: 0}}}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
-			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding ques data", err)
+			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding blog data using uncommnent", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching ques data",
+					"message": "Internal Server Error while fetching blog uncomment data",
 				})
 			}
 		case "votes":
@@ -86,9 +91,9 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
 			projectStage := bson.D{{Key: "$project", Value: bson.D{
 				{Key: "_id", Value: 0},
-				{Key: "QuesUpvote", Value: 1},
-				{Key: "QuesDownvote", Value: 1},
-				{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$QuesUpvote", "$QuesDownvote"}}}},
+				{Key: "Upvote", Value: 1},
+				{Key: "Downvote", Value: 1},
+				{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$Upvote", "$Downvote"}}}},
 			}}}
 
 			sortStage := bson.D{{Key: "$sort", Value: bson.D{
@@ -99,25 +104,25 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 			pipeline := mongo.Pipeline{matchStage, projectStage, sortStage}
 
 			// Execute the aggregation query
-			cursor, err = H.MongoQuestionCol.Aggregate(context.Background(), pipeline)
+			cursor, err = H.MongoBlogCol.Aggregate(context.Background(), pipeline)
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching ques data",
+					"message": "Internal Server Error while fetching blog votes data",
 				})
 			}
 			
 		default:
-			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
+			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
 			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
-			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding ques data", err)
+			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
+			logs.Error("Error while finding blog default data", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching ques data",
+					"message": "Internal Server Error while fetching blog default data",
 				})
 			}
 
@@ -133,24 +138,24 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 
 		for i := start; i < limit; i++ {
 			if !cursor.Next(context.Background()) {
-				fmt.Println("🚀 ~ file: quesListQuery.go ~ line 100 ~ if!cursor.Next ~ dbQuesData : ", dbQuesData)
-				return c.Status(fiber.StatusOK).JSON(dbQuesData)
+				fmt.Println("🚀 ~ file: blogsList.go ~ line 147 ~ if!cursor.Next ~ dbBlogData : ", dbBlogData)
+				return c.Status(fiber.StatusOK).JSON(dbBlogData)
 			}
-
-			var ques model.QuesData
-			if err := cursor.Decode(&ques); err != nil {
+			
+			var blog model.BlogData
+			if err := cursor.Decode(&blog); err != nil {
+				fmt.Println("🚀 ~ file: blogsList.go ~ line 147 ~ if!cursor.Next ~ dbBlogData : ", dbBlogData)
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while decoding question",
+					"message": "Internal Server Error while decoding blog",
 				})
 			}
 
-			dbQuesData = append(dbQuesData, ques)
+			dbBlogData = append(dbBlogData, blog)
 		}
 
 		
-		fmt.Println("🚀 ~ file: quesListQuery.go ~ line 46 ~ forcursor.Next ~ dbQuesData : ", dbQuesData)
 
-		return c.Status(fiber.StatusOK).JSON(dbQuesData)
+		return c.Status(fiber.StatusOK).JSON(dbBlogData)
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Bad Request",

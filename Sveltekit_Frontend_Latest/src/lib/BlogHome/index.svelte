@@ -7,6 +7,8 @@
 	onMount(()=>{
 		Loading= true
 	})
+	export let BlogList:any
+	console.log("🚀 ~ file: index.svelte:11 ~ BlogList:", BlogList)
 </script>
 
 {#if Loading}

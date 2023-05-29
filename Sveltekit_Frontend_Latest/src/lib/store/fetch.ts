@@ -39,7 +39,8 @@ import type {
 	FavouriteHashListType,
 	QuestionDataType,
 	UserFlairDataType,
-	AnswerDataType
+	AnswerDataType,
+	BlogDataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -82,15 +83,23 @@ async function fetchNotificationData(UUID: string): Promise<NotificationDataType
 	return notificationData;
 }
 
-async function fetchBlogList(UUID: string): Promise<BlogListType[]> {
-	const response = await fetch(`/api/user/${UUID}/bloglist`);
+async function fetchBlogList(
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<BlogDataType[]> {
+	const response = await fetch(
+		`/api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
 	if (!response.ok) {
-		console.log(`❌Failed to fetch /api/user/${UUID}/bloglist`);
-		return [] as BlogListType[];
+		console.log(`❌ /api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return [] as BlogDataType[];
 	}
-	const BlogListData: BlogListType[] = await response.json();
-	console.log('🚀 ~ file: fetch.ts:72 ~ fetchBlogList ~ BlogListData:', BlogListData);
-	return BlogListData;
+	const BlogDataList: BlogDataType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:100 ~ BlogDataList:", BlogDataList)
+
+	return BlogDataList ;
 }
 async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 	const response = await fetch(`/api/user/${UUID}/grouplist`);
@@ -116,13 +125,13 @@ async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListTy
 	return FavouriteHashListData;
 }
 
-async function fetchBlogData(BlogID: string): Promise<FavouriteHashListType[]> {
+async function fetchBlogData(BlogID: string): Promise<BlogDataType> {
 	const response = await fetch(`/api/blog/${BlogID}`);
 	if (!response.ok) {
 		console.log(`❌Failed to fetch /api/blog/${BlogID}`);
-		return [] as FavouriteHashListType[];
+		return {} as BlogDataType;
 	}
-	const BlogData: FavouriteHashListType[] = await response.json();
+	const BlogData: BlogDataType = await response.json();
 	console.log('🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:', BlogData);
 	return BlogData;
 }

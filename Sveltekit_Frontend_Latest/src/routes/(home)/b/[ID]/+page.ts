@@ -1,11 +1,11 @@
-export const ssr = false; // all the code will be executed in client side
+// export const ssr = false; // all the code will be executed in client side
 
-export const prerender = false; // if true whole page will be generated as a html page in server side
-export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
+// export const prerender = false; // if true whole page will be generated as a html page in server side
+// export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
 
 // import { fetchUserData } from '$lib/Store/fetch';
-import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
-import { fetchUserData } from '$lib/store/fetch';
+import type { BlogDataType, CookieInfo1Type, UserDataType } from '$lib/store/types';
+import { fetchBlogData, fetchUserData } from '$lib/store/fetch';
 import { UserData } from '$lib/store/store';
 import { getCookieValue } from '$lib/store/utils';
 // async function InitializeData() {
@@ -15,7 +15,7 @@ import { getCookieValue } from '$lib/store/utils';
 
 import type { PageLoad } from './$types';
 
-export const load = (async () => {
+export const load = (async ({params}) => {
 	const CookieValueInfo1: string = getCookieValue('Info1');
 
 	const InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
@@ -31,7 +31,11 @@ export const load = (async () => {
 		UserData.update(() => GetUserData);
 	}
 
+	let BlogData:BlogDataType = {} as BlogDataType
+	BlogData = await fetchBlogData(params.ID)
+
 	return {
-		InfoCookieData
+		InfoCookieData,
+		BlogData
 	};
 }) satisfies PageLoad;

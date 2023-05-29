@@ -2,14 +2,7 @@
 
 
 <script lang="ts">
-	import BlogListCom from '$lib/BlogList/index.svelte';
-    
-    // import Navbar from "$lib/Navbar/index.svelte"
-    // import Collectives from "$lib/Collectives/index.svelte"
-    import RelatedQues from "$lib/RelatedQues/index.svelte"
-    // import Ques from "$lib/Ques/index.svelte"
-    // import Ans from "$lib/Ans/index.svelte"
-    // import {UserData,QuestionData,Loading} from "$lib/store/store"
+	import BlogHomeCom from "$lib/BlogHome/index.svelte"
     import LoadingSVG from "$lib/Loading/index.svelte"
     import SpaceCom from "$lib/SpaceCom/index.svelte"
 	import Navbar from '$lib/Navbar/index.svelte';
@@ -22,11 +15,14 @@ import { onMount } from 'svelte';
  
 
 	import { getCookieValue } from '$lib/store/utils';
-	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
+	import type { BlogDataType, CookieInfo1Type, UserDataType } from '$lib/store/types';
 	import { fetchUserData } from '$lib/store/fetch';
-	import { BlogList, UserData } from '$lib/store/store';
+	import {  UserData } from '$lib/store/store';
 
 let loadingState: boolean = false;
+export let data  
+let BlogList : BlogDataType[] = [] as BlogDataType[]
+BlogList =data.BlogList
 onMount(async () => {
 		const CookieValueInfo1: string = getCookieValue('Info1');
 
@@ -43,6 +39,8 @@ onMount(async () => {
 		}
 		loadingState = true;
 	});
+
+	
 </script>
 
 <style>
@@ -69,7 +67,7 @@ onMount(async () => {
 		<Collectives />
 		<!-- QUESTION LIST -->
 
-        <BlogListCom/>
+        <BlogHomeCom {BlogList} />
 	</div>
 	<Footer />
 </div>
