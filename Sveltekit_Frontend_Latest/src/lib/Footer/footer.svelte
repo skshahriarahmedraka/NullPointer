@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Nullpointer from '$lib/icons/null pointer.svelte';
 	import Stediablue from '$lib/icons/stediablue.svelte';
 </script>
@@ -24,6 +25,13 @@
 				on:keypress={() => {}}
 			>
 				Admin Pannel
+			</p>
+			<p
+				class=" cursor-pointer font-semibold text-gray-400 hover:text-gray-200"
+				on:click={() => {goto('/b/write')}}
+				on:keypress={() => {}}
+			>
+				Write Blog
 			</p>
 		</div>
 		<div class=" my-10 h-fit w-40 flex-col items-start text-sm text-[#677079] ">

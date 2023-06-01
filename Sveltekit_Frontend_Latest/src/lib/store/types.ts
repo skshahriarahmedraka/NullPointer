@@ -48,6 +48,7 @@ export type UserFlairDataType = {
 	UserURL: string;
 	UserName: string;
 	UserImage: string;
+	UserTitle: string;
 	Badges: {
 		Reputation: number;
 		Gold: number;

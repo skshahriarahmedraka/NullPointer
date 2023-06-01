@@ -129,6 +129,10 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 		}
 
 		defer cursor.Close(ctx)
+		if cursor.RemainingBatchLength() == 0 {
+			return c.Status(fiber.StatusOK).JSON(dbBlogData)
+		
+		}
 		start, _ := strconv.Atoi(c.Query("start"))
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {

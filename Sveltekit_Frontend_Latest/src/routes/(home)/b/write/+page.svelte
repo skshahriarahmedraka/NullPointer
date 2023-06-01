@@ -12,6 +12,7 @@
 	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 	import { UserData } from '$lib/store/store';
 	import { fetchUserData } from '$lib/store/fetch';
+    import WriteBlog from '$lib/WriteBlog/index.svelte'
 
     // import Navbar from "$lib/Navbar/index.svelte"
     // import Collectives from "$lib/Collectives/index.svelte"
@@ -28,11 +29,11 @@ onMount(async () => {
 		UserData.subscribe((value) => {
 			UserDataValue = value;
 		});
-		if (UserDataValue.UserID != InfoCookieData.UserID) {
+		// if (UserDataValue.UserID != InfoCookieData.UserID) {
 			const GetUserData = await fetchUserData(InfoCookieData.UserID);
 			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
-		}
+		// }
 		loadingState = true;
 	});
 </script>
@@ -53,26 +54,25 @@ onMount(async () => {
     <!-- QUESTION LIST -->
     <!-- <Ques/> -->
 {#if loadingState}
-<slot/>
-<!-- ////////////////////////////// -->
 
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+    <Navbar />
+    <div class="flex w-full flex-row justify-center   ">
+        
+        <!-- COLLECTIVE -->
+        <!-- <Collectives /> -->
+        <!-- QUESTION LIST -->
+
+        <!-- <WriteQues /> -->
+        <WriteBlog/>
+    </div>
+    <Footer />
+</div>
+    
 
 {:else}
 <LoadingSVG/>
 {/if}
-    <div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
-        <Navbar />
-        <div class="flex w-full flex-row justify-center   ">
-            
-            <!-- COLLECTIVE -->
-            <Collectives />
-            <!-- QUESTION LIST -->
-    
-            <WriteQues />
-        </div>
-        <Footer />
-    </div>
-        
 
         <!-- RELATED QUESTION -->
         <!-- <RelatedQues/> -->

@@ -42,6 +42,7 @@ func (H *DatabaseCollections)UserDataFlair(c *fiber.Ctx) error  {
 		userFlair.Badges = dbUserData.Badges
 		userFlair.Location = dbUserData.Location
 		userFlair.Aboutme = dbUserData.Aboutme
+		userFlair.UserTitle = dbUserData.UserTitle
 
 		fmt.Println("🚀 ~ file: UserdataFlair.go ~ line 54 ~ ifc.Params ~ userFlair : ", userFlair)
 		

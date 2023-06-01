@@ -83,24 +83,6 @@ async function fetchNotificationData(UUID: string): Promise<NotificationDataType
 	return notificationData;
 }
 
-async function fetchBlogList(
-	type: string,
-	start: number,
-	stop: number,
-	order: number
-): Promise<BlogDataType[]> {
-	const response = await fetch(
-		`/api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`
-	);
-	if (!response.ok) {
-		console.log(`❌ /api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`);
-		return [] as BlogDataType[];
-	}
-	const BlogDataList: BlogDataType[] = await response.json();
-	console.log("🚀 ~ file: fetch.ts:100 ~ BlogDataList:", BlogDataList)
-
-	return BlogDataList ;
-}
 async function fetchGroupList(UUID: string): Promise<GroupListType[]> {
 	const response = await fetch(`/api/user/${UUID}/grouplist`);
 	if (!response.ok) {
@@ -121,19 +103,50 @@ async function fetchFavouriteHashList(UUID: string): Promise<FavouriteHashListTy
 	console.log(
 		'🚀 ~ file: fetch.ts:92 ~ fetchFavouriteHashList ~ FavouriteHashListData:',
 		FavouriteHashListData
-	);
-	return FavouriteHashListData;
-}
+		);
+		return FavouriteHashListData;
+	}
+	async function fetchBlogList(
+		type: string,
+		start: number,
+		stop: number,
+		order: number
+	): Promise<BlogDataType[]> {
+		const response = await fetch(
+			`/api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`
+		);
+		if (!response.ok) {
+			console.log(`❌ /api/b/list?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+			// return [] as BlogDataType[];
+		}
+		const BlogDataList: BlogDataType[] = await response.json();
+		console.log("🚀 ~ file: fetch.ts:100 ~ BlogDataList:", BlogDataList)
+	
+		return BlogDataList ;
+	}
 
 async function fetchBlogData(BlogID: string): Promise<BlogDataType> {
-	const response = await fetch(`/api/blog/${BlogID}`);
+	const response = await fetch(`/api/b/${BlogID}`);
 	if (!response.ok) {
-		console.log(`❌Failed to fetch /api/blog/${BlogID}`);
+		console.log(`❌Failed to fetch /api/b/${BlogID}`);
 		return {} as BlogDataType;
 	}
 	const BlogData: BlogDataType = await response.json();
 	console.log('🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:', BlogData);
 	return BlogData;
+}
+async function fetchPostBlog(BlogData : BlogDataType): Promise<BlogDataType> {
+	const response = await fetch(`/api/b/write`,{
+		method: 'POST',
+		body: JSON.stringify(BlogData),
+	});
+	if (!response.ok) {
+		console.log(`❌Failed to fetch /api/b/write`,BlogData);
+		return {} as BlogDataType;
+	}
+	const ResBlogData: BlogDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:148 ~ fetchPostBlog ~ ResBlogData:", ResBlogData)
+	return ResBlogData;
 }
 async function fetchUpdateUserData(UpdatedUserData: UserDataType): Promise<UserDataType> {
 	const response = await fetch(`/api/updateuser`, {
@@ -269,16 +282,20 @@ async function fetchAnsData(UUID: string): Promise<AnswerDataType> {
 }
 export {
 	fetchUserData,
-	fetchNotificationData,
-	fetchBlogList,
-	fetchGroupList,
-	fetchFavouriteHashList,
-	fetchBlogData,
 	fetchUpdateUserData,
+	fetchUserFlairData,
+
+	fetchBlogList,
+	fetchBlogData,
+	fetchPostBlog,
+	
 	fetchAskQuestion,
 	fetchQuestionData,
-	fetchPublicQuestionDataArr,
-	fetchUserFlairData,
+	fetchAnsData,
 	fetchPostAnsData,
-	fetchAnsData
+	fetchPublicQuestionDataArr,
+
+	fetchNotificationData,
+	fetchGroupList,
+	fetchFavouriteHashList,
 };
