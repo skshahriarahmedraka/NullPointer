@@ -69,13 +69,13 @@ export type QuestionDataType = {
 		UserID : string;
 		Vote : number;
 		VoteTime : string;
-	}
+	}[]
 	QuesBookmark: {
 		ID : string;
 		UserID : string;
 		BookmarkTime : string;
 		
-	}
+	}[]
 	QuesTags: string[];
 	QuesGroup: string[];
 	QuesAnsAccepted: string; // accepted answer ID

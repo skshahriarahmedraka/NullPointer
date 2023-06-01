@@ -4,8 +4,8 @@
 // export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
 
 // import { fetchUserData } from '$lib/Store/fetch';
-import type { BlogDataType  } from '$lib/store/types';
-import { fetchBlogList,  } from '$lib/store/fetch';
+// import type { BlogDataType  } from '$lib/store/types';
+// import { fetchBlogList,  } from '$lib/store/fetch';
 // import { BlogList, UserData } from '$lib/store/store';
 // import { getCookieValue } from '$lib/store/utils';
 // async function InitializeData() {
@@ -31,10 +31,9 @@ export const load = (async () => {
 	// 	UserData.update(() => GetUserData);
 	// }
 
-	let BlogDataList = [] as BlogDataType[];
-	BlogDataList =await  fetchBlogList("time", 0, 10, 1);
+
 	return {
 		// InfoCookieData,
-		BlogDataList
+		// BlogDataList
 	};
 }) satisfies PageLoad;

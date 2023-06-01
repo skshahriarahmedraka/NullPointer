@@ -562,7 +562,17 @@
 		QuesViewed: 0,
 		QuesUpvote: 0,
 		QuesDownvote: 0,
-		QuesBookmark: 0,
+		QuesVotes: [] as {
+		ID : string;
+		UserID : string;
+		Vote : number;
+		VoteTime : string;
+	}[],
+		QuesBookmark: [] as  {
+        ID: string;
+        UserID: string;
+        BookmarkTime: string;
+    }[],
 		QuesTags: TagObj.List,
 		QuesGroup : GroupsObj.List,
 		QuesAnsAccepted: "",
@@ -609,7 +619,17 @@
 		QuesViewed: 0,
 		QuesUpvote: 0,
 		QuesDownvote: 0,
-		QuesBookmark: 0,
+		QuesVotes: [] as {
+		ID : string;
+		UserID : string;
+		Vote : number;
+		VoteTime : string;
+	}[],
+		QuesBookmark: [] as  {
+        ID: string;
+        UserID: string;
+        BookmarkTime: string;
+    }[],
 		QuesTags: TagObj.List,
 		QuesGroup : GroupsObj.List,
 		QuesAnsAccepted: "",
@@ -694,7 +714,17 @@
 		QuesViewed: 0,
 		QuesUpvote: 0,
 		QuesDownvote: 0,
-		QuesBookmark: 0,
+		QuesVotes: [] as {
+		ID : string;
+		UserID : string;
+		Vote : number;
+		VoteTime : string;
+	}[],
+		QuesBookmark: [] as  {
+        ID: string;
+        UserID: string;
+        BookmarkTime: string;
+    }[],
 		QuesTags: [] as string[],
 		QuesGroup : [] as string[],
 		QuesAnsAccepted: "",

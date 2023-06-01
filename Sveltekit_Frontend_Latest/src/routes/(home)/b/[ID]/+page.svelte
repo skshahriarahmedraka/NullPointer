@@ -22,8 +22,8 @@
 
 	export let data: PageData;
 	console.log("🚀 ~ file: +page.svelte:23 ~ data:", data)
-	let BlogData:BlogDataType = {} as BlogDataType
-	BlogData =data.BlogData
+	let BlogData:BlogDataType 
+	BlogData =data.BlogData || {} as BlogDataType
 
     let Loading = false;
 

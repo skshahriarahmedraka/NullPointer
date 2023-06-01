@@ -4,10 +4,10 @@
 <script lang="ts">
 	import BlogHomeCom from "$lib/BlogHome/index.svelte"
     import LoadingSVG from "$lib/Loading/index.svelte"
-    import SpaceCom from "$lib/SpaceCom/index.svelte"
+    // import SpaceCom from "$lib/SpaceCom/index.svelte"
 	import Navbar from '$lib/Navbar/index.svelte';
 	import Footer from '$lib/Footer/footer.svelte';
-	import Collectives from "$lib/Collectives/index.svelte"
+	// import Collectives from "$lib/Collectives/index.svelte"
 import { onMount } from 'svelte';
 
 // export let RelatedQuestionList:any
@@ -16,13 +16,13 @@ import { onMount } from 'svelte';
 
 	import { getCookieValue } from '$lib/store/utils';
 	import type { BlogDataType, CookieInfo1Type, UserDataType } from '$lib/store/types';
-	import { fetchUserData } from '$lib/store/fetch';
+	import { fetchBlogList, fetchUserData } from '$lib/store/fetch';
 	import {  UserData } from '$lib/store/store';
 
 let loadingState: boolean = false;
-export let data  
+// export let data  
 let BlogList : BlogDataType[] = [] as BlogDataType[]
-BlogList =data.BlogList
+// BlogList =data.BlogList
 onMount(async () => {
 		const CookieValueInfo1: string = getCookieValue('Info1');
 
@@ -37,6 +37,9 @@ onMount(async () => {
 			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
 		}
+
+		// let BlogDataList = [] as BlogDataType[];
+		BlogList =await  fetchBlogList("time", 0, 10, 1);
 		loadingState = true;
 	});
 
@@ -59,12 +62,12 @@ onMount(async () => {
     
     
     
-<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#181818] ">
+<div class="   flex   w-full flex-col  justify-center overflow-x-hidden overflow-y-hidden bg-[#2d2d2d] ">
 	<Navbar />
 	<div class="flex w-full flex-row justify-center   ">
 		
 		<!-- COLLECTIVE -->
-		<Collectives />
+		<!-- <Collectives /> -->
 		<!-- QUESTION LIST -->
 
         <BlogHomeCom {BlogList} />
