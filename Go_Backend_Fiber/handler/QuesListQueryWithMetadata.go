@@ -20,7 +20,7 @@ import (
 	// "go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
+func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 
 	fmt.Println("🚀 ~ file: quesListQuery.go ~ line 25 ~ ifc.Query ~ c.Query(\"order\") : ", c.Query("order"))
 	fmt.Println("🚀 ~ file: quesListQuery.go ~ line 25 ~ ifc.Query ~ c.Query(\"stop\") : ", c.Query("stop"))
@@ -37,7 +37,6 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 		var cursor *mongo.Cursor
 		var err error
 		var limit int
-
 
 		var filter primitive.D
 		//  type : time , views , unanswered  , vote
@@ -113,7 +112,7 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 					"message": "Internal Server Error while fetching ques data",
 				})
 			}
-			
+
 		default:
 			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
 
@@ -132,6 +131,7 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 		}
 
 		defer cursor.Close(ctx)
+		NumOfQues := cursor.RemainingBatchLength()
 		start, _ := strconv.Atoi(c.Query("start"))
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {
@@ -141,8 +141,12 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
 		for i := start; i < limit; i++ {
 			if !cursor.Next(context.Background()) {
-				fmt.Println("🚀 ~ file: quesListQuery.go ~ line 100 ~ if!cursor.Next ~ dbQuesData : ", dbQuesData)
-				return c.Status(fiber.StatusOK).JSON(dbQuesData)
+				var QuesArrWithMetadata QuesArrWithMetadataType
+
+				QuesArrWithMetadata.Metadata.Length = NumOfQues
+				QuesArrWithMetadata.QuesList = dbQuesData
+				fmt.Println("🚀 ~ file: QuesListQueryWithMetadata.go ~ line 149 ~ if!cursor.Next ~ QuesArrWithMetadata : ", QuesArrWithMetadata)
+				return c.Status(fiber.StatusOK).JSON(QuesArrWithMetadata)
 			}
 
 			var ques model.QuesData
@@ -155,10 +159,13 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 			dbQuesData = append(dbQuesData, ques)
 		}
 
-		
-		fmt.Println("🚀 ~ file: quesListQuery.go ~ line 46 ~ forcursor.Next ~ dbQuesData : ", dbQuesData)
+		var QuesArrWithMetadata QuesArrWithMetadataType
 
-		return c.Status(fiber.StatusOK).JSON(dbQuesData)
+		QuesArrWithMetadata.Metadata.Length = NumOfQues
+		QuesArrWithMetadata.QuesList = dbQuesData
+		fmt.Println("🚀 ~ file: quesListQuery copy.go ~ line 163 ~ ifc.Query ~ QuesArrWithMetadata : ", QuesArrWithMetadata)
+
+		return c.Status(fiber.StatusOK).JSON(QuesArrWithMetadata)
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Bad Request",
@@ -167,4 +174,11 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 	}
 }
 
+type QuesArrWithMetadataType struct {
+	QuesList []model.QuesData `json:"QuesList" bson:"QuesList"`
+	Metadata MetadataType     `json:"Metadata" bson:"Metadata"`
+}
 
+type MetadataType struct {
+	Length int `json:"Length" bson:"Length"`
+}

@@ -52,7 +52,7 @@
 </script>
 
 <svelte:head>
-	<title>{"Blog Title"}</title>
+	<title>{BlogData.Title}</title>
 	<link rel="icon" href={HeadLogo} />
 </svelte:head>
 <!-- markup (zero or more items) goes here -->

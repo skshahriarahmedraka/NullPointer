@@ -34,20 +34,22 @@ export const load = (async ({fetch,params}) => {
 	// }
 	let  QuestionData:QuestionDataType= {} as QuestionDataType;
 	if (typeof document !== 'undefined') {
-
+		
 		const response = await fetch(`/api/q/${params.QID}`);
+		console.log("🚀 ~ file: +page.ts:40 ~ load ~ response:", response)
 		if (!response.ok) {
 			console.log(`❌ Failed to fetch params.QID /api/q/${params.QID} QuestionData`);
 			// return {} 
 		}
-		 QuestionData = await response.json();
+		QuestionData = await response.json();
 		console.log("🚀 ~ file: +page.ts:42 ~ load ~ QuestionData:", QuestionData)
 		
 	}
-
-		// QuestionData= await fetchQuestionData(params.QID) 
+	
+	// QuestionData= await fetchQuestionData(params.QID) 
 	
 	
+	console.log("🚀 ~ file: +page.ts:36 ~ load ~ QuestionData:", QuestionData)
 
 	return {
 		// InfoCookieData,

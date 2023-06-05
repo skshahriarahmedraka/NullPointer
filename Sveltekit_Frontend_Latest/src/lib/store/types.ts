@@ -162,12 +162,19 @@ export type BlogDataType = {
 	ViewedBy  : string [] 
 }
 
+
+export type QuesArrWithMetadataType = {
+	QuesList: QuestionDataType[]
+	Metadata: {
+		Length:number 
+	}
+}
 //////////////////////////////////////
 
-export type BlogListType = {
-	ID: string;
-	Title: string;
-};
+// export type BlogListType = {
+// 	ID: string;
+// 	Title: string;
+// };
 
 export type GroupListType = {
 	ID: string;

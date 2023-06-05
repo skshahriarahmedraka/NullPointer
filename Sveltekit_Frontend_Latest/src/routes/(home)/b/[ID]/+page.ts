@@ -35,9 +35,9 @@ export const load = (async ({ params, fetch }) => {
 	// BlogData = await fetchBlogData(params.ID);
 
 	if (typeof document !== 'undefined') {
-		const response = await fetch(`/api/blog/${params.ID}`);
+		const response = await fetch(`/api/b/${params.ID}`);
 		if (!response.ok) {
-			console.log(`❌Failed to fetch /api/blog/${params.ID}`);
+			console.log(`❌Failed to fetch /api/b/${params.ID}`);
 			return {} as BlogDataType;
 		}
 		BlogData = await response.json();

@@ -73,35 +73,9 @@
 	let CashedLinkImage: string = 'https://';
 	let tArea: any = null;
 
-	// Image Upload
+	
 	let file: File | null = null;
-	// let FileInput: HTMLInputElement;
-
-	// const handleFileChange = (event: Event) => {
-	// 	const inputElement = event.target as HTMLInputElement;
-	// 	file = inputElement.files?.[0] ?? null;
-	// 	handleSubmit();
-	// };
-
-	// const handleSubmit = async () => {
-	// 	if (!file) return;
-	// 	const formData = new FormData();
-	// 	formData.append('image', file);
-	// 	let ResObj: { ImageUrl: string } = {} as { ImageUrl: string };
-	// 	try {
-	// 		const response = await fetch('/api/uploadimage', {
-	// 			method: 'POST',
-	// 			body: formData
-	// 		});
-	// 		ResObj = await response.json();
-	// 		CashedLinkImage = ResObj.ImageUrl;
-	// 		console.log('🚀 ~ file: index.svelte:106 ~ handleSubmit ~ CashedLinkImage:', CashedLinkImage);
-
-	// 		// handle server response
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
+	
 
 	let ShowTableInfo = false;
 	async function OnclickTable() {
@@ -552,7 +526,7 @@
 	WrittenBy : [] as string [],
 	WrittenTime : new Date().toISOString(), 
 	EditedBy : "",
-	EditedTime : "" ,
+	EditedTime : new Date().toISOString() ,
 	Tags 	:   [] as string [],
 	Comments : [] as string[],
 	Upvote 	 : 0,
@@ -591,26 +565,32 @@
 			return true
 		}
 	}
-	async function OnSubmitQuestion() {
+	async function OnSubmitBlog() {
 		BlogData.ID = ""
 		BlogData.WrittenBy.push($UserData.UserID)
 		BlogData.WrittenTime= new Date().toISOString()
+		BlogData.EditedTime = new Date().toISOString()
 		BlogData.Upvote = 0
 		BlogData.Downvote = 0
 		BlogData.Views = 0
+		BlogData.Tags = TagObj.List
+		BlogData.Description = markdown.trim()
 		
 		if (BlogData.Title.trim() === '') {
 			ErrorMsg.BlogTitle[1] = 'Title is empty';
 			ErrorMsg.BlogTitle[0] = true;
+			console.log("🚀 ~ file: index.svelte:579 ~ OnSubmitBlog ~ ErrorMsg.BlogTitle[1]:", ErrorMsg.BlogTitle[1])
 		} else if (!ValidBlogTitle(BlogData.Title)) {
 			ErrorMsg.BlogTitle[1] = 'Title is too small';
 			ErrorMsg.BlogTitle[0] = true;
+			console.log("🚀 ~ file: index.svelte:583 ~ OnSubmitBlog ~ ErrorMsg.BlogTitle[1]:", ErrorMsg.BlogTitle[1])
 		} else {
 			ErrorMsg.BlogTitle[0] = false;
 		}
 		if (BlogData.Tags.length <1) {
 			ErrorMsg.BlogTags[1] = 'Tags are atleast 1';
 			ErrorMsg.BlogTags[0] = true;
+			console.log("🚀 ~ file: index.svelte:590 ~ OnSubmitBlog ~ ErrorMsg.BlogTags[1]:", ErrorMsg.BlogTags[1])
 		}else {
 			ErrorMsg.BlogTags[0] = false;
 		}
@@ -618,6 +598,7 @@
 		 if (!ValidBlogDescription(BlogData.Description)) {
 			ErrorMsg.BlogDescription[1] = 'Description is too short ';
 			ErrorMsg.BlogDescription[0] = true;
+			console.log("🚀 ~ file: index.svelte:598 ~ OnSubmitBlog ~ ErrorMsg.BlogDescription[1]:", ErrorMsg.BlogDescription[1])
 		} else {
 			ErrorMsg.BlogDescription[0] = false;
 		}
@@ -626,6 +607,7 @@
 			
 
 			const res:BlogDataType = await fetchPostBlog(BlogData)
+			console.log("🚀 ~ file: index.svelte:608 ~ OnSubmitBlog ~ res:", res)
 			if (res.ID!==''){
 				goto('/b/'+res.ID)
 
@@ -633,7 +615,7 @@
 			
 		}
 	}
-	async function OnResetQuestion(){
+	async function OnResetBlog(){
 
 		BlogData = {
 			ID     : "" ,
@@ -644,7 +626,7 @@
 			WrittenBy : [] as string [],
 			WrittenTime : new Date().toISOString(), 
 			EditedBy : "",
-			EditedTime : "" ,
+			EditedTime : new Date().toISOString() ,
 			Tags 	:   [] as string [],
 			Comments : [] as string[],
 			Upvote 	 : 0,
@@ -665,8 +647,8 @@
 			ViewedBy  : [] as string[] ,
 		}
 	}
-	async function OnCancelQuestion() {
-		OnResetQuestion()
+	async function OnCancelBlog() {
+		OnResetBlog()
 		goto('/');
 	}
 
@@ -699,7 +681,33 @@
 	
 	};
 
-
+	let TagObj: { Input: string; Focus: boolean; List: string[]; Suggested: string[] } = {
+		Input: '' as string,
+		Focus: false as boolean,
+		List: [] as string[],
+		Suggested: [] as string[]
+	};
+	function onKeyPressTags(e: { keyCode: any }) {
+		switch (e.keyCode) {
+			case 32:
+				onKeyTag();
+				break;
+			case 13:
+				onKeyTag();
+				break;
+		}
+	}
+	function onKeyTag() {
+		if (TagObj.Input.trim() != ('' as String)) {
+			TagObj.List = [...TagObj.List, TagObj.Input.trim()];
+			TagObj.Input = '' as string;
+		}
+	}
+	let ThisTagInput: any;
+	function RemoveTagFromList(s: number) {
+		TagObj.List.splice(s, 1);
+		ThisTagInput.focus();
+	}
 	
 	
 </script>
@@ -806,19 +814,8 @@
 	</div>
 		</div>
 		<div class=" text-base text-[#e7e8eb] flex flex-col items-center  ">
-			<div class=" mt-5 flex  max-h-full min-h-screen w-9/12 flex-col  ">
-				<!-- Ques Title -->
-				<!-- <div class=" mx-5 text-left text-lg font-semibold text-gray-300   ">Title :</div>
-				<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
-					Be specific and imagine you're asking a question to another person
-				</div>
-				<input
-					bind:value={QuestionTitle}
-					type="text"
-					class=" mx-4 mt-3 h-12 w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none  focus:border-sky-500 active:border-gray-800 "
-				/> -->
-		
-				<!-- Ques Description -->
+			<div class=" mt-5 flex  max-h-full  w-9/12 flex-col  ">
+				
 		
 				<div class=" mx-5 mt-3 text-left text-lg font-semibold text-gray-300   ">Description :</div>
 				<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
@@ -1113,7 +1110,7 @@
 					</div>
 				{/if}
 				<p class="">Write Your Blog (Markdown format) :</p>
-				<div class=" w-[950px] h-fit">
+				<div class=" w-[950px]  h-fit">
 	
 					
 					<textarea
@@ -1134,11 +1131,82 @@
 					{/if}
 				</div>
 			</div>
-	<div class=" w-[950px] h-fit flex flex-row">
+			<div class=" mx-5 mt-5 text-left text-lg font-semibold text-gray-300   ">Tags :</div>
+			<div class=" mx-5 text-left text-sm font-semibold text-gray-500   ">
+				Add up to 5 tags to describe what your question is about
+			</div>
+	
+			<div
+				class="mx-4 mt-3 h-fit w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-0   {TagObj.Focus
+					? 'border-sky-500'
+					: ''}  "
+			>
+				<ul class="flex flex-row flex-wrap gap-2">
+					{#each TagObj.List as t,i}
+						<li
+							class="m-1 rounded-md bg-[#3d4951] px-2 py-1 text-[#9bc0da] hover:cursor-pointer hover:bg-slate-600 hover:text-teal-200"
+						>
+							{t}
+							<svg
+							on:click={() => {
+								RemoveTagFromList(i);
+							}}
+							on:keypress={() => {}}
+							class="inline-flex h-6 w-6 hover:stroke-red-500"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M6 18L18 6M6 6l12 12"
+							/></svg
+						>
+						</li>
+					{/each}
+					<input
+					bind:this={ThisTagInput}
+						on:keypress={onKeyPressTags}
+						maxlength="20"
+						bind:value={TagObj.Input}
+						on:focus={() => {
+							TagObj.Focus = true;
+						}}
+						on:blur={() => {
+							TagObj.Focus = true;
+						}}
+						type="text"
+						class=" inline w-fit grow border-0  bg-inherit outline-0 focus:outline-none  "
+					/>
+				</ul>
+			</div>
+	<!-- <div class=" w-[950px] h-fit flex flex-row">
 		<p class=" font-medium text-lg text-[#e7e8eb]">Tags</p>
 		<p class=" font-semibold text-lg text-blue-600 ">Golang</p>
 		<p class=" font-semibold text-lg text-blue-600 ">Rust</p>
 		<p class=" font-semibold text-lg text-blue-600 ">Elixir</p>
+	</div> -->
+	<div class=" flex flex-row  justify-center gap-5">
+		<button
+		on:click={() => {OnSubmitBlog()}}
+			class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
+		>
+			<p class="my-auto text-xl font-semibold text-gray-200">Post Blog</p>
+		</button>
+		<button
+		on:click={() => {OnResetBlog()}}
+			class=" m-5 flex h-12 w-fit  items-center justify-center rounded-md bg-blue-500 px-3 hover:bg-blue-600 active:bg-blue-800 "
+		>
+			<p class="my-auto text-xl font-semibold text-gray-200">Reset</p>
+		</button>
+		<button
+			on:click={() => {OnCancelBlog()}}
+			class=" m-5 flex h-12 w-fit items-center justify-center  rounded-md border-2 border-red-600 bg-inherit px-3 text-red-600 hover:bg-red-500 hover:text-gray-200 active:bg-red-600 "
+		>
+			<p class="my-auto text-xl font-semibold  ">Discart</p>
+		</button>
 	</div>
 		</div>
 	</div>

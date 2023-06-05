@@ -10,6 +10,10 @@
 	import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
 	import { fetchUserData } from '$lib/store/fetch';
 	import { UserData } from '$lib/store/store';
+	import HotQuesCom from '$lib/HotQues/index.svelte';
+	import BlogListCom from '$lib/BlogList/index.svelte';
+
+	import Search from '$lib/search/search.svelte';
 
 	let loadingState: boolean = false;
 	onMount(async () => {
@@ -42,7 +46,31 @@
 			<Collectives />
 			<!-- QUESTION LIST -->
 
-			<p class="text-xl">search result</p>
+			<!-- settings -->
+			<div class=" mb-2 mt-2 min-h-screen w-[1200px] bg-[#2d2d2d]   ">
+				<div class="flex flex-row">
+					<!-- questions -->
+					<div class="flex w-[850px] flex-col">
+						<!-- public ques & ask -->
+						
+						<!-- filter -->
+						<!-- <QuesFilter/> -->
+
+						<!-- all Question list -->
+						<Search/>
+						<!-- <PageNum /> -->
+					</div>
+					<!-- right sidebar -->
+					<div class="flex h-full w-[350px] flex-col">
+						<!-- Blog -->
+						<!-- svelte-ignore missing-declaration -->
+						<BlogListCom />
+						<!-- hot ques -->
+
+						<HotQuesCom />
+					</div>
+				</div>
+			</div>
 		</div>
 		<Footer />
 	</div>

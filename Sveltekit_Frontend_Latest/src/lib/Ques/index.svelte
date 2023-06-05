@@ -20,6 +20,7 @@
 	import { UserData } from '$lib/store/store';
 	import WriteAns from '$lib/WriteAns/index.svelte';
 	import Emptybox from '$lib/errors/emptybox.svelte';
+	import { goto } from '$app/navigation';
 
 	export let QuestionData: QuestionDataType;
 	// export let RelatedQuestionList:any
@@ -112,7 +113,9 @@
 			<div class=" flex flex-row">
 				<p class=" line-clamp-3 basis-10/12 font-raleway text-2xl">{QuestionData.QuesTitle}</p>
 				<div
-					class="ml-3 flex h-12 basis-2/12 items-center justify-center rounded-md bg-[#0964aa] hover:bg-blue-600"
+				on:click={()=>{goto("/ask")}}
+				on:keypress={()=>{}}
+					class="ml-3 flex h-12 basis-2/12 items-center justify-center rounded-md bg-[#0964aa] hover:bg-blue-600 hover:cursor-pointer"
 				>
 					<p class="  my-auto text-xl font-semibold text-gray-200">Ask Question</p>
 				</div>

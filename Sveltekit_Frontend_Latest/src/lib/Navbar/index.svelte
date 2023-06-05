@@ -20,7 +20,7 @@
 	import Stedia from '$lib/icons/stedia.svelte';
 	import StediaRed from '$lib/icons/stediaRed.svelte';
 	import Stediablue from '$lib/icons/stediablue.svelte';
-	import { UserData } from '$lib/store/store';
+	import { UserData, SearchedString } from '$lib/store/store';
 	console.log("🚀 ~ file: navBar.svelte:24 ~ UserData:", UserData)
 
 	let UserdataLoading: boolean = true;
@@ -327,6 +327,7 @@
 				<div class="input-group relative flex w-full flex-row items-stretch ">
 					<!-- search input -->
 					<input
+					bind:value={$SearchedString}
 						type="search"
 						class="form-control  relative m-0 block w-full min-w-0 flex-auto rounded border border-solid  border-gray-800 bg-gray-600 bg-clip-padding px-3 py-1.5 text-base font-normal transition ease-in-out  focus:border-blue-600 focus:bg-gray-600 focus:outline-none"
 						placeholder="Search"
@@ -335,6 +336,7 @@
 					/>
 					<!-- search button -->
 					<button
+					on:click={()=>{goto("/search")}}
 						class="  btn inline-block items-center rounded bg-sky-500 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150  ease-in-out hover:bg-blue-600 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800  active:shadow-lg"
 						type="button"
 						id="button-addon2"
@@ -354,11 +356,19 @@
 				on:keydown={(e) => {}}
 			>
 				<!-- User -->
-				<img
-					src={$UserData.UserImage}
-					alt=""
-					class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
-				/>
+				{#if $UserData.UserImage != ""}
+					 <!-- content here -->
+					 <img
+						 src={$UserData.UserImage}
+						 alt=""
+						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+						 />
+						 {:else}
+						 <!-- else content here -->
+						 <UserAnonymous
+						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer  object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+					    />
+				{/if}
 				<!-- user Credit -->
 				<div class="max-w-36   flex h-fit  min-w-min flex-row items-center justify-center">
 					{#if $UserData.Badges.Reputation !=0}

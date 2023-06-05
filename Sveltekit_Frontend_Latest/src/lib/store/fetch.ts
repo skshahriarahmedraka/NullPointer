@@ -40,7 +40,8 @@ import type {
 	QuestionDataType,
 	UserFlairDataType,
 	AnswerDataType,
-	BlogDataType
+	BlogDataType,
+	QuesArrWithMetadataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -218,6 +219,27 @@ async function fetchPublicQuestionDataArr(
 	return QuestionDataResponseArr;
 }
 
+async function fetchQuesArrWithMetadata(
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<QuesArrWithMetadataType> {
+	const response = await fetch(
+		`/api/public/meta/q?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
+	console.log("🚀 ~ file: fetch.ts:231 ~ response:", response)
+	if (!response.ok) {
+		console.log(`❌QuesArrWithMetadataType /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return {} as QuesArrWithMetadataType;
+	}
+	const QuestionDataResponseArr: QuesArrWithMetadataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:236 ~ QuesArrWithMetadataType:", QuestionDataResponseArr)
+	
+	return QuestionDataResponseArr;
+}
+
+
 async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	const response = await fetch(`/api/user/flair/${UUID}`);
 	if (!response.ok) {
@@ -294,6 +316,7 @@ export {
 	fetchAnsData,
 	fetchPostAnsData,
 	fetchPublicQuestionDataArr,
+	fetchQuesArrWithMetadata,
 
 	fetchNotificationData,
 	fetchGroupList,

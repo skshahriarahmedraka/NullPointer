@@ -65,7 +65,7 @@ func (H *DatabaseCollections) BlogCreate(c *fiber.Ctx) error {
 			fmt.Println("🚀 ~ file: quesAsk.go ~ line 64 ~ func ~ reqQuesData : ", reqBlogData)
 			fmt.Println("🚀 ~ file: quesAsk.go ~ line 70 ~ func ~ res : ", res)
 
-			return c.Status(fiber.StatusOK).JSON(res)
+			return c.Status(fiber.StatusOK).JSON(reqBlogData)
 
 		}
 

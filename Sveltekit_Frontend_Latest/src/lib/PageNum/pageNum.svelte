@@ -1,7 +1,7 @@
 <script lang="ts">
-	export let pageNumStart = 1;
-	export let pageNumNow = 1;
-	export let pageNumEnd = 30;
+	export let pageNumStart :number;
+	export let pageNumNow :number;
+	export let pageNumEnd :number ;
 	// let PresentArray = Array.from(Array(6).keys()).slice(1);
 	// let func = function () {
 	// 	if (pageNumNow < 3) {
@@ -22,9 +22,9 @@
 
 
 <div class=" flex h-32 w-full items-center justify-center font-sf-pro ">
-	{#if pageNumStart != pageNumEnd}
+	{#if pageNumEnd!=0 }
 		<div class="flex items-center justify-center gap-2 ">
-			{#if pageNumNow != 1}
+			{#if pageNumNow != 0}
 				<button
 					class="h-8 w-fit   "
 					on:click={() => {
@@ -35,10 +35,11 @@
 			<button
 				class="h-8 w-8  rounded-md  {1 === pageNumNow ? 'bg-[#f28225]' : 'text-[#a9a9a9] border-[1px] border-[#a9a9a9] border-opacity-40'}"
 				on:click={() => {
-					pageNumNow = 1;
+					pageNumNow = 0;
 				}}><p class="text-sm font-bold ">1</p></button
 			>
-			{#if pageNumNow > 4}
+
+			{#if pageNumNow > 3}
 				<button
 					class="h-8 w-8 rounded-md "
 					on:click={() => {
@@ -47,14 +48,14 @@
 				>
 			{/if}
 			<div class="flex items-center justify-center gap-2">
-				{#if pageNumNow < 5 && pageNumEnd >1}
+				{#if pageNumNow < 4 && pageNumEnd >0}
 					
 					{#each Array.from(Array(5+1 ).keys()).slice(2) as i}
 						<button
 							class="h-8 w-8  rounded-md  {i === pageNumNow ? 'bg-[#f28225]' : 'text-[#a9a9a9] border-[1px] border-[#a9a9a9] border-opacity-40'} "
 							on:click={() => {
 								pageNumNow = i;
-							}}><p class="text-sm font-bold ">{i}</p></button
+							}}><p class="text-sm font-bold ">{i+1}</p></button
 						>
 					{/each}
 				{:else if pageNumNow > pageNumEnd - 4}
@@ -63,7 +64,7 @@
 							class="h-8 w-8 rounded-md {i === pageNumNow ? 'bg-[#f28225]' : 'text-[#a9a9a9] border-[1px] border-[#a9a9a9] border-opacity-40'} "
 							on:click={() => {
 								pageNumNow = i;
-							}}><p class="text-sm font-bold ">{i}</p></button
+							}}><p class="text-sm font-bold ">{i+1}</p></button
 						>
 					{/each}
 				{:else}
@@ -73,7 +74,7 @@
                         class="h-8 w-8 rounded-md  { i===pageNumNow ? "bg-[#f28225]" : "text-[#a9a9a9] border-[1px] border-[#a9a9a9] border-opacity-40"} "
                         on:click={() => {
 							pageNumNow = i;
-                        }}><p class="text-sm font-bold ">{ i}</p></button
+                        }}><p class="text-sm font-bold ">{ i+1}</p></button
                     >
                 {/each}
 				{/if}
@@ -91,7 +92,7 @@
 					 class="h-8 w-8 rounded-md {pageNumEnd === pageNumNow ? 'bg-[#f28225]' : 'text-[#a9a9a9] border-[1px] border-[#a9a9a9] border-opacity-40'}"
 					 on:click={() => {
 						 pageNumNow = pageNumEnd;
-					 }}><p class="text-sm font-bold ">{pageNumEnd}</p></button
+					 }}><p class="text-sm font-bold ">{pageNumEnd+1}</p></button
 				 >
 			{/if}
 			{#if pageNumNow != pageNumEnd}
@@ -112,3 +113,41 @@
 <style>
 	/* your styles go here */
 </style>
+
+
+{#if pageNumEnd!=0 }
+	 {#if pageNumNow != 0}
+		 <!-- prev  -->
+	 {/if}
+	 
+	 <!-- 1 button -->
+	 {#if pageNumEnd<3}
+		 {#each 0 as pageNumEnd}
+			 <!-- content here -->
+		 {/each}
+	{:else if  pageNumNow > 3}
+			<!-- 1 -->
+			<!-- ... -->
+			<!-- page Now  -->
+			<!-- ... -->
+			<!-- Page End -->
+
+	 {/if}
+
+	 
+{:else}
+	 <!-- else content here -->
+{/if}
+
+
+
+{#if pageNumNow > 3}
+		 <!-- ... -->
+	 {/if}
+	 {#if condition}
+	 <!-- content here -->
+	{:else if  otherCondition}
+		<!-- else if content here -->
+	{:else}
+		<!-- else content here -->
+	{/if}
