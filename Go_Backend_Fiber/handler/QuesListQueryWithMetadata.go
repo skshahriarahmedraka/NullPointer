@@ -89,12 +89,43 @@ func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 				})
 			}
 		case "votes":
-
+			// not working
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
+	// 		"ID": "000000000000000000000000",
+    //   "QuesTitle": "",
+    //   "QuesViewed": 0,
+    //   "QuesUpvote": 0,
+    //   "QuesDownvote": 0,
+    //   "QuesVotes": null,
+    //   "QuesBookmark": null,
+    //   "QuesTags": null,
+    //   "QuesGroup": null,
+    //   "QuesAnsAccepted": "",
+    //   "QuesAskedBy": "000000000000000000000000",
+    //   "QuesAskedTime": "0001-01-01T00:00:00Z",
+    //   "QuesEditedBy": "000000000000000000000000",
+    //   "QuesEditedTime": "0001-01-01T00:00:00Z",
+    //   "QuesDescription": "",
+    //   "QuesComment": null,
+    //   "Answers": null
 			projectStage := bson.D{{Key: "$project", Value: bson.D{
-				{Key: "_id", Value: 0},
+				{Key: "_id", Value: 1},
 				{Key: "QuesUpvote", Value: 1},
 				{Key: "QuesDownvote", Value: 1},
+				{Key: "QuesTitle", Value: 1},
+				{Key: "QuesViewed", Value: 1},
+				{Key: "QuesVotes", Value: 1},
+				{Key: "QuesBookmark", Value: 1},
+				{Key: "QuesTags", Value: 1},
+				{Key: "QuesGroup", Value: 1},
+				{Key: "QuesAnsAccepted", Value: 1},
+				{Key: "QuesAskedBy", Value: 1},
+				{Key: "QuesAskedTime", Value: 1},
+				{Key: "QuesEditedBy", Value: 1},
+				{Key: "QuesEditedTime", Value: 1},
+				{Key: "QuesDescription", Value: 1},
+				{Key: "QuesComment", Value: 1},
+				{Key: "Answers", Value: 1},
 				{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$QuesUpvote", "$QuesDownvote"}}}},
 			}}}
 
@@ -112,6 +143,30 @@ func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 					"message": "Internal Server Error while fetching ques data",
 				})
 			}
+
+			////////////////////////////////////////////////////////////////
+			// NumOfQues := cursor.RemainingBatchLength()
+            // fmt.Println("🚀 ~ file: QuesListQueryWithMetadata.go ~ line 118 ~ switchc.Query ~ NumOfQues : ", NumOfQues)
+			// for  {
+			// 	if !cursor.Next(context.Background()) {
+			// 		var QuesArrWithMetadata QuesArrWithMetadataType
+	
+			// 		QuesArrWithMetadata.Metadata.Length = NumOfQues
+			// 		QuesArrWithMetadata.QuesList = dbQuesData
+			// 		fmt.Println("🚀 ~ file: QuesListQueryWithMetadata.go ~ line 149 ~ if!cursor.Next ~ QuesArrWithMetadata : ", QuesArrWithMetadata)
+			// 		return c.Status(fiber.StatusOK).JSON(QuesArrWithMetadata)
+			// 	}
+	
+			// 	var ques model.QuesData
+			// 	if err := cursor.Decode(&ques); err != nil {
+			// 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			// 			"message": "Internal Server Error while decoding question",
+			// 		})
+			// 	}
+	
+			// 	dbQuesData = append(dbQuesData, ques)
+			// }
+
 
 		default:
 			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})

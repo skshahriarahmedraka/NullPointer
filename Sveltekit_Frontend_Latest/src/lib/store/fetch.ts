@@ -207,6 +207,7 @@ async function fetchPublicQuestionDataArr(
 	const response = await fetch(
 		`/api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`
 	);
+	console.log(` /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 	if (!response.ok) {
 		console.log(`❌ /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 		return [] as QuestionDataType[];
@@ -229,8 +230,9 @@ async function fetchQuesArrWithMetadata(
 		`/api/public/meta/q?type=${type}&start=${start}&stop=${stop}&order=${order}`
 	);
 	console.log("🚀 ~ file: fetch.ts:231 ~ response:", response)
+	console.log(`QuesArrWithMetadataType /api/public/meta/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 	if (!response.ok) {
-		console.log(`❌QuesArrWithMetadataType /api/public/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		console.log(`❌QuesArrWithMetadataType /api/public/meta/q?type=${type}&start=${start}&stop=${stop}&order=${order}`);
 		return {} as QuesArrWithMetadataType;
 	}
 	const QuestionDataResponseArr: QuesArrWithMetadataType = await response.json();

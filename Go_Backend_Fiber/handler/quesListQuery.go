@@ -93,9 +93,23 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
 			projectStage := bson.D{{Key: "$project", Value: bson.D{
-				{Key: "_id", Value: 0},
+				{Key: "_id", Value: 1},
 				{Key: "QuesUpvote", Value: 1},
 				{Key: "QuesDownvote", Value: 1},
+				{Key: "QuesTitle", Value: 1},
+				{Key: "QuesViewed", Value: 1},
+				{Key: "QuesVotes", Value: 1},
+				{Key: "QuesBookmark", Value: 1},
+				{Key: "QuesTags", Value: 1},
+				{Key: "QuesGroup", Value: 1},
+				{Key: "QuesAnsAccepted", Value: 1},
+				{Key: "QuesAskedBy", Value: 1},
+				{Key: "QuesAskedTime", Value: 1},
+				{Key: "QuesEditedBy", Value: 1},
+				{Key: "QuesEditedTime", Value: 1},
+				{Key: "QuesDescription", Value: 1},
+				{Key: "QuesComment", Value: 1},
+				{Key: "Answers", Value: 1},
 				{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$QuesUpvote", "$QuesDownvote"}}}},
 			}}}
 

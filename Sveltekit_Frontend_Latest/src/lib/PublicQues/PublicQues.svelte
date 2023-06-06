@@ -21,11 +21,14 @@
 	// import { goto } from "$app/navigation";
 	let filterState: boolean = true;
 	// GetEditedByData(QuestionData.QuesEditedBy);
-	let filterType: string = 'time';
+	let filterType: string = 'votes';
 	// let filterIndex: number = 0;
 	let pageNumStart: number=0;
 	let pageNumNow: number =0;
 	let pageNumEnd: number;
+	$: console.log("pageNumNow:", pageNumNow)
+	$: console.log("pageNumStart:", pageNumStart)
+	$: console.log("pageNumEnd:", pageNumEnd)
 	let contentPerPage:number=5
 	let Loading:boolean=false
 	onMount(async () => {
@@ -38,7 +41,7 @@
 			console.log("🚀 ~ file: PublicQues.svelte:32 ~ onMount ~ QuestionList:", QuestionList)
 		// CalculatePages();
 		pageNumStart = 0;
-		pageNumNow = pageNumNow*contentPerPage;
+		// pageNumNow = pageNumNow*contentPerPage;
 		pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
 		Loading=true
 	});
@@ -54,22 +57,16 @@
 		} else {
 			QuestionList = await fetchQuesArrWithMetadata(filterType, pageNumNow*contentPerPage, pageNumNow*contentPerPage + contentPerPage, 1);
 		}
+		console.log("🚀 ~ file: PublicQues.svelte:59 ~ ApplyFilter ~ QuestionList:", QuestionList)
 		
 		pageNumStart = 0;
-		pageNumNow = pageNumNow*contentPerPage;
-		pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
 	}
 
-	function CalculatePages() {
-		pageNumStart = 0;
-		pageNumNow = pageNumNow*contentPerPage;
-		pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
-	}
+
 	$: pageNumNow , ApplyFilter(filterType, filterState)
 </script>
 
 {#if Loading}
-	 <!-- content here -->
 
 <div class="flex h-16 w-full flex-row">
 	<div class="ml-5 self-center text-lg text-[#e7e9eb]">{QuestionList.Metadata.Length} Question</div>
@@ -78,7 +75,7 @@
 		<div
 			on:click={() => {
 				ApplyFilter('time', filterState);
-				CalculatePages();
+				// CalculatePages();
 			}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
@@ -91,7 +88,7 @@
 		<div
 			on:click={() => {
 				ApplyFilter('views', filterState);
-				CalculatePages();
+				// CalculatePages();
 			}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
@@ -104,7 +101,7 @@
 		<div
 			on:click={() => {
 				ApplyFilter('votes', filterState);
-				CalculatePages();
+				// CalculatePages();
 			}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
@@ -117,7 +114,7 @@
 		<div
 			on:click={() => {
 				ApplyFilter('unanswered', filterState);
-				CalculatePages();
+				// CalculatePages();
 			}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-0 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
@@ -137,7 +134,7 @@
 		on:click={() => {
 			filterState = !filterState;
 			ApplyFilter(filterType, filterState);
-			CalculatePages();
+			// CalculatePages();
 		}}
 		on:keydown={() => {}}
 		class=" ml-4 flex h-9 w-24 flex-row items-center justify-center self-center rounded-md border-2 border-[#7d858d] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245]"
@@ -236,7 +233,10 @@
 		</div>
 	{/if}
 </div>
-<PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} />
+{#if pageNumEnd > 0}
+	 <PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} />
+	 <!-- <PageNum pageNumStart={0} pageNumNow={0} pageNumEnd={5} /> -->
+{/if}
 
 {:else}
 	 <!-- else content here -->
@@ -247,6 +247,3 @@
 		</div>
 	</div>
 {/if}
-<style>
-	/* your styles go here */
-</style>

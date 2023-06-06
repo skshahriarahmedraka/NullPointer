@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import PageNum from '$lib/PageNum/pageNum.svelte';
+	import { onMount } from "svelte";
+	import Emptybox from "$lib/errors/emptybox.svelte";
 
 	// your script goes here
 	const rustLogo = new URL('../images/rust.png', import.meta.url).href;
@@ -10,9 +12,18 @@
 	export let pageNumStart: number = 0;
 	export  let pageNumNow: number = 0;
 	export  let pageNumEnd: number = 0;
+	$: console.log("pageNumNow:", pageNumNow)
+	$: console.log("pageNumStart:", pageNumStart)
+	$: console.log("pageNumEnd:", pageNumEnd)
+	let Loading:boolean=false 
+	onMount(()=>{
+		Loading= true
+	})
 </script>
 
 <!-- markup (zero or more items) goes here -->
+{#if Loading}
+
 
 <div class=" mb-2 mt-2 h-full w-full bg-[#2d2d2d]">
 	{#each Array(4) as _, i}
@@ -39,3 +50,11 @@
 <!-- <PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} /> -->
 
 </div>
+{:else}
+	<div class=" flex h-full w-full items-center justify-center text-xl text-white">
+		<div class="flex flex-col items-center justify-center">
+			<Emptybox class="h-20 " />
+			<p class=" font-raleway">error</p>
+		</div>
+	</div>
+{/if}

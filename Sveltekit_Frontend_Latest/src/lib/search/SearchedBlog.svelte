@@ -8,18 +8,44 @@
 	import { onMount } from "svelte";
 
     // your script goes here
-	export let filterType: string = 'time';
+	export let filterType: string;
+	export let filterState:boolean
 	console.log("🚀 ~ file: SearchedBlog.svelte:12 ~ filterType:", filterType)
-	export let pageNumStart: number = 0;
-	export  let pageNumNow: number = 0;
-	export  let pageNumEnd: number = 0;
+	 let pageNumStart: number = 0;
+	  let pageNumNow: number = 0;
+	  let pageNumEnd: number = 0;
+	let contentPerPage:number=10
+
+	$: console.log("pageNumNow:", pageNumNow)
+	$: console.log("pageNumStart:", pageNumStart)
+	$: console.log("pageNumEnd:", pageNumEnd)
 	let Loading = false;
 	onMount(async () => {
-		BlogList =await  fetchBlogList("time", 0, 10, 1);
+		BlogList =await  fetchBlogList(filterType,
+			pageNumNow*contentPerPage,
+			pageNumNow*contentPerPage + contentPerPage,
+			filterState ? -1 : 1);
 	
-		Loading = true;
+	pageNumStart = 0;
+		// pageNumNow = pageNumNow*contentPerPage;
+		pageNumEnd = Math.ceil(BlogList.length / contentPerPage);
+		Loading=true
 	});
-	export let BlogList: BlogDataType[] = [] as BlogDataType[];
+	async function ApplyFilter(filterType: string, filterState: boolean) {
+		// time , views , unanswered , votes
+		BlogList =await  fetchBlogList(filterType,
+			pageNumNow*contentPerPage,
+			pageNumNow*contentPerPage + contentPerPage,
+			filterState ? -1 : 1);
+		console.log("🚀 ~ file: SearchedBlog.svelte:41 ~ ApplyFilter ~ BlogList:", BlogList)
+
+		
+		pageNumStart = 0;
+	}
+
+
+	$: pageNumNow , ApplyFilter(filterType, filterState)
+	 let BlogList: BlogDataType[] = [] as BlogDataType[];
 </script>
 
 <style>
@@ -29,6 +55,8 @@
 <!-- markup (zero or more items) goes here -->
 
 <!-- Small blogs  -->
+{#if Loading}
+
 {#if BlogList.length >0}
 			
 <div class="flex flex-row flex-wrap gap-2 justify-around">
@@ -81,14 +109,21 @@
 					<p style="color: red">{error.message}</p>
 				{/await}					</div>
 	{/each}
-<!-- <PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} /> -->
+<PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} />
 
 	<!-- <PageNum bind:pageNumStart={pageNumStart} bind:pageNumNow={pageNumNow} bind:pageNumEnd={pageNumEnd} /> -->
 </div>
 {:else }
-<!-- only one blog exist -->
 	<div class="flex flex-col h-48 w-full items-center justify-center    ">
 		<Emptybox class="h-20 " />
 		<p class=" font-raleway text-white">No More Blog Found</p>
+	</div>
+{/if}
+{:else}
+	<div class=" flex h-full w-full items-center justify-center text-xl text-white">
+		<div class="flex flex-col items-center justify-center">
+			<Emptybox class="h-20 " />
+			<p class=" font-raleway">error</p>
+		</div>
 	</div>
 {/if}

@@ -3,6 +3,8 @@
 	import Emptybox from '$lib/errors/emptybox.svelte';
 
 	// let QuestionList: QuestionDataType[] = [] as QuestionDataType[];
+	// let QuestionList:QuesArrWithMetadataType = {} as QuesArrWithMetadataType;
+
 	// let fetchData = async () => {
 
 	// }
@@ -10,55 +12,69 @@
 	// console.log('🚀 ~ file: index.svelte:126 ~ QuestionList:', QuestionList);
 
 	import ZtoA from '$lib/PublicQues/svgs/ZtoA.svelte';
-	import PageNum from '$lib/PageNum/pageNum.svelte';
+	// import PageNum from '$lib/PageNum/pageNum.svelte';
 	import SearchedQues from './searchedQues.svelte';
 	import SearchedHash from './SearchedHash.svelte';
 	import SearchedBlog from './SearchedBlog.svelte';
+	// import {  fetchQuesArrWithMetadata } from '$lib/store/fetch';
+	// import type { QuesArrWithMetadataType } from '$lib/store/types';
 
 	// import { goto } from "$app/navigation";
 	let filterState: boolean = true;
 	// GetEditedByData(QuestionData.QuesEditedBy);
-	let filterType: string = 'votes';
-	let filterIndex: number = 0;
+	let filterType: string = 'time';
+	// let filterIndex: number = 0;
+	// let pageNumStart: number = 0;
+	// let pageNumNow: number = 0;
+	// let pageNumEnd: number ;
+	// let contentPerPage:number=5
+	let Loading:boolean=false
+
 	onMount(async () => {
-		// QuestionList = await fetchPublicQuestionDataArr(
+		// QuestionList = await fetchQuesArrWithMetadata(
 		// 	filterType,
-		// 	filterIndex,
-		// 	filterIndex + 20,
+		// 	pageNumNow*contentPerPage,
+		// 	pageNumNow*contentPerPage + contentPerPage,
 		// 	filterState ? -1 : 1
-		// );
+		// 	);
+		// 	console.log("🚀 ~ file: PublicQues.svelte:32 ~ onMount ~ QuestionList:", QuestionList)
 		// CalculatePages();
+		// pageNumStart = 0;
+		// pageNumNow = pageNumNow*contentPerPage;
+		// pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
+		Loading=true
 	});
-	// async function ApplyFilter(filterType: string, filterState: boolean, filterIndex: number) {
-	// 	// time , views , unanswered , votes
-	// 	if (filterState) {
-	// 		QuestionList = await fetchPublicQuestionDataArr(
-	// 			filterType,
-	// 			filterIndex,
-	// 			filterIndex + 20,
-	// 			-1
-	// 		);
-	// 	} else {
-	// 		QuestionList = await fetchPublicQuestionDataArr(filterType, filterIndex, filterIndex + 20, 1);
-	// 	}
-	// }
+	async function ApplyFilter(filterType1: string, filterState1: boolean) {
+		filterType=filterType1
+		filterState=filterState1
+		// time , views , unanswered , votes
+		// if (filterState) {
+		// 	QuestionList = await fetchQuesArrWithMetadata(
+		// 		filterType,
+		// 		pageNumNow*contentPerPage,
+		// 		pageNumNow*contentPerPage + contentPerPage,
+		// 		-1
+		// 	);
+		// } else {
+		// 	QuestionList = await fetchQuesArrWithMetadata(filterType, pageNumNow*contentPerPage, pageNumNow*contentPerPage + contentPerPage, 1);
+		// }
+		// console.log("🚀 ~ file: PublicQues.svelte:59 ~ ApplyFilter ~ QuestionList:", QuestionList)
+		
+		// pageNumStart = 0;
+	}
 
-	let pageNumStart: number = 0;
-	let pageNumNow: number = 0;
-	let pageNumEnd: number ;
-	let contentPerPage:number=5
+	
 
-	// function CalculatePages() {
-	// 	pageNumStart = 0;
-	// 	pageNumNow = 0;
-	// 	pageNumEnd = Math.ceil(QuestionList.length / 20);
-	// }
 
-	let activeField = 1;
+	// $: pageNumNow , ApplyFilter(filterType, filterState)
+
+	let activeField = 0;
 	function SelectActiveField(num: number) {
 		activeField = num;
 	}
 </script>
+
+{#if Loading}
 
 <div class="flex h-16 w-full flex-row">
 	<!-- <div class="ml-5 self-center text-lg text-[#e7e9eb]">{QuestionList.length} Question</div> -->
@@ -87,7 +103,7 @@
 	<div class="grow" />
 	<div class=" flex h-9 flex-row justify-around self-center rounded-md border-2 border-[#7d858d]">
 		<div
-			on:click={() => {}}
+			on:click={() => {filterType="votes"}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
 			'votes'
@@ -97,7 +113,7 @@
 			Rated
 		</div>
 		<div
-			on:click={() => {}}
+			on:click={() => { filterType="views"}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
 			'views'
@@ -107,7 +123,7 @@
 			Popular
 		</div>
 		<div
-			on:click={() => {}}
+			on:click={() => {filterType="time"}}
 			on:keypress={() => {}}
 			class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
 			'time'
@@ -139,11 +155,11 @@
 </div>
 <div class="h-full w-full">
 	{#if activeField === 0}
-		<SearchedQues  bind:filterState={filterState} bind:filterType={filterType}  {pageNumStart} {pageNumNow} {pageNumEnd}  />
+		<SearchedQues  bind:filterState={filterState} bind:filterType={filterType}   />
 	{:else if activeField === 1}
 		<SearchedHash />
 	{:else if activeField === 2}
-		<SearchedBlog  bind:filterType={filterType}  {pageNumStart} {pageNumNow} {pageNumEnd}  />
+		<SearchedBlog  bind:filterType={filterType}  bind:filterState={filterState}  />
 	{:else}
 		<div class=" flex h-full w-full items-center justify-center text-xl text-white">
 			<div class="flex flex-col items-center justify-center">
@@ -152,14 +168,15 @@
 			</div>
 		</div>
 	{/if}
-	<!-- {#if QuestionList.length != 0} -->
 
-	<!-- {:else} -->
-	<!-- else content here -->
-	<!-- {/if} -->
 </div>
-<!-- <PageNum {pageNumStart} {pageNumNow} {pageNumEnd} /> -->
 
-<style>
-	/* your styles go here */
-</style>
+{:else}
+	 <!-- else content here -->
+	 <div class=" flex h-full w-full items-center justify-center text-xl text-white">
+		<div class="flex flex-col items-center justify-center">
+			<Emptybox class="h-20 " />
+			<p class=" font-raleway">Loading</p>
+		</div>
+	</div>
+{/if}

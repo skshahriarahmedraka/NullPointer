@@ -30,8 +30,8 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/q/askquestion",H.QuesAsk)
 
 	r.Get("/q/:ID",H.QuesData)
-	r.Get("/public/meta/q",H.QuesListQueryWithMetadata)
-	r.Get("/public/q",H.QuesListQuery)
+	r.Get("/public/meta/q",H.QuesListQueryWithMetadata) //vote not working
+	r.Get("/public/q",H.QuesListQuery) // votenot working
 	r.Get("/logout",H.Logout) // not complete
 	
 	r.Post("/q/:ID/answer",H.AnsPost) 

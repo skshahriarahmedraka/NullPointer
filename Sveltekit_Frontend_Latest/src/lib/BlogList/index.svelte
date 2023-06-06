@@ -59,8 +59,8 @@ onMount(async () => {
      </div>
 {:else}
      <!-- else content here -->
-     <div class=" m-4 p-2 pr-2  h-full  flex flex-col border-2 border-[#393939] rounded-md text-[#e7e9eb]">
-        <img src="{StarLoading}" alt="Star Loading" class="">
+     <div class=" m-4 p-2 pr-2  h-full  flex flex-col justify-center items-center border-2 border-[#393939] rounded-md text-[#e7e9eb]">
+        <img src="{StarLoading}" alt="Star Loading" class=" h-10 w-10">
     </div>
 
 {/if}
