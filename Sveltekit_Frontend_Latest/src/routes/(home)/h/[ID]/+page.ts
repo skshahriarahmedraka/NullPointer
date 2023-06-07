@@ -3,9 +3,9 @@
 // export const prerender = false; // if true whole page will be generated as a html page in server side
 // export const csr = true; // the component will only be rendered on the client-side, after the initial HTML page has been loaded.
 
-// // import { fetchUserData } from '$lib/Store/fetch';
-// import type { CookieInfo1Type, UserDataType } from '$lib/store/types';
-// import { fetchUserData } from '$lib/store/fetch';
+// import { fetchUserData } from '$lib/Store/fetch';
+import type { BlogDataType } from '$lib/store/types';
+// import { fetchBlogData } from '$lib/store/fetch';
 // import { UserData } from '$lib/store/store';
 // import { getCookieValue } from '$lib/store/utils';
 // async function InitializeData() {
@@ -15,7 +15,7 @@
 
 import type { PageLoad } from './$types';
 
-export const load = (async () => {
+export const load = (async ({ params, fetch }) => {
 	// const CookieValueInfo1: string = getCookieValue('Info1');
 
 	// const InfoCookieData = JSON.parse(atob(CookieValueInfo1)) as CookieInfo1Type;
@@ -31,7 +31,22 @@ export const load = (async () => {
 	// 	UserData.update(() => GetUserData);
 	// }
 
+	let BlogData: BlogDataType = {} as BlogDataType;
+	// BlogData = await fetchBlogData(params.ID);
+
+	if (typeof document !== 'undefined') {
+		const response = await fetch(`/api/b/${params.ID}`);
+		if (!response.ok) {
+			console.log(`❌Failed to fetch /api/b/${params.ID}`);
+			return {} as BlogDataType;
+		}
+		BlogData = await response.json();
+		console.log('🚀 ~ file: fetch.ts:103 ~ fetchBlogData ~ BlogData:', BlogData);
+		// return BlogData;
+	}
+
 	return {
-		// InfoCookieData
+		// InfoCookieData,
+		BlogData
 	};
 }) satisfies PageLoad;

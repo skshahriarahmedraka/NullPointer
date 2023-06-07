@@ -1,4 +1,10 @@
+
+
 <script lang="ts">
+    import type { HashDataType } from "$lib/store/types";
+    
+    
+    export let HashData:HashDataType
 	import { goto } from '$app/navigation';
 	import { fetchPublicQuestionDataArr, fetchQuesArrWithMetadata } from '$lib/store/fetch';
 	import type { QuesArrWithMetadataType, QuestionDataType } from '$lib/store/types';

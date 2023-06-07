@@ -169,6 +169,19 @@ export type QuesArrWithMetadataType = {
 		Length:number 
 	}
 }
+export type HashDataType ={
+	ID : string
+	Name : string
+	MetaTitle : string
+	Image : string
+	BannerImage : string
+	NumOfFollower : number 
+	NumOfQuestion : number
+	NumOfBlog : number
+	NumOfAnswer : number
+	About : string
+
+}
 //////////////////////////////////////
 
 // export type BlogListType = {

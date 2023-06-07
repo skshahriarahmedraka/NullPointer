@@ -7,11 +7,13 @@
 	// your script goes here
 	const rustLogo = new URL('../images/rust.png', import.meta.url).href;
 	const awsLogo = new URL('../images/go.png', import.meta.url).href;
-	export let filterType: string = 'time';
+	export let filterType: string;
+	export let filterState:boolean
+	console.log("🚀 ~ file: SearchedHash.svelte:12 ~ filterState:", filterState)
 	console.log("🚀 ~ file: SearchedHash.svelte:9 ~ filterType:", filterType)
-	export let pageNumStart: number = 0;
-	export  let pageNumNow: number = 0;
-	export  let pageNumEnd: number = 0;
+	let pageNumStart: number = 0;
+	  let pageNumNow: number = 0;
+	  let pageNumEnd: number = 0;
 	$: console.log("pageNumNow:", pageNumNow)
 	$: console.log("pageNumStart:", pageNumStart)
 	$: console.log("pageNumEnd:", pageNumEnd)

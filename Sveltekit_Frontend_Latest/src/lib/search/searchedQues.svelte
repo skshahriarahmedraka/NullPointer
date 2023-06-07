@@ -17,9 +17,9 @@
 	import PageNum from '$lib/PageNum/pageNum.svelte';
 
 	// import { goto } from "$app/navigation";
-	export let filterState: boolean = true;
+	export let filterState: boolean ;
 	// GetEditedByData(QuestionData.QuesEditedBy);
-	export let filterType: string = 'time';
+	export let filterType: string;
 	// let filterIndex: number = 0;
 	 let pageNumStart: number = 0;
 	let pageNumNow: number = 0;
@@ -31,6 +31,8 @@
 	let Loading: boolean = false;
 	// let filterIndex: number = pageNumNow *20;
 	onMount(async () => {
+		filterType= 'time'
+		filterState = true
 		QuestionList = await fetchQuesArrWithMetadata(
 			filterType,
 			pageNumNow * contentPerPage,
@@ -41,7 +43,7 @@
 		// CalculatePages();
 		pageNumStart = 0;
 		// pageNumNow = pageNumNow * contentPerPage;
-		pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
+		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
 		Loading = true;
 	});
 	async function ApplyFilter(filterType: string, filterState: boolean) {
@@ -64,7 +66,7 @@
 
 		pageNumStart = 0;
 		// pageNumNow = pageNumNow * contentPerPage;
-		// pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
+		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
 	}
 
 	// function CalculatePages() {

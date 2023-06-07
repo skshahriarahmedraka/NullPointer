@@ -78,7 +78,7 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 
 			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
 
-			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: 0}}}}
+			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: ""}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
@@ -90,7 +90,7 @@ func (H *DatabaseCollections) QuesListQuery(c *fiber.Ctx) error {
 				})
 			}
 		case "votes":
-
+			limit, _ = strconv.Atoi(c.Query("stop"))
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
 			projectStage := bson.D{{Key: "$project", Value: bson.D{
 				{Key: "_id", Value: 1},

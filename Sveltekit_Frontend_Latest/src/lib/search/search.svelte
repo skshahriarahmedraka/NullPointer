@@ -157,7 +157,7 @@
 	{#if activeField === 0}
 		<SearchedQues  bind:filterState={filterState} bind:filterType={filterType}   />
 	{:else if activeField === 1}
-		<SearchedHash />
+		<SearchedHash  bind:filterType={filterType}  bind:filterState={filterState}   />
 	{:else if activeField === 2}
 		<SearchedBlog  bind:filterType={filterType}  bind:filterState={filterState}  />
 	{:else}

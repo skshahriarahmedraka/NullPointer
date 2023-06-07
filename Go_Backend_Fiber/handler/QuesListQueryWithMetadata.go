@@ -77,7 +77,7 @@ func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 
 			opts.SetSort(bson.D{{Key: "QuesAskedTime", Value: order}})
 
-			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: 0}}}}
+			filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: ""}}}}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoQuestionCol.Find(ctx, filter, opts)
@@ -90,6 +90,7 @@ func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 			}
 		case "votes":
 			// not working
+			limit, _ = strconv.Atoi(c.Query("stop"))
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
 	// 		"ID": "000000000000000000000000",
     //   "QuesTitle": "",
@@ -188,6 +189,7 @@ func (H *DatabaseCollections) QuesListQueryWithMetadata(c *fiber.Ctx) error {
 		defer cursor.Close(ctx)
 		NumOfQues := cursor.RemainingBatchLength()
 		start, _ := strconv.Atoi(c.Query("start"))
+        fmt.Println("🚀 ~ file: QuesListQueryWithMetadata.go ~ line 191 ~ ifc.Query ~ start : ", start)
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {
 				fmt.Println("skipping", i)
