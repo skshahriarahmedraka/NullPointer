@@ -40,20 +40,22 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/b/write",H.BlogCreate) 
 	r.Get("/b/list",H.BlogsList) 
 	r.Get("/b/:ID",H.BlogGet) 
+
+	r.Post("/h/write",H.HashCreate) 
+	r.Get("/h/:ID",H.HashData)
 	// /////////////////////////////////////////////////////
 	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)
 	// r.Get("/channel/:ID",H.Channel)
-	r.Get("/channel",H.Channel)
-	r.Get("/favchannel",H.FavChannelList)
-	r.Get("/channel/:ID",H.Channel)
+	// r.Get("/channel",H.Channel)
+	// r.Get("/favchannel",H.FavChannelList)
+	// r.Get("/channel/:ID",H.Channel)
 
 	// r.Get("/q/:ID",H.QuesData)
 	r.Get("/hotQues", H.HotQues)
 	r.Post("/related",H.RelatedQues)
 
-	r.Get("/hash",H.Hash)
 	r.Get("/favhash",H.FavHash)
 
 	

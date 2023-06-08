@@ -732,11 +732,11 @@
 				
 				<div class=" text-left text-lg font-semibold text-gray-300   ">Meta Data :</div>
 				
-				<textarea
-					bind:value={BlogData.MetaTitle}
-					
-					class="  mt-3 h-16 w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none  focus:border-sky-500 active:border-gray-800 "
-				/>
+					<textarea
+						bind:value={BlogData.MetaTitle}
+						
+						class="  mt-3 h-16 w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2  text-lg font-medium text-[#98999e]  outline-none  focus:border-sky-500 active:border-gray-800 "
+					/>
 				
 				<div class=" grow" />
 				<div class="  flex h-10 w-full flex-row gap-2">

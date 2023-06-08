@@ -13,7 +13,7 @@
 	import LoadingSVG from '$lib/Loading/index.svelte';
 
 	import type { PageData } from './$types';
-	import type { BlogDataType, CookieInfo1Type, QuestionDataType, UserDataType } from '$lib/store/types';
+	import type { BlogDataType, CookieInfo1Type, HashDataType, QuestionDataType, UserDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import { getCookieValue } from '$lib/store/utils';
 	import { fetchUserData } from '$lib/store/fetch';
@@ -22,9 +22,9 @@
 	import HashProfile from '$lib/Hash/HashProfile.svelte';
 
 	export let data: PageData;
-	console.log("🚀 ~ file: +page.svelte:23 ~ data:", data)
-	let BlogData:BlogDataType 
-	BlogData =data.BlogData || {} as BlogDataType
+	console.log("🚀 ~ file: +page.svelte:25 ~ data:", data)
+	let HashData:HashDataType 
+	HashData =data.HashData || {} as HashDataType
 
     let Loading = false;
 
@@ -44,6 +44,7 @@
 			console.log('🚀 ~ file: +page.ts:24 ~ InitializeData ~ GetUserData:', GetUserData);
 			UserData.update(() => GetUserData);
 		}
+
 		
         Loading = true;
 	});
@@ -53,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>{BlogData.Title}</title>
+	<title>{HashData.Name}</title>
 	<link rel="icon" href={HeadLogo} />
 </svelte:head>
 <!-- markup (zero or more items) goes here -->
@@ -71,7 +72,7 @@
             <Collectives />
             <!-- QUESTION LIST -->
 			<!-- <Blog BlogData={BlogData}/> -->
-			<HashProfile/>
+			<HashProfile HashData={HashData}/>
             
         </div>
         <Footer />

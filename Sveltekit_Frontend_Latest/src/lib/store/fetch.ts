@@ -41,7 +41,8 @@ import type {
 	UserFlairDataType,
 	AnswerDataType,
 	BlogDataType,
-	QuesArrWithMetadataType
+	QuesArrWithMetadataType,
+	HashDataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -181,6 +182,36 @@ async function fetchAskQuestion(QuestionData: QuestionDataType): Promise<{ Inser
 	const res: { InsertedID: string } = await response.json();
 	console.log('🚀 ~ file: fetch.ts:151 ~ fetchAskQuestion ~ res:', res);
 	return res;
+}
+
+async function fetchCreateHash(HashData: HashDataType): Promise<{ InsertedID: string }> {
+	const response = await fetch(`/api/h/write`, {
+		method: 'POST',
+		body: JSON.stringify(HashData),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	if (!response.ok) {
+		console.log(`❌ Failed to fetch /api/q/askquestion QuestionData`);
+		return {} as { InsertedID: string };
+	}
+	const res: { InsertedID: string } = await response.json();
+	console.log('🚀 ~ file: fetch.ts:151 ~ fetchAskQuestion ~ res:', res);
+	return res;
+}
+
+async function fetchHashData(QID: string): Promise<HashDataType> {
+	// const response = await (typeof event !== 'undefined' ? event.fetch : fetch)(`/api/q/${QID}`);
+	const response = await fetch(`/api/h/${QID}`);
+	if (!response.ok) {
+		console.log(`❌ Failed to fetch /api/h/${QID} HashData`);
+		return {} as HashDataType;
+	}
+	const HashData:HashDataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:212 ~ fetchHashData ~ HashData:", HashData)
+	
+	return HashData;
 }
 
 async function fetchQuestionData(QID: string): Promise<QuestionDataType> {
@@ -323,4 +354,7 @@ export {
 	fetchNotificationData,
 	fetchGroupList,
 	fetchFavouriteHashList,
+
+	fetchCreateHash,
+	fetchHashData,
 };

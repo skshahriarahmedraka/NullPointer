@@ -12,6 +12,6 @@ type DatabaseCollections struct {
 	MongoAnswerCol *mongo.Collection
 	MongoBlogCol *mongo.Collection
 	MongoGroupCol *mongo.Collection
-	MongoChannelCol *mongo.Collection
+	MongoHashCol *mongo.Collection
 	MinioClient *minio.Client
 }
