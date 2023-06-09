@@ -3,14 +3,17 @@
 	import PageNum from "$lib/PageNum/pageNum.svelte";
 	import Emptybox from "$lib/errors/emptybox.svelte";
 	import UserAnonymous from "$lib/icons/UserAnonymous.svelte";
-	import { fetchBlogList, fetchUserFlairData } from "$lib/store/fetch";
-	import type { BlogDataType } from "$lib/store/types";
+	import { fetchBlogList, fetchSearchBlogArrWithMetadata, fetchUserFlairData } from "$lib/store/fetch";
+	import type { BlogArrWithMetadataType, BlogDataType } from "$lib/store/types";
 	import { onMount } from "svelte";
 
     // your script goes here
+	import { StoredSearchedString } from '$lib/store/store';
+	let SearchedString= ''
+
 	export let filterType: string;
 	export let filterState:boolean
-	console.log("🚀 ~ file: SearchedBlog.svelte:12 ~ filterType:", filterType)
+	// console.log("🚀 ~ file: SearchedBlog.svelte:12 ~ filterType:", filterType)
 	 let pageNumStart: number = 0;
 	  let pageNumNow: number = 0;
 	  let pageNumEnd: number = 0;
@@ -21,31 +24,55 @@
 	$: console.log("pageNumEnd:", pageNumEnd)
 	let Loading = false;
 	onMount(async () => {
-		BlogList =await  fetchBlogList(filterType,
-			pageNumNow*contentPerPage,
-			pageNumNow*contentPerPage + contentPerPage,
-			filterState ? -1 : 1);
+		filterType= 'time'
+		filterState = true
+		StoredSearchedString.subscribe((value) => {
+			console.log("🚀 ~ file: searchedQues.svelte:44 ~ StoredSearchedString.subscribe ~ value:", value)
+			
+			SearchedString = value;
+		});
+		if ( SearchedString.trim() != "" ){
+
+			BlogList =await  fetchSearchBlogArrWithMetadata(
+				SearchedString,
+				filterType,
+				pageNumNow*contentPerPage,
+				pageNumNow*contentPerPage + contentPerPage,
+				filterState ? -1 : 1);
+			}
 	
 	pageNumStart = 0;
 		// pageNumNow = pageNumNow*contentPerPage;
-		pageNumEnd = Math.ceil(BlogList.length / contentPerPage);
+		pageNumEnd = Math.ceil(BlogList.Metadata.Length / contentPerPage);
 		Loading=true
 	});
 	async function ApplyFilter(filterType: string, filterState: boolean) {
 		// time , views , unanswered , votes
-		BlogList =await  fetchBlogList(filterType,
+		StoredSearchedString.subscribe((value) => {
+			console.log("🚀 ~ file: SearchedBlog.svelte:49 ~ StoredSearchedString.subscribe ~ value:", value)
+			SearchedString = value;
+		});
+		if ( SearchedString.trim() != "" ){
+			BlogList =await  fetchSearchBlogArrWithMetadata(
+				SearchedString,
+			filterType,
 			pageNumNow*contentPerPage,
 			pageNumNow*contentPerPage + contentPerPage,
 			filterState ? -1 : 1);
-		console.log("🚀 ~ file: SearchedBlog.svelte:41 ~ ApplyFilter ~ BlogList:", BlogList)
-
+			console.log("🚀 ~ file: SearchedBlog.svelte:41 ~ ApplyFilter ~ BlogList:", BlogList)
+			
+		}
 		
 		pageNumStart = 0;
+		pageNumEnd = Math.floor(BlogList.Metadata.Length / contentPerPage);
+
 	}
 
 
 	$: pageNumNow , ApplyFilter(filterType, filterState)
-	 let BlogList: BlogDataType[] = [] as BlogDataType[];
+	$: $StoredSearchedString, ApplyFilter(filterType, filterState)
+
+	 let BlogList: BlogArrWithMetadataType = {} as BlogArrWithMetadataType
 </script>
 
 <style>
@@ -57,10 +84,10 @@
 <!-- Small blogs  -->
 {#if Loading}
 
-{#if BlogList.length >0}
+{#if BlogList.Metadata.Length >0}
 			
 <div class="flex flex-row flex-wrap gap-2 justify-around">
-	{#each BlogList as i}
+	{#each BlogList.BlogList as i}
 		<div
 			on:click={() => {goto(`/b/${i.ID}`) }}
 			on:keypress={() => {}}

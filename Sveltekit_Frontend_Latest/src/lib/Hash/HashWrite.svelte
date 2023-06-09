@@ -790,7 +790,7 @@
 						ThisImage.src = HashData.Image;
 					}}
 					alt="ProfileImage"
-					class=" aspect-[18/10] h-full w-full self-center rounded-lg object-cover"
+					class=" aspect-[18/10] h-full w-full self-center rounded-lg object-contain"
 				/>
 			</div>
 		{:else}

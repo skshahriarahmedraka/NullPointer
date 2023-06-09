@@ -19,6 +19,7 @@ func DatabaseInit(db *mongo.Database , minioClient *minio.Client) handler.Databa
 		MongoBlogCol:     db.Collection(os.Getenv("MONGO_BLOG_COL")),
 		MongoGroupCol:    db.Collection(os.Getenv("MONGO_GROUP_COL")),
 		MongoHashCol:  db.Collection(os.Getenv("MONGO_HASH_COL")),
+		MongoUserActivityCol :  db.Collection(os.Getenv("MONGO_USER_ACTIVITY_COL")),
 		MinioClient:      minioClient,
 	}
 	return c

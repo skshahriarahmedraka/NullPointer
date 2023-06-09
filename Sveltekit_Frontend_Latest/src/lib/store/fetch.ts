@@ -43,7 +43,8 @@ import type {
 	BlogDataType,
 	QuesArrWithMetadataType,
 	HashDataType,
-	HashArrWithMetadata
+	HashArrWithMetadata,
+	BlogArrWithMetadataType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -379,6 +380,68 @@ async function fetchSearchQuesArrWithMetadata(
 	
 	return QuestionDataResponseArr;
 }
+
+async function fetchSearchBlogArrWithMetadata(
+	SearchedString: string,
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<BlogArrWithMetadataType> {
+	const response = await fetch(
+		`/api/search/b/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
+	console.log("🚀 ~ file: fetch.ts:393 ~ response:", response)
+	console.log(`Searched BlogArrWithMetadataType /api/search/b/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+	if (!response.ok) {
+		console.log(`❌Searched BlogArrWithMetadataType  /api/search/b/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return {} as BlogArrWithMetadataType;
+	}
+	const blogDataResponseArr: BlogArrWithMetadataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:401 ~ blogDataResponseArr:", blogDataResponseArr)
+	
+	return blogDataResponseArr;
+}
+
+async function fetchSearchhashArrWithMetadata(
+	SearchedString: string,
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<HashArrWithMetadata> {
+	const response = await fetch(
+		`/api/search/h/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
+	console.log(`Searched HashArrWithMetadataType /api/search/h/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+	if (!response.ok) {
+		console.log(`❌Searched HashArrWithMetadataType  /api/search/h/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return {} as HashArrWithMetadata;
+	}
+	const HashDataResponseArr: HashArrWithMetadata = await response.json();
+	console.log("🚀 ~ file: fetch.ts:422 ~ HashDataResponseArr:", HashDataResponseArr)
+	
+	return HashDataResponseArr;
+}
+
+
+async function fetchHashViewData(HashViewData: HashViewDataType)  {
+	const response = await fetch(
+		`/follow/hash`,{
+			method: 'POST',
+			body: JSON.stringify(HashViewData),
+		}
+	);
+	console.log("🚀 ~ file: fetch.ts:435 ~ fetchHashViewData ~ response:", response)
+	if (!response.ok) {
+		console.log(`❌/follow/hash`);
+		return {} as HashViewDataType;
+	}
+	const res: {message:boolean} = await response.json();
+	
+	return res;
+}
+
 export {
 	fetchUserData,
 	fetchUpdateUserData,
@@ -394,14 +457,18 @@ export {
 	fetchPostAnsData,
 	fetchPublicQuestionDataArr,
 	fetchQuesArrWithMetadata,
-
+	
 	fetchNotificationData,
 	fetchGroupList,
 	fetchFavouriteHashList,
-
+	
 	fetchCreateHash,
 	fetchHashData,
 	fetchHashArrWithMetadata,
-
+	
 	fetchSearchQuesArrWithMetadata,
+	fetchSearchBlogArrWithMetadata,
+	fetchSearchhashArrWithMetadata,
+
+	fetchHashViewData,
 };

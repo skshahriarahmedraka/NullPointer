@@ -111,7 +111,7 @@
                     }}
                     on:keypress={() => {}}
                     class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
-                    'time'
+                    'alpha'
                         ? 'bg-[#404245]'
                         : ''}  "
                 >
@@ -125,7 +125,7 @@
                     }}
                     on:keypress={() => {}}
                     class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
-                    'views'
+                    'follower'
                         ? 'bg-[#404245]'
                         : ''}"
                 >
@@ -139,7 +139,7 @@
                     }}
                     on:keypress={() => {}}
                     class="flex h-full items-center justify-center border-r-2 border-[#7d858d] px-2 text-[#9cc1db] hover:cursor-pointer hover:bg-[#3d4951] hover:text-[#9cc1db] active:bg-[#404245] {filterType ===
-                    'votes'
+                    'popular'
                         ? 'bg-[#404245]'
                         : ''}"
                 >
@@ -175,30 +175,12 @@
 			
 			<div class="flex flex-row flex-wrap gap-2">
 				{#each Hashlist.HashList as i}
-					<!-- <div
-						on:click={() => {goto(`/h/${i.ID}`) }}
-						on:keypress={() => {}}
-						class="mt-8 flex h-[536px] w-[306px] flex-col items-center rounded-xl bg-[#2d2d2d] transition-all duration-200 hover:cursor-pointer hover:shadow-lg hover:shadow-gray-600"
-					>
-						<img
-							src={i.Image}
-							alt=""
-							class="  h-[160px] w-[300px] rounded-xl object-cover"
-						/>
-						<div class="text-[#fafafa]">
-							<p class=" font-OpenSans ml-3 mt-2 text-sm text-slate-400">
-								 {new Date(i.WrittenTime).toLocaleDateString()} 
-							</p>
-							<p class="font-Poppins ml-2 mt-2 line-clamp-5 font-sf-pro text-2xl font-bold">
-								{i.Name}
-							</p>
-							<p class="mb-3 ml-3 mt-2 line-clamp-4 w-[90%] text-sm text-slate-300">
-								{"MetaTitle"}
-							</p>
-						</div>
-								 
-						</div> -->
+				
 						<div
+						on:click={()=>{
+							goto('/h/'+i.ID)	
+						}}
+						on:keypress={()=>{}}
 					class=" flex h-48  w-64 flex-col rounded-xl border-2   border-blue-600 border-opacity-25  bg-slate-700 bg-opacity-30 fill-[#b4b8bc] text-[#e7e9eb] hover:cursor-pointer hover:bg-opacity-60"
 					>
 					<!-- SPACE WALL PHOTO -->

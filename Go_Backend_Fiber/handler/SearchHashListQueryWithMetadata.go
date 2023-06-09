@@ -18,13 +18,15 @@ import (
 )
 
 
-func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
-	fmt.Println("🚀 ~ file: HashList.go ~ line 23 ~ ifc.Query ~ c.Query(\"order\") : ", c.Query("order"))
-    fmt.Println("🚀 ~ file: HashList.go ~ line 23 ~ ifc.Query ~ c.Query(\"stop\") : ", c.Query("stop"))
-    fmt.Println("🚀 ~ file: HashList.go ~ line 23 ~ ifc.Query ~ c.Query(\"start\") : ", c.Query("start"))
-    fmt.Println("🚀 ~ file: HashList.go ~ line 23 ~ ifc.Query ~ c.Query(\"type\") : ", c.Query("type"))
-	if c.Query("type") != "" && c.Query("start") != "" && c.Query("stop") != "" && c.Query("order") != "" {
+func (H *DatabaseCollections)SearchHashListQueryWithMetadata(c *fiber.Ctx) error  {
 
+	fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 24 ~ ifc.Params ~ c.Query(\"order\") : ", c.Query("order"))
+    fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 24 ~ ifc.Params ~ c.Query(\"stop\") : ", c.Query("stop"))
+    fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 24 ~ ifc.Params ~ c.Query(\"start\") : ", c.Query("start"))
+    fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 24 ~ ifc.Params ~ c.Query(\"type\") : ", c.Query("type"))
+    fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 24 ~ ifc.Params ~ c.Params(\"search\") : ", c.Params("search"))
+	
+	if c.Params("search")!="" && c.Query("type") != "" && c.Query("start") != "" && c.Query("stop") != "" && c.Query("order") != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -34,24 +36,30 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 		var cursor *mongo.Cursor
 		var err error
 		var limit int
-
-
+		var SearchQuery string =c.Params("search")
 		var filter primitive.D
+
+		// var filter primitive.D
 		//  type : time , views , unanswered  , vote
 		switch c.Query("type") {
 		case "alpha":
 
 			opts.SetSort(bson.D{{Key: "Name", Value: order}}) // 1 for ascending order, -1 for descending order
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			// filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Name",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoHashCol.Find(ctx, filter, opts)
-            logs.Error("🚀 ~ file: HashList.go ~ line 46 ~ switchc.Query ~ err : ", err)
+			logs.Error("Error while finding blog data using alphabetial search", err)
+
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching Hash alphabetical data",
+					"message": "Internal Server Error while fetching Hash alphabetical data search",
 				})
 			}
 
@@ -59,7 +67,12 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 
 			opts.SetSort(bson.D{{Key: "NumOfQuestion", Value: order}})
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			// filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Name",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoHashCol.Find(ctx, filter, opts)
@@ -67,15 +80,19 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching Hash popular data",
+					"message": "Internal Server Error while fetching Hash popular data search",
 				})
 			}
 
 		case "follower":
 
 			opts.SetSort(bson.D{{Key: "NumOfFollower", Value: order}})
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			// filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
 
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Name",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoHashCol.Find(ctx, filter, opts)
@@ -86,43 +103,25 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 					"message": "Internal Server Error while fetching hash follower data",
 				})
 			}
-		// case "votes":
-
-		// 	matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
-		// 	projectStage := bson.D{{Key: "$project", Value: bson.D{
-		// 		{Key: "_id", Value: 0},
-		// 		{Key: "Upvote", Value: 1},
-		// 		{Key: "Downvote", Value: 1},
-		// 		{Key: "Difference", Value: bson.D{{Key: "$subtract", Value: bson.A{"$Upvote", "$Downvote"}}}},
-		// 	}}}
-
-		// 	sortStage := bson.D{{Key: "$sort", Value: bson.D{
-		// 		{Key: "Difference", Value: order},
-		// 	}}}
-
-		// 	// Aggregation pipeline
-		// 	pipeline := mongo.Pipeline{matchStage, projectStage, sortStage}
-
-		// 	// Execute the aggregation query
-		// 	cursor, err = H.MongoBlogCol.Aggregate(context.Background(), pipeline)
-		// 	if err != nil {
-		// 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-		// 			"message": "Internal Server Error while fetching blog votes data",
-		// 		})
-		// 	}
+	
 			
 		default:
 			opts.SetSort(bson.D{{Key: "Name", Value: order}}) // 1 for ascending order, -1 for descending order
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			// filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Name",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoHashCol.Find(ctx, filter, opts)
-            logs.Error("🚀 ~ file: HashList.go ~ line 46 ~ switchc.Query ~ err : ", err)
+			logs.Error("Error while finding blog data using alphabetial search", err)
+
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching Hash alphabetical data",
+					"message": "Internal Server Error while fetching Hash alphabetical data search",
 				})
 			}
 
@@ -131,7 +130,7 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 		defer cursor.Close(ctx)
 		NumOfHash := cursor.RemainingBatchLength()
 		start, _ := strconv.Atoi(c.Query("start"))
-        fmt.Println("🚀 ~ file: HashList.go ~ line 134 ~ ifc.Query ~ start : ", start)
+        fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 128 ~ ifc.Params ~ start : ", start)
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {
 				fmt.Println("skipping", i)
@@ -144,14 +143,14 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 
 				HashArrWithMetadata.Metadata.Length = NumOfHash
 				HashArrWithMetadata.HashList = dbHashData
-                fmt.Println("🚀 ~ file: HashList.go ~ line 147 ~ if!cursor.Next ~ HashArrWithMetadata : ", HashArrWithMetadata)
+                fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 141 ~ if!cursor.Next ~ HashArrWithMetadata : ", HashArrWithMetadata)
 				return c.Status(fiber.StatusOK).JSON(HashArrWithMetadata)
 			}
 
 			var hash model.HashData
 			if err := cursor.Decode(&hash); err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while decoding hash data",
+					"message": "Internal Server Error while decoding hash data search",
 				})
 			}
 
@@ -162,7 +161,7 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 
 		HashArrWithMetadata.Metadata.Length = NumOfHash
 		HashArrWithMetadata.HashList = dbHashData
-        fmt.Println("🚀 ~ file: HashList.go ~ line 165 ~ ifc.Query ~ HashArrWithMetadata : ", HashArrWithMetadata)
+        fmt.Println("🚀 ~ file: SearchHashListQueryWithMetadata.go ~ line 159 ~ ifc.Params ~ HashArrWithMetadata : ", HashArrWithMetadata)
 
 		return c.Status(fiber.StatusOK).JSON(HashArrWithMetadata)
 	} else {
@@ -174,10 +173,7 @@ func (H *DatabaseCollections)HashList(c *fiber.Ctx) error  {
 }
 
 
-type HashArrWithMetadataType struct {
-	HashList []model.HashData `json:"HashList" bson:"HashList"`
-	Metadata MetadataType     `json:"Metadata" bson:"Metadata"`
-}
+
 
 // type MetadataType struct {
 // 	Length int `json:"Length" bson:"Length"`

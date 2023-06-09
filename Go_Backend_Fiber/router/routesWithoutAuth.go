@@ -47,6 +47,12 @@ func RouteWithoutAuth(app *fiber.App) {
 	
 	// r.Get("/search/:search",H.Search)
 	r.Get("/search/q/:search",H.SearchQuesListQueryWithMetadata) 
+	r.Get("/search/b/:search",H.SearchBlogListQueryWithMetadata) 
+	r.Get("/search/h/:search",H.SearchHashListQueryWithMetadata) //working
+	
+	r.Post("/follow/hash",H.FollowHash)
+
+	// r.Get("/search/q/:search",H.SearchQuesListQueryWithMetadata) 
 	// /////////////////////////////////////////////////////
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)

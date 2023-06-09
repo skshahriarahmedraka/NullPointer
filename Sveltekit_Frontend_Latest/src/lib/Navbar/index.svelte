@@ -29,6 +29,10 @@
 	function handleSearchKeyPress(event:any) {
     if (event.key === "Enter") {
       if ($StoredSearchedString.trim().length > 0) {
+		if (typeof document !== 'undefined') {
+			// window.location.href = `/search/${$StoredSearchedString.trim()}`
+
+		}
 		goto(`/search/${$StoredSearchedString.trim()}`);
 	  }
     }
@@ -317,9 +321,9 @@
 			<!-- <Following /> -->
 		</button>
 		<!-- spaces -->
-		<button class="rounded-lg hover:bg-slate-800" on:click={() => goto('/g')}>
+		<!-- <button class="rounded-lg hover:bg-slate-800" on:click={() => goto('/g')}>
 			<Spaces />
-		</button>
+		</button> -->
 		<!-- question for you -->
 		<button
 			class="rounded-lg hover:bg-slate-800"

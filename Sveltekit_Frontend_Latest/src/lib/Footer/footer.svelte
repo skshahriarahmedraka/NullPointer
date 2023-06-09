@@ -33,6 +33,13 @@
 			>
 				Write Blog
 			</p>
+			<p
+				class=" cursor-pointer font-semibold text-gray-400 hover:text-gray-200"
+				on:click={() => {goto('/h/write')}}
+				on:keypress={() => {}}
+			>
+				Write hash
+			</p>
 		</div>
 		<div class=" my-10 h-fit w-40 flex-col items-start text-sm text-[#677079] ">
 			<p class=" my-2 text-base font-semibold text-gray-400">Products</p>

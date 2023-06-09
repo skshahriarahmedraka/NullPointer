@@ -6,25 +6,25 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-
-	// "strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	// "go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/x/mongo/driver/operation"
+	// "go.mongodb.org/mongo-driver/bson"
+	// "go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (H *DatabaseCollections) SearchBlogListQueryWithMetadata(c *fiber.Ctx) error {
 
-func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
-	fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"order\") : ", c.Query("order"))
-    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"stop\") : ", c.Query("stop"))
-    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"start\") : ", c.Query("start"))
-    fmt.Println("🚀 ~ file: blogsList.go ~ line 22 ~ ifc.Query ~ c.Query(\"type\") : ", c.Query("type"))
-	if c.Query("type") != "" && c.Query("start") != "" && c.Query("stop") != "" && c.Query("order") != "" {
 
+  
+	if c.Params("search")!="" && c.Query("type") != "" && c.Query("start") != "" && c.Query("stop") != "" && c.Query("order") != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -34,8 +34,7 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 		var cursor *mongo.Cursor
 		var err error
 		var limit int
-
-
+		var SearchQuery string =c.Params("search")
 		var filter primitive.D
 		//  type : time , views , unanswered  , vote
 		switch c.Query("type") {
@@ -43,15 +42,18 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 
 			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Title",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding blog data using time", err)
+			logs.Error("search Error while finding Blog data  time", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching blog time data",
+					"message": "Internal Server Error while fetching search blog data time",
 				})
 			}
 
@@ -59,15 +61,19 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 
 			opts.SetSort(bson.D{{Key: "Views", Value: order}})
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			// filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Title",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding blog data using view", err)
+			logs.Error("search Error while finding Blog data views", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching blog view data",
+					"message": "Internal Server Error while fetching search Blog data views",
 				})
 			}
 
@@ -75,19 +81,24 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 
 			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
-			filter = bson.D{{Key: "Comments", Value: bson.D{{Key: "$not", Value: bson.D{{Key: "$size", Value: 0}}}}}}
+			// filter = bson.D{{Key: "QuesAnsAccepted", Value: bson.D{{Key: "$eq", Value: ""}}}}
+			filter = bson.D{
+				{Key: "Comments", Value: bson.D{{Key: "$not", Value: bson.D{{Key: "$size", Value: 0}}}}},
+				{Key:"Title",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding blog data using uncommnent", err)
+			logs.Error("search Error while finding Blog data uncommented", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching blog uncomment data",
+					"message": "Internal Server Error while fetching search  blog data uncommented",
 				})
 			}
 		case "votes":
-
+			// not working
+			limit, _ = strconv.Atoi(c.Query("stop"))
 			matchStage := bson.D{{Key: "$match", Value: bson.D{}}} // Add any matching conditions if needed
 			projectStage := bson.D{{Key: "$project", Value: bson.D{
 				{Key: "_id", Value: 1},
@@ -114,40 +125,56 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 				{Key: "Difference", Value: order},
 			}}}
 
+			filterStage := bson.D{
+				{Key: "$match", Value: bson.D{
+					{Key: "_id", Value: bson.D{
+						{Key: "$ne", Value: 0},
+					}},
+					{Key: "Title", Value: bson.M{
+						"$regex": SearchQuery,
+						"$options": "i",
+					}},
+				}},
+			}
 			// Aggregation pipeline
-			pipeline := mongo.Pipeline{matchStage, projectStage, sortStage}
+			pipeline := mongo.Pipeline{filterStage,matchStage, projectStage, sortStage}
 
 			// Execute the aggregation query
 			cursor, err = H.MongoBlogCol.Aggregate(context.Background(), pipeline)
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching blog votes data",
+					"message": "Internal Server Error while fetching Blog  data votes",
 				})
 			}
+
 			
+
+
 		default:
 			opts.SetSort(bson.D{{Key: "WrittenTime", Value: order}})
 
-			filter = bson.D{{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}}}
+			filter = bson.D{
+				{Key: "_id", Value: bson.D{{Key: "$ne", Value: 0}}},
+				{Key:"Title",Value: bson.M{"$regex": SearchQuery, "$options": "i"}},
+			}
 			limit, _ = strconv.Atoi(c.Query("stop"))
 			opts.SetLimit(int64(limit))
 			cursor, err = H.MongoBlogCol.Find(ctx, filter, opts)
-			logs.Error("Error while finding blog default data", err)
+			logs.Error("search Error while finding Blog data  time", err)
 
 			if err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-					"message": "Internal Server Error while fetching blog default data",
+					"message": "Internal Server Error while fetching default search blog data time",
 				})
 			}
+
 
 		}
 
 		defer cursor.Close(ctx)
-		if cursor.RemainingBatchLength() == 0 {
-			return c.Status(fiber.StatusOK).JSON(dbBlogData)
-		
-		}
+		NumOfBlog := cursor.RemainingBatchLength()
 		start, _ := strconv.Atoi(c.Query("start"))
+        fmt.Println("🚀 ~ file: SearchBlogListQueryWithMetadata.go ~ line 198 ~ ifc.Params ~ start : ", start)
 		for i := 0; i < start; i++ {
 			if !cursor.Next(context.Background()) {
 				fmt.Println("skipping", i)
@@ -156,13 +183,16 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 
 		for i := start; i < limit; i++ {
 			if !cursor.Next(context.Background()) {
-				fmt.Println("🚀 ~ file: blogsList.go ~ line 147 ~ if!cursor.Next ~ dbBlogData : ", dbBlogData)
-				return c.Status(fiber.StatusOK).JSON(dbBlogData)
+				var BlogArrWithMetadataType BlogArrWithMetadataType
+
+				BlogArrWithMetadataType.Metadata.Length = NumOfBlog
+				BlogArrWithMetadataType.BlogList = dbBlogData
+                fmt.Println("🚀 ~ file: SearchBlogListQueryWithMetadata.go ~ line 211 ~ if!cursor.Next ~ BlogArrWithMetadataType : ", BlogArrWithMetadataType)
+				return c.Status(fiber.StatusOK).JSON(BlogArrWithMetadataType)
 			}
-			
+
 			var blog model.BlogData
 			if err := cursor.Decode(&blog); err != nil {
-				fmt.Println("🚀 ~ file: blogsList.go ~ line 147 ~ if!cursor.Next ~ dbBlogData : ", dbBlogData)
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 					"message": "Internal Server Error while decoding blog",
 				})
@@ -171,13 +201,23 @@ func (H *DatabaseCollections)BlogsList(c *fiber.Ctx) error  {
 			dbBlogData = append(dbBlogData, blog)
 		}
 
-		
+		var BlogArrWithMetadataType BlogArrWithMetadataType
 
-		return c.Status(fiber.StatusOK).JSON(dbBlogData)
+		BlogArrWithMetadataType.Metadata.Length = NumOfBlog
+		BlogArrWithMetadataType.BlogList = dbBlogData
+        fmt.Println("🚀 ~ file: SearchBlogListQueryWithMetadata.go ~ line 229 ~ ifc.Params ~ BlogArrWithMetadataType : ", BlogArrWithMetadataType)
+
+		return c.Status(fiber.StatusOK).JSON(BlogArrWithMetadataType)
 	} else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Bad Request",
 		})
 
 	}
+}
+
+
+type BlogArrWithMetadataType struct {
+	BlogList []model.BlogData `json:"BlogList" bson:"BlogList"`
+	Metadata MetadataType     `json:"Metadata" bson:"Metadata"`
 }

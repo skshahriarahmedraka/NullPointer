@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { UserData } from '$lib/store/store';
 	// import { Following } from '$lib/Navbar/svgs/following.svelte';
-	import type { HashDataType } from '$lib/store/types';
+	import type { HashDataType, HashViewDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import HashAbout from './component/HashAbout.svelte';
 	import HashBlog from './component/HashBlog.svelte';
 	import HashQues from './component/HashQues.svelte';
+	import { fetchHashViewData } from '$lib/store/fetch';
 
 	// your script goes here
 	export let HashData: HashDataType = {} as HashDataType;
@@ -41,6 +43,23 @@
 			return String(x);
 		}
 	}
+	let HashViewData : HashViewDataType
+	async function FollowHash() {
+		HashViewData.ID = HashData.ID
+		HashViewData.Name = HashData.Name
+		HashViewData.Image = HashData.Image
+		HashViewData.FollowStatus = !FollowingStatus
+		HashViewData.UserID = $UserData.UserID
+
+
+		let res: {message:boolean} = await fetchHashViewData(HashViewData)
+		if (res.message) {
+			FollowingStatus = true 
+		}else {
+			FollowingStatus = false
+		}
+		// FollowingStatus = !FollowingStatus;
+	}
 </script>
 
 <!-- <div class=" mt-2 flex max-h-full min-h-screen w-[1400px] flex-col gap-5 bg-transparent"> -->
@@ -72,10 +91,11 @@
 					</div>
 				</div>
 				<div class="flex h-full w-36 items-center justify-center">
-					{#if FollowingStatus}
+					{#if !FollowingStatus}
 						<button
 							on:click={() => {
-								FollowingStatus = !FollowingStatus;
+
+								FollowHash()
 							}}
 							class=" h-10 w-28 rounded-3xl bg-blue-500 font-poppins font-semibold text-[#e7e9eb]"
 							>Follow</button
@@ -83,7 +103,7 @@
 					{:else}
 						<button
 							on:click={() => {
-								FollowingStatus = !FollowingStatus;
+								FollowHash()
 							}}
 							class=" h-10 w-28 rounded-3xl bg-green-500 font-poppins font-semibold text-[#e7e9eb]"
 							>Following</button

@@ -45,14 +45,17 @@
 			
 			SearchedString = value;
 		});
-		QuestionList = await fetchSearchQuesArrWithMetadata(
-			SearchedString,
-			filterType,
-			pageNumNow * contentPerPage,
-			pageNumNow * contentPerPage + contentPerPage,
-			filterState ? -1 : 1
-			);
-			console.log("🚀 ~ file: searchedQues.svelte:48 ~ onMount ~ QuestionList:", QuestionList)
+		if ( SearchedString.trim() != "" ){
+
+			QuestionList = await fetchSearchQuesArrWithMetadata(
+				SearchedString,
+				filterType,
+				pageNumNow * contentPerPage,
+				pageNumNow * contentPerPage + contentPerPage,
+				filterState ? -1 : 1
+				);
+				console.log("🚀 ~ file: searchedQues.svelte:48 ~ onMount ~ QuestionList:", QuestionList)
+		}
 		pageNumStart = 0;
 		// pageNumNow = pageNumNow * contentPerPage;
 		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
@@ -66,7 +69,7 @@
 			SearchedString = value;
 		});
 		
-		if (filterState ) {
+		if (filterState && SearchedString.trim() != "" ) {
 			QuestionList = await fetchSearchQuesArrWithMetadata(
 				SearchedString,
 				filterType,
@@ -74,7 +77,7 @@
 				pageNumNow * contentPerPage + contentPerPage,
 				-1
 			);
-		} else {
+		} else if ( SearchedString.trim() != "" ) {
 			QuestionList = await fetchSearchQuesArrWithMetadata(
 				SearchedString,
 				filterType,

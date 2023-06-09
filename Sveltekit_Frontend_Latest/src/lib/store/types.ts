@@ -161,7 +161,12 @@ export type BlogDataType = {
 	Views 	 : number
 	ViewedBy  : string [] 
 }
-
+export type BlogArrWithMetadataType = {
+	BlogList: BlogDataType[]
+	Metadata: {
+		Length:number 
+	}
+}
 
 export type QuesArrWithMetadataType = {
 	QuesList: QuestionDataType[]
@@ -187,6 +192,14 @@ export type HashArrWithMetadata ={
 	Metadata: {
 		Length:number
 	}
+}
+
+export type HashViewDataType = {
+    ID     : string
+    UserID   : string
+    Image      :  string   
+    Name       :  string            
+    FollowStatus : boolean      
 }
 //////////////////////////////////////
 
