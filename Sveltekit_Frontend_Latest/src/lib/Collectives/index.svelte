@@ -155,7 +155,7 @@
 				<!-- <div class=" h-full w-full text-xl text-white ">No Favorite</div> -->
 				<div class=" flex h-full w-full items-center justify-center text-xl text-white">
 					<div class="flex flex-col items-center justify-center">
-						<Emptybox class="h-20 " />
+						<Emptybox class="h-10 " />
 						<p class=" font-raleway">Nothing Found</p>
 					</div>
 				</div>

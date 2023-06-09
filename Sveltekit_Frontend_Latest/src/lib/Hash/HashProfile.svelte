@@ -6,14 +6,14 @@
 	import HashAbout from './component/HashAbout.svelte';
 	import HashBlog from './component/HashBlog.svelte';
 	import HashQues from './component/HashQues.svelte';
-	import { fetchHashViewData } from '$lib/store/fetch';
+	import { fetchHashViewCheck, fetchHashViewData } from '$lib/store/fetch';
 
 	// your script goes here
 	export let HashData: HashDataType = {} as HashDataType;
 	onMount(async () => {});
 
 	let seletedTab = 'questions';
-	let FollowingStatus = false;
+	let FollowingStatus:boolean ;
 	// let HashData: HashDataType= {
 	//     "ID": "1",
 	//     "Name": "AWS Collective",
@@ -43,23 +43,38 @@
 			return String(x);
 		}
 	}
-	let HashViewData : HashViewDataType
+	// let HashViewData : HashViewDataType
 	async function FollowHash() {
-		HashViewData.ID = HashData.ID
-		HashViewData.Name = HashData.Name
-		HashViewData.Image = HashData.Image
-		HashViewData.FollowStatus = !FollowingStatus
-		HashViewData.UserID = $UserData.UserID
+		let HashViewData: HashViewDataType = {} as HashViewDataType;
+		HashViewData.ID = HashData.ID;
+		HashViewData.Name = HashData.Name;
+		HashViewData.Image = HashData.Image;
+		HashViewData.UserID = $UserData.UserID;
 
-
-		let res: {message:boolean} = await fetchHashViewData(HashViewData)
+		let res: { message: boolean } = await fetchHashViewData(HashViewData);
+		console.log('🚀 ~ file: HashProfile.svelte:56 ~ FollowHash ~ res:', res);
 		if (res.message) {
-			FollowingStatus = true 
-		}else {
-			FollowingStatus = false
+			FollowingStatus = true;
+		} else {
+			FollowingStatus = false;
 		}
 		// FollowingStatus = !FollowingStatus;
 	}
+	async function checkFollowingStatus() {
+		let HashViewData: HashViewDataType = {} as HashViewDataType;
+		HashViewData.ID = HashData.ID;
+		HashViewData.Name = HashData.Name;
+		HashViewData.Image = HashData.Image;
+		HashViewData.UserID = $UserData.UserID;
+		let res: { message: boolean } = await fetchHashViewCheck(HashViewData);
+		console.log('🚀 ~ file: HashProfile.svelte:70 ~ checkFollowingStatus ~ res:', res);
+		if (res.message) {
+			FollowingStatus = true;
+		} else {
+			FollowingStatus = false;
+		}
+	}
+	checkFollowingStatus();
 </script>
 
 <!-- <div class=" mt-2 flex max-h-full min-h-screen w-[1400px] flex-col gap-5 bg-transparent"> -->
@@ -91,22 +106,23 @@
 					</div>
 				</div>
 				<div class="flex h-full w-36 items-center justify-center">
-					{#if !FollowingStatus}
+					{#if FollowingStatus}
 						<button
 							on:click={() => {
-
-								FollowHash()
+								FollowHash();
+								// checkFollowingStatus();
 							}}
-							class=" h-10 w-28 rounded-3xl bg-blue-500 font-poppins font-semibold text-[#e7e9eb]"
-							>Follow</button
+							class=" h-10 w-28 rounded-3xl bg-green-500 font-poppins font-semibold text-[#e7e9eb]"
+							>Following</button
 						>
 					{:else}
 						<button
 							on:click={() => {
-								FollowHash()
+								FollowHash();
+								// checkFollowingStatus();
 							}}
-							class=" h-10 w-28 rounded-3xl bg-green-500 font-poppins font-semibold text-[#e7e9eb]"
-							>Following</button
+							class=" h-10 w-28 rounded-3xl bg-blue-500 font-poppins font-semibold text-[#e7e9eb]"
+							>Follow</button
 						>
 					{/if}
 				</div>

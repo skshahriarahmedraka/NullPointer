@@ -8,5 +8,5 @@ type HashViewData struct {
 	UserID primitive.ObjectID `json:"UserID" bson:"UserID"`
 	Image string `json:"Image" bson:"Image"`
 	Name string `json:"Name" bson:"Name"`
-	FollowStatus bool `json:"FollowStatus" bson:"FollowStatus"`
+
 }

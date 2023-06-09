@@ -427,7 +427,7 @@ async function fetchSearchhashArrWithMetadata(
 
 async function fetchHashViewData(HashViewData: HashViewDataType)  {
 	const response = await fetch(
-		`/follow/hash`,{
+		`/api/follow/hash`,{
 			method: 'POST',
 			body: JSON.stringify(HashViewData),
 		}
@@ -435,13 +435,29 @@ async function fetchHashViewData(HashViewData: HashViewDataType)  {
 	console.log("🚀 ~ file: fetch.ts:435 ~ fetchHashViewData ~ response:", response)
 	if (!response.ok) {
 		console.log(`❌/follow/hash`);
-		return {} as HashViewDataType;
+		return {} as {message:boolean} 
 	}
 	const res: {message:boolean} = await response.json();
 	
 	return res;
 }
 
+async function fetchHashViewCheck(HashViewData: HashViewDataType)  {
+	const response = await fetch(
+		`/api/follow/hashcheck`,{
+			method: 'POST',
+			body: JSON.stringify(HashViewData),
+		}
+	);
+	console.log("🚀 ~ file: fetch.ts:452 ~ fetchHashViewCheck ~ response:", response)
+	if (!response.ok) {
+		console.log(`❌/api/follow/hashcheck`);
+		return {} as {message:boolean} 
+	}
+	const res: {message:boolean} = await response.json();
+	
+	return res;
+}
 export {
 	fetchUserData,
 	fetchUpdateUserData,
@@ -471,4 +487,5 @@ export {
 	fetchSearchhashArrWithMetadata,
 
 	fetchHashViewData,
+	fetchHashViewCheck,
 };

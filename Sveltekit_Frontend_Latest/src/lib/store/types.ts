@@ -198,8 +198,7 @@ export type HashViewDataType = {
     ID     : string
     UserID   : string
     Image      :  string   
-    Name       :  string            
-    FollowStatus : boolean      
+    Name       :  string              
 }
 //////////////////////////////////////
 

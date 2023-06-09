@@ -29,28 +29,20 @@ func (H *DatabaseCollections) HashFollowCheck(c *fiber.Ctx) error {
 			"message": "Bad Request",
 		})
 	}
-	var HashFlair model.HashFlair 
-	HashFlair.ID = reqData.ID
-	HashFlair.Name = reqData.Name
-	HashFlair.Image = reqData.Image
+	// var HashFlair model.HashFlair 
+	// HashFlair.ID = reqData.ID
+	// HashFlair.Name = reqData.Name
+	// HashFlair.Image = reqData.Image
 
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-		// opts := options.CountOptions{}
-		// filter := bson.D{{Key: "_id", Value: reqData.ID}}
-
-
-		// update := bson.M{
-		// 	"$push": bson.M{
-		// 		"FollowingHash": HashFlair,
-		// 	},
-		// }
+		
 		filter := bson.M{
 			"_id": reqData.UserID, 
 			"FollowingHash": bson.M{
-				"$elemMatch": HashFlair,
+				"$elemMatch": bson.M{ "_id" : reqData.ID},
 			},
 		}
 	
