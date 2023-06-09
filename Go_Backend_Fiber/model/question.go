@@ -53,3 +53,15 @@ type QuesAnsIndicatorData struct{
 	Comment  []string `json:"Comment" validate:"omitempty"`
 }
 
+
+
+type QuesFlair struct {
+	ID primitive.ObjectID `json:"ID" bson:"_id"`
+	QuesTitle       string    `json:"QuesTitle" bson:"QuesTitle" validate:"required,min=4,max=200"`
+	QuesAskedBy     primitive.ObjectID   `json:"QuesAskedBy" bson:"QuesAskedBy" validate:"required"`
+	QuesUpvote      int      `json:"QuesUpvote" bson:"QuesUpvote" validate:"omitempty"`
+	QuesDownvote    int      `json:"QuesDownvote" bson:"QuesDownvote" validate:"omitempty"`
+	QuesAnsAccepted string   `json:"QuesAnsAccepted" bson:"QuesAnsAccepted" validate:"required"` // accepted answer id
+	Answers                 []QuesAnsIndicatorData `json:"Answers" bson:"Answers" validate:"omitempty"`
+
+}

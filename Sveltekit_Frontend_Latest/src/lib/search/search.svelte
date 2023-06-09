@@ -16,6 +16,7 @@
 	import SearchedQues from './searchedQues.svelte';
 	import SearchedHash from './SearchedHash.svelte';
 	import SearchedBlog from './SearchedBlog.svelte';
+	import type { QuesArrWithMetadataType } from '$lib/store/types';
 	// import {  fetchQuesArrWithMetadata } from '$lib/store/fetch';
 	// import type { QuesArrWithMetadataType } from '$lib/store/types';
 
@@ -29,6 +30,9 @@
 	// let pageNumEnd: number ;
 	// let contentPerPage:number=5
 	let Loading:boolean=false
+
+	// export let SearchedString: string 
+	// console.log("🚀 ~ file: search.svelte:35 ~ SearchedString:", SearchedString)
 
 	onMount(async () => {
 		// QuestionList = await fetchQuesArrWithMetadata(
@@ -155,7 +159,7 @@
 </div>
 <div class="h-full w-full">
 	{#if activeField === 0}
-		<SearchedQues  bind:filterState={filterState} bind:filterType={filterType}   />
+		<SearchedQues     bind:filterState={filterState} bind:filterType={filterType}   />
 	{:else if activeField === 1}
 		<SearchedHash  bind:filterType={filterType}  bind:filterState={filterState}   />
 	{:else if activeField === 2}

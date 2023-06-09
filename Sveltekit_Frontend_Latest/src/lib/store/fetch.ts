@@ -42,7 +42,8 @@ import type {
 	AnswerDataType,
 	BlogDataType,
 	QuesArrWithMetadataType,
-	HashDataType
+	HashDataType,
+	HashArrWithMetadata
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -272,6 +273,26 @@ async function fetchQuesArrWithMetadata(
 	return QuestionDataResponseArr;
 }
 
+async function fetchHashArrWithMetadata(
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<HashArrWithMetadata> {
+	const response = await fetch(
+		`/api/h/list?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
+	console.log("🚀 ~ file: fetch.ts:231 ~ response:", response)
+	console.log(`HashArrWithMetadata /api/h/list?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+	if (!response.ok) {
+		console.log(`HashArrWithMetadata /api/h/list?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return {} as HashArrWithMetadata;
+	}
+	const HashDataResponseArr: HashArrWithMetadata = await response.json();
+	console.log("🚀 ~ file: fetch.ts:292 ~ HashDataResponseArr:", HashDataResponseArr)
+	
+	return HashDataResponseArr;
+}
 
 async function fetchUserFlairData(UUID: string): Promise<UserFlairDataType> {
 	const response = await fetch(`/api/user/flair/${UUID}`);
@@ -335,6 +356,29 @@ async function fetchAnsData(UUID: string): Promise<AnswerDataType> {
 	console.log("🚀 ~ file: fetch.ts:258 ~ fetchAnsData ~ AnsData:", AnsData)
 	return AnsData;
 }
+
+
+async function fetchSearchQuesArrWithMetadata(
+	SearchedString: string,
+	type: string,
+	start: number,
+	stop: number,
+	order: number
+): Promise<QuesArrWithMetadataType> {
+	const response = await fetch(
+		`/api/search/q/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`
+	);
+	console.log("🚀 ~ file: fetch.ts:231 ~ response:", response)
+	console.log(`Searched QuesArrWithMetadataType /api/search/q/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+	if (!response.ok) {
+		console.log(`❌Searched QuesArrWithMetadataType  /api/search/q/${SearchedString}?type=${type}&start=${start}&stop=${stop}&order=${order}`);
+		return {} as QuesArrWithMetadataType;
+	}
+	const QuestionDataResponseArr: QuesArrWithMetadataType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:236 ~ QuesArrWithMetadataType:", QuestionDataResponseArr)
+	
+	return QuestionDataResponseArr;
+}
 export {
 	fetchUserData,
 	fetchUpdateUserData,
@@ -357,4 +401,7 @@ export {
 
 	fetchCreateHash,
 	fetchHashData,
+	fetchHashArrWithMetadata,
+
+	fetchSearchQuesArrWithMetadata,
 };

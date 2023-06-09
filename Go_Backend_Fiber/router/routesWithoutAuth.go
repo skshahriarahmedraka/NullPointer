@@ -30,21 +30,24 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/q/askquestion",H.QuesAsk)
 
 	r.Get("/q/:ID",H.QuesData)
-	r.Get("/public/meta/q",H.QuesListQueryWithMetadata) //vote not working
-	r.Get("/public/q",H.QuesListQuery) // votenot working
-	r.Get("/logout",H.Logout) // not complete
-	
+	r.Get("/public/meta/q",H.QuesListQueryWithMetadata) 
+	r.Get("/public/q",H.QuesListQuery) //use less
+	r.Get("/logout",H.Logout) 	
 	r.Post("/q/:ID/answer",H.AnsPost) 
 	r.Get("/q/answer/:ID",H.AnsData) 
 	
 	r.Post("/b/write",H.BlogCreate) 
-	r.Get("/b/list",H.BlogsList) 
+	r.Get("/b/list",H.BlogsList) // useless
 	r.Get("/b/:ID",H.BlogGet) 
-
+	
 	r.Post("/h/write",H.HashCreate) 
+	r.Get("/h/list",H.HashList)
 	r.Get("/h/:ID",H.HashData)
+	
+	
+	// r.Get("/search/:search",H.Search)
+	r.Get("/search/q/:search",H.SearchQuesListQueryWithMetadata) 
 	// /////////////////////////////////////////////////////
-	r.Get("/api/search/locations",H.SearchLocation)
 	// r.Get("/collection",H.Channel)
 	// r.Get("/favcollection",H.FavChannelList)
 	// r.Get("/channel/:ID",H.Channel)
@@ -56,7 +59,7 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/hotQues", H.HotQues)
 	r.Post("/related",H.RelatedQues)
 
-	r.Get("/favhash",H.FavHash)
+	// r.Get("/favhash",H.FavHash)
 
 	
 

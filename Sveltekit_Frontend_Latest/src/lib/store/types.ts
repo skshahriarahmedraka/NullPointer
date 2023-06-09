@@ -182,6 +182,12 @@ export type HashDataType ={
 	About : string
 
 }
+export type HashArrWithMetadata ={
+	HashList : HashDataType[]
+	Metadata: {
+		Length:number
+	}
+}
 //////////////////////////////////////
 
 // export type BlogListType = {

@@ -7,7 +7,7 @@ export const load:PageServerLoad = async ({parent,locals}) => {
 			'🚀 ~ file: +page.server.ts ~ line 10 ~ constload:PageServerLoad= ~ user',
 			locals.user.Authenticated
 		);
+		throw redirect(302, '/login');
 	}
     
-	throw redirect(302, '/');
 }

@@ -415,10 +415,10 @@ const UserData = writable({} as UserDataType)
 // ])
 
 
-const SearchedString = writable("" as string)
+const StoredSearchedString = writable("" as string)
 
 
 
-export {UserData,SearchedString}
+export {UserData,StoredSearchedString}
 // export { SpaceList,FavoriteHash}
 

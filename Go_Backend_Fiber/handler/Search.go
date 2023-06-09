@@ -10,9 +10,9 @@ import (
 	// "go.mongodb.org/mongo-driver/bson"
 )
 
-func (H *DatabaseCollections)SearchLocation(c *fiber.Ctx) error  {
+func (H *DatabaseCollections)Search(c *fiber.Ctx) error  {
 	c.Accepts("application/json")
-	if c.Query("q") != "" {
+	if c.Query("search") != "" {
 		
 
 		

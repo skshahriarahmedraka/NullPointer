@@ -16,3 +16,9 @@ type HashData struct {
 	About  string `json:"About" bson:"About"`
 
 }
+
+type HashFlair struct {
+	ID primitive.ObjectID `json:"ID" bson:"_id"`
+	Image string `json:"Image" bson:"Image"`
+	Name string `json:"Name" bson:"Name"`
+}

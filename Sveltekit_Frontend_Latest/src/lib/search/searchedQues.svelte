@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { SearchedString } from '$lib/store/store';
+	// import { SearchedString } from '$lib/store/store';
 	import { goto } from '$app/navigation';
-	import { fetchPublicQuestionDataArr, fetchQuesArrWithMetadata } from '$lib/store/fetch';
+	import { fetchPublicQuestionDataArr, fetchQuesArrWithMetadata, fetchSearchQuesArrWithMetadata } from '$lib/store/fetch';
 	import type { QuesArrWithMetadataType, QuestionDataType } from '$lib/store/types';
 	import { fetchUserFlairData } from '$lib/store/fetch';
 	import { onMount } from 'svelte';
@@ -15,11 +15,18 @@
 
 	import ZtoA from '$lib/PublicQues/svgs/ZtoA.svelte';
 	import PageNum from '$lib/PageNum/pageNum.svelte';
+	import { StoredSearchedString } from '$lib/store/store';
 
 	// import { goto } from "$app/navigation";
 	export let filterState: boolean ;
 	// GetEditedByData(QuestionData.QuesEditedBy);
 	export let filterType: string;
+	// export let SearchedString: string 
+	// console.log("🚀 ~ file: searchedQues.svelte:24 ~ SearchedString:", SearchedString)
+	let SearchedString= ''
+
+	
+
 	// let filterIndex: number = 0;
 	 let pageNumStart: number = 0;
 	let pageNumNow: number = 0;
@@ -33,14 +40,19 @@
 	onMount(async () => {
 		filterType= 'time'
 		filterState = true
-		QuestionList = await fetchQuesArrWithMetadata(
+		StoredSearchedString.subscribe((value) => {
+			console.log("🚀 ~ file: searchedQues.svelte:44 ~ StoredSearchedString.subscribe ~ value:", value)
+			
+			SearchedString = value;
+		});
+		QuestionList = await fetchSearchQuesArrWithMetadata(
+			SearchedString,
 			filterType,
 			pageNumNow * contentPerPage,
 			pageNumNow * contentPerPage + contentPerPage,
 			filterState ? -1 : 1
-		);
-		console.log('🚀 ~ file: PublicQues.svelte:32 ~ onMount ~ QuestionList:', QuestionList);
-		// CalculatePages();
+			);
+			console.log("🚀 ~ file: searchedQues.svelte:48 ~ onMount ~ QuestionList:", QuestionList)
 		pageNumStart = 0;
 		// pageNumNow = pageNumNow * contentPerPage;
 		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
@@ -48,15 +60,23 @@
 	});
 	async function ApplyFilter(filterType: string, filterState: boolean) {
 		// time , views , unanswered , votes
-		if (filterState) {
-			QuestionList = await fetchQuesArrWithMetadata(
+		// let SearchedString= ''
+		StoredSearchedString.subscribe((value) => {
+			console.log("🚀 ~ file: searchedQues.svelte:65 ~ StoredSearchedString.subscribe ~ value:", value)
+			SearchedString = value;
+		});
+		
+		if (filterState ) {
+			QuestionList = await fetchSearchQuesArrWithMetadata(
+				SearchedString,
 				filterType,
 				pageNumNow * contentPerPage,
 				pageNumNow * contentPerPage + contentPerPage,
 				-1
 			);
 		} else {
-			QuestionList = await fetchQuesArrWithMetadata(
+			QuestionList = await fetchSearchQuesArrWithMetadata(
+				SearchedString,
 				filterType,
 				pageNumNow * contentPerPage,
 				pageNumNow * contentPerPage + contentPerPage,
@@ -75,6 +95,17 @@
 	// 	pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage);
 	// }
 	$: pageNumNow, ApplyFilter(filterType, filterState);
+
+	// let tempstr = ''
+	// StoredSearchedString.subscribe((value) => {
+	// 	console.log("🚀 ~ file: searchedQues.svelte:30 ~ StoredSearchedString.subscribe ~ value:", value)
+	// 	// console.log('🚀 ~ file: PublicQues.svelte:32 ~ onMount ~ value:', value);
+	// 	tempstr = value;
+	// });
+	// if (tempstr != SearchedString) {
+	// 	ApplyFilter(filterType, filterState)
+	// }
+	$: $StoredSearchedString, ApplyFilter(filterType, filterState)
 </script>
 
 {#if Loading}
