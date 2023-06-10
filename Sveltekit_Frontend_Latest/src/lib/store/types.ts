@@ -240,3 +240,37 @@ export type NotificationDataType = {
 	description?: string;
 	point?: number;
 };
+
+
+
+
+export type UserActivityType = {
+	ID : string
+	FollowingHash : HashFlairType[]
+	FollowingUser : UserFlairDataType
+	FollowingQuestion : QuesFlair 
+}
+
+export type HashFlairType = {
+	ID : string 
+	Image : string 
+	Name : string 
+}
+
+export type QuesFlair = {
+	ID : string
+	QuesTitle  :     string   
+	QuesAskedBy : string 
+	QuesUpvote  :    number      
+	QuesDownvote  :  number     
+	QuesAnsAccepted : string   
+	Answers            :     QuesAnsIndicatorData []
+}
+
+export type QuesAnsIndicatorData ={ 
+	ID  :string 
+	UpVote : number
+	DownVote :number
+	AnsweredBy : string
+	Comment :string[] 
+}

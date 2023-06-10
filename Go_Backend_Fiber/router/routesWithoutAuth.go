@@ -44,15 +44,22 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Get("/h/list",H.HashList)
 	r.Get("/h/:ID",H.HashData)
 	
+	r.Get("/user/activity/:ID",H.UserActivityData)
 	
 	// r.Get("/search/:search",H.Search)
 	r.Get("/search/q/:search",H.SearchQuesListQueryWithMetadata) 
 	r.Get("/search/b/:search",H.SearchBlogListQueryWithMetadata) 
-	r.Get("/search/h/:search",H.SearchHashListQueryWithMetadata) //working
+	r.Get("/search/h/:search",H.SearchHashListQueryWithMetadata) 
 	
+
 	r.Post("/follow/hash",H.HashFollow)
 	r.Post("/follow/hashcheck",H.HashFollowCheck)
 	r.Get("/follow/hashfollowing/:ID",H.HashFollowingList)
+	
+	
+	r.Post("/q/votecheck",H.QuesVoteCheck)
+	r.Post("/q/givevote",H.QuesGiveVote)
+
 
 	// r.Get("/search/q/:search",H.SearchQuesListQueryWithMetadata) 
 	// /////////////////////////////////////////////////////

@@ -380,7 +380,7 @@
 						 alt=""
 						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
 						 />
-						 {:else}
+				{:else}
 						 <!-- else content here -->
 						 <UserAnonymous
 						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer  object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
@@ -529,11 +529,24 @@
 					class=" fixed z-30 float-left  -ml-[340px] mt-2 flex max-h-screen min-h-fit w-96  flex-col overflow-scroll rounded-lg  border-2 border-gray-600 bg-[#2d2d2d]  text-gray-200"
 				>
 					<div class="mt-3 ml-2 mb-1 flex flex-row">
-						<img
+						{#if $UserData.UserImage != ""}
+					 <!-- content here -->
+					 <img
+						 src={$UserData.UserImage}
+						 alt=""
+						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+						 />
+				{:else}
+						 <!-- else content here -->
+						 <UserAnonymous
+						 class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer  object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+					    />
+				{/if}
+						<!-- <img
 							src={$UserData['UserImage']}
 							alt=""
 							class=" aspect-square active:ring-offset-base-50 mx-2  h-16 w-16  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
-						/>
+						/> -->
 						<div class="flex flex-col items-center justify-center">
 							<div class=" text-2xl font-light line-clamp-1 ">{$UserData.UserName}</div>
 							<p class=" font-semibold">

@@ -65,3 +65,15 @@ type QuesFlair struct {
 	Answers                 []QuesAnsIndicatorData `json:"Answers" bson:"Answers" validate:"omitempty"`
 
 }
+
+
+type QuesVoteCheck struct {
+	ID primitive.ObjectID `json:"ID" bson:"_id"`
+	UserID primitive.ObjectID `json:"UserID" bson:"UserID"`
+}
+
+type QuesVoteGive struct {
+	ID primitive.ObjectID `json:"ID" bson:"_id"`
+	UserID primitive.ObjectID `json:"UserID" bson:"UserID"`
+	Vote int `json:"Vote" bson:"Vote"`
+}

@@ -214,7 +214,7 @@
 						{:then flairUserData}
 							<!-- <p>The number is {number}</p> -->
 							<p
-								class="mr-1 mt-2 line-clamp-1 h-6 w-36 text-center text-sky-600 hover:cursor-pointer hover:text-blue-600"
+								class="mr-1 mt-2 line-clamp-1 h-6 w-fit  text-center text-sky-600 hover:cursor-pointer hover:text-blue-600"
 							>
 								{flairUserData.UserName}
 							</p>

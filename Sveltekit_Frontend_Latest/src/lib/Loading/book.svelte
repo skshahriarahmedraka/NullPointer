@@ -260,7 +260,7 @@ body .dribbble img {
 
 
 
-<div class="loader scale-125 ">
+<div class="loader scale-125 {$$props.class} ">
     <div>
       <ul>
         <li>

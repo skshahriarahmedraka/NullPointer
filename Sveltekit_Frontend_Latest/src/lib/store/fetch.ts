@@ -44,7 +44,10 @@ import type {
 	QuesArrWithMetadataType,
 	HashDataType,
 	HashArrWithMetadata,
-	BlogArrWithMetadataType
+	BlogArrWithMetadataType,
+	UserActivityType,
+	HashViewDataType,
+	HashFlairType
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -458,6 +461,29 @@ async function fetchHashViewCheck(HashViewData: HashViewDataType)  {
 	
 	return res;
 }
+
+async function fetchUserActivitydata(UUID: string): Promise<UserActivityType> {
+	const response = await fetch(`/api/user/activity/:ID${UUID}`);
+	if (!response.ok) {
+		
+
+		return {} as UserActivityType;
+	}
+	const Data: UserActivityType = await response.json();
+	console.log("🚀 ~ file: fetch.ts:470 ~ fetchUserActivitydata ~ Data:", Data)
+	return Data;
+}
+async function fetchUserHashdata(UUID: string): Promise<HashFlairType[]> {
+	const response = await fetch(`/api/follow/hashfollowing/${UUID}`);
+	if (!response.ok) {
+		console.log(`❌/api/follow/hashfollowing/`);
+		return [] as HashFlairType[];
+	}
+	const Data: HashFlairType[] = await response.json();
+	console.log("🚀 ~ file: fetch.ts:483 ~ fetchUserHashdata ~ Data:", Data)
+	return Data;
+}
+
 export {
 	fetchUserData,
 	fetchUpdateUserData,
@@ -488,4 +514,7 @@ export {
 
 	fetchHashViewData,
 	fetchHashViewCheck,
+
+	fetchUserActivitydata,
+	fetchUserHashdata,
 };

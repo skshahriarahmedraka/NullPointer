@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (H *DatabaseCollections)HashFollowingList(c *fiber.Ctx) error  {
+func (H *DatabaseCollections)UserActivityData(c *fiber.Ctx) error  {
 	c.Accepts("application/json")
 	fmt.Println("🚀 ~ file: HashFollowingList.go ~ line 18 ~ ifc.Params ~ c.Params(\"ID\") : ", c.Params("ID"))
 	if c.Params("ID") != "" {
@@ -29,10 +29,7 @@ func (H *DatabaseCollections)HashFollowingList(c *fiber.Ctx) error  {
 				"message": "Internal Server Error while fetching user activity",
 			})
 		}
-		var hash []model.HashFlair
-
-			hash = append(hash,user.FollowingHash ...)
-		return c.Status(fiber.StatusOK).JSON(hash)
+		return c.Status(fiber.StatusOK).JSON(user)
 	}else {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Bad Request",

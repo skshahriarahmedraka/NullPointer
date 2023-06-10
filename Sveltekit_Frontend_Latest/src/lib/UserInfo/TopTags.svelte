@@ -20,7 +20,7 @@ import {UserData} from "../store/store"
         </div>
         <div class="grow"></div>
         <div class="mt-1 mr-2 text-lg text-[#e7e9eb]">
-            {$UserData["TopTagsPercent"][j]}%
+            <!-- {$UserData["TopTagsPercent"][j]}% -->
         </div>
     </div>
          

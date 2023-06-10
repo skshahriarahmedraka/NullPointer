@@ -374,10 +374,9 @@
 
 			<!--List of Answers -->
 			<!-- RELATED QUESTION -->
-			{#if true}
-				<!-- content here -->
+			<!-- {#if true}
 				<RelatedQues />
-			{/if}
+			{/if} -->
 		</div>
 	</div>
 {:else}
