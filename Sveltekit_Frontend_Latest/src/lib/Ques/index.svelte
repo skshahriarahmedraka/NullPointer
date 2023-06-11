@@ -6,8 +6,8 @@
 	import Ans from '$lib/Ans/index.svelte';
 	import MarkDownWriter from '$lib/Write/index.svelte';
 	import AvatarDefault from '$lib/icons/avatarDefault.svg';
-	import { fetchAnsData, fetchPostAnsData, fetchUserFlairData } from '$lib/store/fetch';
-	import type { AnswerDataType, QuestionDataType, UserFlairDataType } from '$lib/store/types';
+	import { fetchAnsData, fetchCheckVotetoQuestion, fetchPostAnsData, fetchUserFlairData } from '$lib/store/fetch';
+	import type { AnswerDataType, QuesVoteGive, QuestionDataType, UserFlairDataType } from '$lib/store/types';
 	import { onMount } from 'svelte';
 	import Down from './svgs/Down.svelte';
 	import Up from './svgs/Up.svelte';
@@ -104,6 +104,26 @@
 		let PostedAns: AnswerDataType = await fetchPostAnsData(QuestionData.ID, UserWrittenAns);
 		console.log('🚀 ~ file: index.svelte:100 ~ PostMyAns ~ PostedAns:', PostedAns);
 	}
+
+	let UserVote: QuesVoteGive
+	async function GiveVote (n:number){
+		UserVote = {
+			ID: QuestionData.ID,
+			UserID: $UserData.UserID,
+			Vote: n
+		}
+
+		let res:boolean = await fetchCheckVotetoQuestion(UserVote)
+
+		if(res){
+			
+		}
+		else{
+			QuestionData.Votes = QuestionData.Votes.filter((x)=>{return x.UserID != $UserData.UserID})
+		}
+
+	}
+
 </script>
 
 {#if Loading}
@@ -146,7 +166,7 @@
 						<!-- Ratings -->
 						<div class=" flex w-14 flex-col">
 							<!-- UP -->
-							<Up />
+							<Up on:click={()=>{}} />
 							<div
 								class=" mx-2 text-center text-xl {QuestionData.QuesUpvote -
 									QuestionData.QuesDownvote <
@@ -157,7 +177,7 @@
 								{QuestionData.QuesUpvote - QuestionData.QuesDownvote}
 							</div>
 							<!-- DOWN -->
-							<Down />
+							<Down on:click={()=>{}} />
 						</div>
 						<!-- Question Detail  -->
 						<div class="w-full font-sf-pro text-[#e7e9eb]">

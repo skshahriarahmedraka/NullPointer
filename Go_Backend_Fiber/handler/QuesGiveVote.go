@@ -11,6 +11,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	// "go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	// "go.mongodb.org/mongo-driver/bson"
@@ -65,6 +67,7 @@ func (H *DatabaseCollections) QuesGiveVote(c *fiber.Ctx) error {
 	}
 	fmt.Println("🚀 ~ file: QuesGiveVote.go ~ line 61 ~ func ~ myVote : ", myVote)
 	//////////////////////
+	var update primitive.M
 
 	if myVote == 0 {
 		opts := options.Update().SetUpsert(true)
@@ -76,10 +79,22 @@ func (H *DatabaseCollections) QuesGiveVote(c *fiber.Ctx) error {
 		VoteData.UserID = reqData.UserID
 		VoteData.Vote= reqData.Vote
 		VoteData.VoteTime = time.Now().UTC()
-		update := bson.M{
-			"$push": bson.M{
-				"QuesVotes": VoteData,
-			},
+		if reqData.Vote == 1 {
+
+			update = bson.M{
+				"$inc": bson.M{"QuesUpvote": 1},
+				"$push": bson.M{
+					"QuesVotes": VoteData,
+				},
+			}
+		}else if reqData.Vote == -1 {
+			update = bson.M{
+				"$inc": bson.M{"QuesDownvote": 1},
+				"$push": bson.M{
+					"QuesVotes": VoteData,
+				},
+			}
+
 		}
 	
 		res , err := H.MongoQuestionCol.UpdateOne(ctx, filter, update,opts)
@@ -93,11 +108,33 @@ func (H *DatabaseCollections) QuesGiveVote(c *fiber.Ctx) error {
 	}else {
 		opts := options.Update().SetUpsert(true)
 		filter := bson.D{{Key: "_id", Value: reqData.ID}}
-		update := bson.M{
-			"$set": bson.M{
-				"QuesVotes.O.Vote": bson.M{"_id": reqData.Vote},
-			},
+		var VoteData model.QuesVoteData
+
+		VoteData.ID =reqData.ID
+		VoteData.UserID = reqData.UserID
+		VoteData.Vote= reqData.Vote
+		VoteData.VoteTime = time.Now().UTC()
+		
+		if reqData.Vote == 1 {
+			update = bson.M{
+				"$inc": bson.M{"QuesUpvote": 1, "QuesDownvote": -1},
+				"$set": bson.M{
+					"QuesVotes.$.Vote": reqData.Vote,
+				},
+			}
+		}else if reqData.Vote == -1 {
+			update = bson.M{
+				"$inc": bson.M{"QuesUpvote": -1, "QuesDownvote": 1},
+				"$set": bson.M{
+					"QuesVotes.$.Vote": reqData.Vote,
+				},
+			}
 		}
+		// update := bson.M{
+		// 	"$set": bson.M{
+		// 		"QuesVotes.O.Vote": bson.M{"_id": reqData.Vote},
+		// 	},
+		// }
 		res , err := H.MongoQuestionCol.UpdateOne(ctx, filter, update,opts)
         fmt.Println("🚀 ~ file: QuesGiveVote.go ~ line 102 ~ func ~ res : ", res)
 		if err != nil {

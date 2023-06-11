@@ -47,7 +47,9 @@ import type {
 	BlogArrWithMetadataType,
 	UserActivityType,
 	HashViewDataType,
-	HashFlairType
+	HashFlairType,
+	QuesVoteGive,
+	QuesVoteCheck
 } from './types';
 
 async function fetchUserData(UUID: string): Promise<UserDataType> {
@@ -484,6 +486,42 @@ async function fetchUserHashdata(UUID: string): Promise<HashFlairType[]> {
 	return Data;
 }
 
+
+
+async function fetchGiveVotetoQuestion(giveVote: QuesVoteGive)  {
+	const response = await fetch(
+		`/api/q/givevote`,{
+			method: 'POST',
+			body: JSON.stringify(giveVote),
+		}
+	);
+	console.log("🚀 ~ file: fetch.ts:497 ~ fetchGiveVotetoQuestion ~ response:", response)
+	if (!response.ok) {
+		console.log(`❌/q/givevote`);
+		return false  as boolean;
+	}
+	// const res: {message:boolean} = await response.json();
+	
+	return true as boolean;
+}
+
+async function fetchCheckVotetoQuestion(checkVote: QuesVoteCheck)  {
+	const response = await fetch(
+		`/api/q/votecheck`,{
+			method: 'POST',
+			body: JSON.stringify(checkVote),
+		}
+	);
+	console.log("🚀 ~ file: fetch.ts:497 ~ fetchGiveVotetoQuestion ~ response:", response)
+	if (!response.ok) {
+		console.log(`❌/q/givevote`);
+		return {} as {message:boolean} 
+	}
+	const res: {Vote:number} = await response.json();
+	
+	return res 
+}
+
 export {
 	fetchUserData,
 	fetchUpdateUserData,
@@ -517,4 +555,7 @@ export {
 
 	fetchUserActivitydata,
 	fetchUserHashdata,
+
+	fetchGiveVotetoQuestion,
+	fetchCheckVotetoQuestion,
 };

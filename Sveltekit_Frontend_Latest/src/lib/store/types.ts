@@ -274,3 +274,15 @@ export type QuesAnsIndicatorData ={
 	AnsweredBy : string
 	Comment :string[] 
 }
+
+
+export type QuesVoteGive = {
+    ID  :  string 
+    UserID : string 
+    Vote   : number 
+}
+
+export type QuesVoteCheck = {
+    ID  :  string 
+    UserID : string 
+}
