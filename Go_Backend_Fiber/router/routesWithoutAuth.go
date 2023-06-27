@@ -16,6 +16,7 @@ func RouteWithoutAuth(app *fiber.App) {
 
 	r.Post("/login",H.Login)
 	r.Post("/register",H.Register)
+	r.Get("/logout",H.Logout) 	
 
 	// r.Get("/blogs",H.BlogsList)
 	// r.Get("/blog/:ID",H.Blog)
@@ -30,9 +31,8 @@ func RouteWithoutAuth(app *fiber.App) {
 	r.Post("/q/askquestion",H.QuesAsk)
 
 	r.Get("/q/:ID",H.QuesData)
-	r.Get("/public/meta/q",H.QuesListQueryWithMetadata) 
 	r.Get("/public/q",H.QuesListQuery) //use less
-	r.Get("/logout",H.Logout) 	
+	r.Get("/public/meta/q",H.QuesListQueryWithMetadata) 
 	r.Post("/q/:ID/answer",H.AnsPost) 
 	r.Get("/q/answer/:ID",H.AnsData) 
 	

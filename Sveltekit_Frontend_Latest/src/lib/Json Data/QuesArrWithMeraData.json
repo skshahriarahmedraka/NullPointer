@@ -1,0 +1,182 @@
+{
+    "QuesList": [
+        
+        {
+            "ID": "6483c63b15dfee732feccdae",
+            "QuesTitle": "The background becomes black when I add DaisyUI in my SvelteJS+Tailwindcss Project",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "daisy",
+                "UI",
+                "css"
+            ],
+            "QuesGroup": [
+                "color",
+                "ui"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be4410a6de717c628559",
+            "QuesAskedTime": "2023-06-10T00:39:23.822Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:39:23.822Z",
+            "QuesDescription": "I was configuring with my SvelteJS and Tailwindcss project with DaisyUI. But every time I add DaisyUI to a Project the background color becomes black. Maybe it's a default color that's not the problem. but how will I change it?  \nAfter a lot of searches, I found if I add ```data-theme=\"corporate\"``` default HTML tag it's gone. But I don't think it's a good idea to change the default HTML file.  \n```\n<!DOCTYPE html>\n<html lang=\"en\" data-theme=\"corporate\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <meta name=\"description\" content=\"\" />\n        <link rel=\"icon\" href=\"%svelte.assets%/favicon.png\" />\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n        %svelte.head%\n    </head>\n    <body>\n        <div>%svelte.body%</div>\n    </body>\n</html>\n\n```\nPlease show me the correct way to change these colors in DaisyUI?",
+            "QuesComment": [],
+            "Answers": []
+        },
+        {
+            "ID": "6483c5aff59291230dc7bbd1",
+            "QuesTitle": "Reditect from handle function in Hooks.js , SvelteKit",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "hook",
+                "redirect",
+                "svelte"
+            ],
+            "QuesGroup": [
+                "hook",
+                "redirect",
+                "svelte"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be4410a6de717c628559",
+            "QuesAskedTime": "2023-06-10T00:37:03.731Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:37:03.731Z",
+            "QuesDescription": "I tried this solution from StackOverflow and some other solutions<br>\nhttps://stackoverflow.com/questions/71360354/redirecting-from-exported-handle-hook-in-sveltekit<br>\n\n\nI tried to redirect after authentication from the handle function inside hooks.js. I tried to like this\n```\n return  response.redirect(event.url.origin+\"/login2\", 303);\n```\nbut this gives me an error \n```\n500\nTypeError: response.redirect is not a functionat Object.handle (/mnt/golang/vscode Web/svelteKit/s16JWT/src/hooks.ts:48:30)at async respond (file:///mnt/golang/vscode%20Web/svelteKit/s16JWT/.svelte-kit/runtime/server/index.js:2685:20)at async file:///mnt/golang/vscode%20Web/svelteKit/s16JWT/node_modules/@sveltejs/kit/dist/chunks/index.js:299:24\n```\n\ni tried in some other methods in some other places inside my code base , only place i could redirect from ```<script context=\"module\"></script>``` or ```<script></script>``` using **goto()** method or **header redirect**. help me to fix this problem\n",
+            "QuesComment": [],
+            "Answers": []
+        },
+        {
+            "ID": "6483c576a4b9784e7a23e666",
+            "QuesTitle": "How to add Autosave plugin in Astrovim?",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "vim",
+                "linux",
+                "astrovim"
+            ],
+            "QuesGroup": [
+                "vim",
+                "astrovim"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be4410a6de717c628559",
+            "QuesAskedTime": "2023-06-10T00:36:06.771Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:36:06.771Z",
+            "QuesDescription": "I am new to the **vim/neovim** community. I wanted to add **Autosave** feature like **Vscode**. I don't know the **lua language**. I broke **Astrovim** config file many times. and had to reinstall altogether.   \nI found this package but was unable to find any reliable solution that how to add this plugin in **Astrovim**. <br>\nhttps://github.com/Pocco81/AutoSave.nvim\n\n**init.lua** file :\n```\nvim.opt.rtp:append(vim.fn.stdpath \"config\" .. \"/../astronvim\")\n\nlocal impatient_ok, impatient = pcall(require, \"impatient\")\nif impatient_ok then\n  impatient.enable_profile()\nend\n\nlocal utils = require \"core.utils\"\n\nutils.bootstrap()\n\nlocal sources = {\n  \"core.options\",\n  \"core.plugins\",\n  \"core.autocmds\",\n  \"core.mappings\",\n  \"configs.which-key-register\",\n}\n\nfor _, source in ipairs(sources) do\n  local status_ok, fault = pcall(require, source)\n  if not status_ok then\n    error(\"Failed to load \" .. source .. \"\\n\\n\" .. fault)\n  elseif source == \"core.plugins\" then\n    utils.compiled()\n  end\nend\n\nlocal status_ok, ui = pcall(require, \"core.ui\")\nif status_ok then\n  for ui_addition, enabled in pairs(utils.user_settings().ui) do\n    if enabled and type(ui[ui_addition]) == \"function\" then\n      ui[ui_addition]()\n    end\n  end\nend\n\nlocal polish = utils.user_plugin_opts \"polish\"\nif type(polish) == \"function\" then\n  polish()\nend\n```\n\n\nHow can I add **Autosave** plugin in **Astrovim** and where I can find a proper guideline to setup **Plugins** that are not available in **LspInstall** .\n",
+            "QuesComment": [],
+            "Answers": []
+        },
+        {
+            "ID": "6483c538a4b9784e7a23e665",
+            "QuesTitle": "svelte with tailwind showing different output in Firefox and Chrome",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "svelte",
+                "firefox",
+                "chrome"
+            ],
+            "QuesGroup": [
+                "svelte",
+                "firefox"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be4410a6de717c628559",
+            "QuesAskedTime": "2023-06-10T00:35:04.506Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:35:04.506Z",
+            "QuesDescription": "I was designing a **Tags** input field much like **StackOverflow**. I designed it using **[Sveltekit][1]** and **[Tailwindcss][2]**  . But it was showing different outputs in Firefox and Chrome. I searched through the code using debugger tools. As a result, I was unable to find any solution.\n\nI designed this :\n\n[![enter image description here][3]][3]\n\nCode of this :\n\n\n```\n<script lang=\"ts\">\n     let TagObj: { Input: string; Focus: boolean; List: string[]; Suggested: string[] } = {\n\t\tInput: '' as string,\n\t\tFocus: false as boolean,\n\t\tList: [] as string[],\n\t\tSuggested: [] as string[]\n\t};\n    / TAGS\n\tfunction onKeyPressTags(e: { keyCode: any }) {\n\t\tswitch (e.keyCode) {\n\t\t\tcase 32:\n\t\t\t\tonKeyTag();\n\t\t\t\tbreak;\n\t\t\tcase 13:\n\t\t\t\tonKeyTag();\n\t\t\t\tbreak;\n\t\t}\n\t}\n\tfunction onKeyTag() {\n\t\tif (TagObj.Input.trim() != (\"\" as String)) {\n\t\t\tTagObj.List = [...TagObj.List, TagObj.Input.trim()];\n\t\t\tTagObj.Input = '' as string;\n\t\t}\n\t}\n\n</script>\n\n<div class=\"mx-4 mt-3 h-fit w-[95%] rounded-lg border-2 border-[#24262b] bg-[#303338] p-2 text-lg font-medium text-[#98999e]  outline-0   {TagObj.Focus ? 'border-sky-500' : ''}  \">\n\t<ul class=\"flex flex-row flex-wrap gap-2\">\n\t\t{#each TagObj.List as t}\n\t\t<li class=\"m-1 rounded-md bg-[#3d4951] px-2 py-1 text-[#9bc0da] hover:cursor-pointer hover:bg-slate-600 hover:text-teal-200\">\n\t\t\t{t}\n\t\t</li>\n\t\t{/each}\n\t\t<input on:keypress={onKeyPressTags}\tmaxlength=20 bind:value={TagObj.Input} on:focus={() => { TagObj.Focus = true;}} on:blur={() => { TagObj.Focus = false; }} type=\"text\" class=\" inline w-fit grow bg-inherit  border-0  outline-0  \" />\n\t</ul>\n</div>\n```\n\nThis is how chrome is showing :\n[![enter image description here][4]][4]\n\nThis is how Firefox is showing :\n[![enter image description here][5]][5]\n\nA small blue border is showing around the input field in Firefox. I couldn't find the reason behind it. How i show the exact same UI in Firefox ?\n\n\n  [1]: https://kit.svelte.dev/\n  [2]: https://tailwindcss.com/\n  [3]: https://i.stack.imgur.com/X2tiA.png\n  [4]: https://i.stack.imgur.com/Abw0i.png\n  [5]: https://i.stack.imgur.com/cNsIv.png",
+            "QuesComment": [],
+            "Answers": [
+                {
+                    "ID": "6483ecbf6eef37b56c577e8f",
+                    "UpVote": 0,
+                    "DownVote": 0,
+                    "AnsweredBy": "6483be6d48a136004e7daa67",
+                    "Comment": []
+                }
+            ]
+        },
+        {
+            "ID": "6483c4db77ea8b1fd4d66c80",
+            "QuesTitle": "How to use external endpoint to set jwt cookies in sveltekit",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "api",
+                "golang",
+                "svelte"
+            ],
+            "QuesGroup": [
+                "api",
+                "golang",
+                "svelte"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be6d48a136004e7daa67",
+            "QuesAskedTime": "2023-06-10T00:33:31.017Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:33:31.017Z",
+            "QuesDescription": "I wanted to set jwt cookie in a **Sveltekit** application from a **Golang** API.\nThe following code runs successfully but no cookie is set in the browser. Is it impossible to set jwt cookie from an external API? <br>\nMy most of the work is done in a external API that's why i wanted to do the authentication from that same API.\n\nIn Sveltekit code,\n\n```\nasync function OnSubmit() {\n\t\t//test\n\t\tlet res = await fetch('http://localhost:50000/login', {\n\t\t\tcredentials: 'same-origin',\n\t\t\tmethod: 'POST',\n\t\t\tmode: 'cors',\n\t\t\tbody: JSON.stringify({\n\t\t\t\tUsername: 'raka',\n\t\t\t\tPassword: 'password1'\n\t\t\t})\n\t\t});\n\t\tconsole.log('🚀 ~ file: index@blank.svelte ~ line 45 ~ OnSubmit ~ res', res);\n\t\tif (res.ok) {\n\t\t\t\n\t\t\tconsole.log('🚀 ~ file: index.svelte ~ line 49 ~ OnSubmit ~ value : ', 200);\n\t\t\t\n\t\t}\n\n}\n\n```\n\nIn Golang API, \n```\nfunc main() {\n\thttp.HandleFunc(\"/login\", handler.Login)\n\thttp.HandleFunc(\"/home\", handler.Home)\n\thttp.HandleFunc(\"/\", handler.Home2)\n\thttp.HandleFunc(\"/refresh\", handler.Refresh)\n\n\tfmt.Println(\"listening in port 50000\")\n\tlog.Fatal(http.ListenAndServe(\":50000\", nil))\n\n}\n\nfunc Login(w http.ResponseWriter, r *http.Request) {\n\tw.Header().Set(\"Access-Control-Allow-Origin\", \"*\")\n\n    w.Header().Set(\"Access-Control-Allow-Headers\", \"Content-Type\")\n\tfmt.Println(\"Login is hit ...\")\n\tvar credentials Credentials\n\n\terr := json.NewDecoder(r.Body).Decode(&credentials)\n\n\tif err != nil {\n\t\tw.WriteHeader(http.StatusBadRequest)\n\t\treturn\n\t}\n\texpectedPassword, ok := Users[credentials.Username]\n\n\tif !ok || expectedPassword != credentials.Password {\n\t\tw.WriteHeader(http.StatusUnauthorized)\n\t\treturn\n\t}\n\n\texpirationTime := time.Now().Add(time.Minute * 5)\n\n\tclaims := &Claims{\n\t\tUsername: credentials.Username,\n\t\tStandardClaims: jwt.StandardClaims{\n\t\t\tExpiresAt: expirationTime.Unix(),\n\t\t},\n\t}\n\n\ttoken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)\n\n\ttokenString, err := token.SignedString(jwtKey)\n\n\tif err != nil {\n\t\tw.WriteHeader(http.StatusInternalServerError)\n\t\treturn\n\t}\n\n\thttp.SetCookie(w, &http.Cookie{\n\t\tName:    \"token\",\n\t\tValue:   tokenString,\n\t\tExpires: expirationTime,\n\t})\n\n}\n```",
+            "QuesComment": [],
+            "Answers": []
+        },
+        {
+            "ID": "6483c485f59291230dc7bbd0",
+            "QuesTitle": "Uncaught (in promise) SyntaxError: JSON.parse: unexpected end of data at line 1 column 1 of the JSON data -SvelteKit",
+            "QuesViewed": 0,
+            "QuesUpvote": 0,
+            "QuesDownvote": 0,
+            "QuesVotes": [],
+            "QuesBookmark": [],
+            "QuesTags": [
+                "go",
+                "golang",
+                "svelte"
+            ],
+            "QuesGroup": [
+                "go",
+                "svelte"
+            ],
+            "QuesAnsAccepted": "",
+            "QuesAskedBy": "6483be6d48a136004e7daa67",
+            "QuesAskedTime": "2023-06-10T00:32:05.568Z",
+            "QuesEditedBy": "000000000000000000000000",
+            "QuesEditedTime": "2023-06-10T00:32:05.568Z",
+            "QuesDescription": "I am running Sveltekit and my Golang server on the same machine `localhost` (I have enabled `mode: 'no-cors',`). when i was creating **post fetch** to the server i was unable to get the json response . For some reason browser console showing \n`Uncaught (in promise) SyntaxError: JSON.parse: unexpected end of data at line 1 column 1 of the JSON data` in Firefox and \n`+page.svelte? [sm]:312 Uncaught (in promise) SyntaxError: Unexpected end of input (at +page.svelte? [sm]:312:33)\n at +page.svelte? [sm]:312:33` in Chrome\n\nBut If i send request to a `+server.ts` file than send the same request to the golang server it works file . it gives the desired response ,\n\ni have use the same fetch request code before ``@sveltejs/kit@1.0.0-next.405`` . it was working fine . For some reason don't know why in the latest version of svelte kit it is not working\n\nMy fetch request (from +page.svelte) :\n\n#### +page.svelte\n\n```\nasync function PostGameData() {\n        await fetch('http://localhost:8001/admin/addproduct', {\n            method: 'POST',\n            mode: 'no-cors',\n            headers: new Headers({ 'Content-Type': 'application/json', Accept: 'application/json' }),\n            body: JSON.stringify(data)\n        })\n            .then((response) => response.json())\n            .then((d) => {\n                console.log('🚀 ~ file: +page.svelte ~ line 312 ~ .then ~ Response', d);\n            });\n    } \n```\n\nFrom Golang Server :\n\n### main.go\n\n```\nfunc(H *DatabaseCollections) AdminAddProduct() gin.HandlerFunc {\n  return func(c * gin.Context) {\n    c.Request.Header.Set(\"Access-Control-Allow-Origin\", \"*\")\n        var req GameData err\n        : = c.Bind(&req) if err !=\n            nil{\n    log.Println(\"Error : \", err)}\n\n            c.JSON(http.StatusOK, gin.H{\"ok\" : \" accepted bro\"})\n  }\n}\n```\n\n### Output :\n\nafter calling **PostGameData()**\n\n`Uncaught (in promise) SyntaxError: JSON.parse: unexpected end of data at line 1 column 1 of the JSON data` in Firefox and `+page.svelte? [sm]:312 Uncaught (in promise) SyntaxError: Unexpected end of input (at +page.svelte? [sm]:312:33) at +page.svelte? [sm]:312:33` in Chrome\n\n## But\n\nif i send the request to **+server.ts** and then make the same fetch to the Golang server than the output was as expected\n\n### +server.ts\n\n```\nexport async function POST({ request }) {\n    const data = await request.json();\n    let resData\n    await fetch('http://localhost:8001/admin/addproduct', {\n            // credentials: 'same-origin',\n            method: 'POST',\n            mode: 'no-cors',\n            headers: new Headers({ 'Content-Type': 'application/json', Accept: 'application/json' }),\n\n            body: JSON.stringify(data)\n        })\n            .then((response) => response.json())\n            .then((d) => {\n                resData=data\n                console.log('🚀 ~ file: +page.svelte ~ line 312 ~ .then ~ REsponse', d);\n        });\n\n    return json(resData)\n}\n```\n\n### +page.svelte\n\n```\nasync function PostGameData() {\n        await fetch('/api/addgame', {\n            method: 'POST',\n            mode: 'no-cors',\n            headers: new Headers({ 'Content-Type': 'application/json', Accept: 'application/json' }),\n            body: JSON.stringify(data)\n        })\n            .then((response) => response.json())\n            .then((d) => {\n                console.log('🚀 ~ file: +page.svelte ~ line 312 ~ .then ~ Response', d);\n            });\n    } \n```\n\n### Output:\n\n```\n{\n    \"ok\": \" accepted bro\"\n}\n```\n\nI tried all the solution about this topic in Stackoverflow, but None worked for me . I desperately need a solution .",
+            "QuesComment": [],
+            "Answers": [
+                {
+                    "ID": "6483ed83474333bc81eb7922",
+                    "UpVote": 0,
+                    "DownVote": 0,
+                    "AnsweredBy": "6483be4410a6de717c628559",
+                    "Comment": []
+                }
+            ]
+        }
+    ],
+    "Metadata": {
+        "Length": 10
+    }
+}

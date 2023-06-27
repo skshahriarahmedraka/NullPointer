@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { fetchPublicQuestionDataArr, fetchQuesArrWithMetadata } from '$lib/store/fetch';
-	import type { QuesArrWithMetadataType, QuestionDataType } from '$lib/store/types';
+	import { fetchPublicQuestionDataArr, fetchQuesArrWithMetadata,  } from '$lib/store/fetch';
+	import type { QuesArrWithMetadataType,  } from '$lib/store/types';
 	import { fetchUserFlairData } from '$lib/store/fetch';
 	import { onMount } from 'svelte';
 	import Emptybox from '$lib/errors/emptybox.svelte';
 
 	
+	// let testQuesData: QuesArrWithMetadataType = {} as QuesArrWithMetadataType;
+	
+	// fetch('$lib/Json Data/QuesArrWithMeraData.json').then(response =>response.json()).then(data => testQuesData = data)
+	// 	console.log("🚀 ~ file: PublicQues.svelte:13 ~ testQuesData:", testQuesData)
+		
 
-	let QuestionList:QuesArrWithMetadataType = {} as QuesArrWithMetadataType;
+	let QuestionList: QuesArrWithMetadataType = {} as QuesArrWithMetadataType;
 	// let fetchData = async () => {
 
 	// }
@@ -22,7 +27,7 @@
 	let filterType: string 
 	let pageNumStart: number=0;
 	let pageNumNow: number =0;
-	let pageNumEnd: number;
+	let pageNumEnd: number=0;
 	$: console.log("pageNumNow:", pageNumNow)
 	$: console.log("pageNumStart:", pageNumStart)
 	$: console.log("pageNumEnd:", pageNumEnd)
@@ -39,7 +44,10 @@
 			);
 			console.log("🚀 ~ file: PublicQues.svelte:32 ~ onMount ~ QuestionList:", QuestionList)
 		pageNumStart = 0;
-		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
+		pageNumEnd = Math.ceil(QuestionList.Metadata.Length / contentPerPage)
+		// if (pageNumEnd === -1) {
+		// 	pageNumEnd = 0;
+		// }
 		Loading=true
 	});
 	async function ApplyFilter(filterType: string, filterState: boolean) {
@@ -57,7 +65,7 @@
 		console.log("🚀 ~ file: PublicQues.svelte:59 ~ ApplyFilter ~ QuestionList:", QuestionList)
 		
 		pageNumStart = 0;
-		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage);
+		pageNumEnd = Math.floor(QuestionList.Metadata.Length / contentPerPage) 
 
 	}
 

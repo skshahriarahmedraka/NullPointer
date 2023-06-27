@@ -286,3 +286,14 @@ export type QuesVoteCheck = {
     ID  :  string 
     UserID : string 
 }
+
+export type NavShowType={
+		"Logo": boolean,
+		"Hash": boolean,
+		"Blog": boolean ,
+		"SearchInput": boolean,
+		"SearchIcon": boolean,
+		"Notification": boolean,
+		"Profile" : boolean,
+		"Options": boolean,
+	}

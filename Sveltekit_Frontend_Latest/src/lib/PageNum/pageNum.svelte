@@ -2,8 +2,11 @@
 	import { onMount } from 'svelte';
 
 	export let pageNumStart: number;
+	$: console.log("🚀 ~ file: pageNum.svelte:5 ~ pageNumStart:", pageNumStart)
 	export let pageNumNow: number;
+	$: console.log("🚀 ~ file: pageNum.svelte:7 ~ pageNumNow:", pageNumNow)
 	export let pageNumEnd: number;
+	$: console.log("🚀 ~ file: pageNum.svelte:9 ~ pageNumEnd:", pageNumEnd)
 	// let PresentArray = Array.from(Array(6).keys()).slice(1);
 	// let func = function () {
 	// 	if (pageNumNow < 3) {

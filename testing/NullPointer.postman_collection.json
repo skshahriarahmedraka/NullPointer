@@ -1,0 +1,971 @@
+{
+	"info": {
+		"_postman_id": "95a8e675-d424-44c3-9a27-ecf233956fc6",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14574997"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"Email\":\"skshahrraka@gmail.com\",\n    \"Password\":\"4154154\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/login",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"Email\":\"skshahrraka@gmail.com\",\n    \"Password\":\"4154154\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/login",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n    \"UserName\": \"sk raka\",\n    \"Email\":\"skshahrraka@gmail.com\",\n    \"Password\":\"4154154\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/register",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "register",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \n    \"UserName\": \"sk raka\",\n    \"Email\":\"skshahrraka@gmail.com\",\n    \"Password\":\"4154154\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/register",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Ask Question",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n\t\t\"ID\": \"\",\n\t\t\"QuesTitle\": \"Output file is corrupted while downloading and merging\",\n\t\t\"QuesViewed\": 0,\n\t\t\"QuesUpvote\": 0,\n\t\t\"QuesDownvote\": 0,\n\t\t\"QuesBookmark\": 0,\n\t\t\"QuesTags\": [],\n\t\t\"QuesGroup\" : [],\n\t\t\"QuesAnsAccepted\": \"\",\n\n\t\t\"QuesAskedBy\": \"18244124541\",\n\t\t\"QuesAskedTime\":\"2021-04-30T09:11:26.701Z\",\n\n\t\t\"QuesEditedBy\": \"\",\n\t\t\"QuesEditedTime\": \"2013-06-30T09:10:26.701Z\",\n\n\t\t\"QuesDescription\": \"But for the binary files hashes is not the same and file is corrupted. For text files everything is ok. Where can be the problem? When i',m uploading and splitting file, i'm checking hashes all the way and it's always the same.I tried first split files after download and them merge it to a one file, but the problem is still there.\" ,\n\t\t\"QuesComment\": [] ,\n\t\t\"Answers\": []\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/q/askquestion",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"q",
+						"askquestion"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Ask Question",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n\t\t\"ID\": \"\",\n\t\t\"QuesTitle\": \"QuestionTitle3\",\n\t\t\"QuesViewed\": 0,\n\t\t\"QuesUpvote\": 0,\n\t\t\"QuesDownvote\": 0,\n\t\t\"QuesBookmark\": 0,\n\t\t\"QuesTags\": [],\n\t\t\"QuesGroup\" : [],\n\t\t\"QuesAnsAccepted\": \"\",\n\n\t\t\"QuesAskedBy\": \"1324412431\",\n\t\t\"QuesAskedTime\":\"2023-04-30T09:10:26.701Z\",\n\n\t\t\"QuesEditedBy\": \"\",\n\t\t\"QuesEditedTime\": \"2023-04-30T09:10:26.701Z\",\n\n\t\t\"QuesDescription\": \"How to show the tapped appointment details on another page in the Flutter Calendar\" ,\n\t\t\"QuesComment\": [] ,\n\t\t\"Answers\": []\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/q/askquestion",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"q",
+								"askquestion"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "/user/:ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/user/644b51abb421ba87e77d1062",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"user",
+						"644b51abb421ba87e77d1062"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User Data",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/api/user/64362dedc4d170c1a55aea47",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"64362dedc4d170c1a55aea47"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Fiber"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 13 Apr 2023 09:48:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "25"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Bad Request\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/user/flair/:ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/user/644b51abb421ba87e77d1062",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"user",
+						"644b51abb421ba87e77d1062"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/updateuser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ID\" :  \"\",\n\t\"Title\"  : \"How to use marketing techniques to build a better resume\",\n\t\"MetaTitle\"  :\"If you want to get the attention of a employer, marketing has the techniques to get you there. \",\n\t\"Image\" \t: \"\",\n\t\"Description\" : \"Between the Great Resignation and the recent spate of layoffs, you may be thinking about your resume a bit more than usual in the last few months. Even if it’s been spruced up and you’re following the best advice out there, you might get more out of your resume by treating it as a marketing document instead of just an information dump. \",\n\t\"WrittenBy\" : [\"Caroline Thomas\"],  // vsn be written mode than one perosn\n\t\"WrittenTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"EditedBy\" :\"\",\n\t\"EditedTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"Tags\" \t  : [\"golang\",\"rust\"],\n\t\"Comments\"  : [],\n\t\"Upvote\" \t:1,\n\t\"Downvote\"  :6,\n\t\"Votes\" : [{\n        \"ID\"    : \"\",\n        \"UserID\"\t   : \"\",\n        \"Vote\"   : 3,\n        \"VoteTime\" : \"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Bookmark\" :[ {\n        \"ID\" \t: \"\",\n        \"UserID\"\t : \"Caroline Thomas\",\n        \"BookmarkTime\" :\"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Views\" :77789,\n\t\"ViewedBy\" :[]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/b/write",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"b",
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/uploadimage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ID\" :  \"\",\n\t\"Title\"  : \"How to use marketing techniques to build a better resume\",\n\t\"MetaTitle\"  :\"If you want to get the attention of a employer, marketing has the techniques to get you there. \",\n\t\"Image\" \t: \"\",\n\t\"Description\" : \"Between the Great Resignation and the recent spate of layoffs, you may be thinking about your resume a bit more than usual in the last few months. Even if it’s been spruced up and you’re following the best advice out there, you might get more out of your resume by treating it as a marketing document instead of just an information dump. \",\n\t\"WrittenBy\" : [\"Caroline Thomas\"],  // vsn be written mode than one perosn\n\t\"WrittenTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"EditedBy\" :\"\",\n\t\"EditedTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"Tags\" \t  : [\"golang\",\"rust\"],\n\t\"Comments\"  : [],\n\t\"Upvote\" \t:1,\n\t\"Downvote\"  :6,\n\t\"Votes\" : [{\n        \"ID\"    : \"\",\n        \"UserID\"\t   : \"\",\n        \"Vote\"   : 3,\n        \"VoteTime\" : \"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Bookmark\" :[ {\n        \"ID\" \t: \"\",\n        \"UserID\"\t : \"Caroline Thomas\",\n        \"BookmarkTime\" :\"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Views\" :77789,\n\t\"ViewedBy\" :[]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/b/write",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"b",
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Question",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/q/6465c36275046b375f4bd0bd",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"q",
+						"6465c36275046b375f4bd0bd"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get Question",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/q/644ea4a459165298b03d5022",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"q",
+								"644ea4a459165298b03d5022"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "get Public Questions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/public/q?type=time&start=2&stop=20&order=-1",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"public",
+						"q"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "time"
+						},
+						{
+							"key": "start",
+							"value": "2"
+						},
+						{
+							"key": "stop",
+							"value": "20"
+						},
+						{
+							"key": "order",
+							"value": "-1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "type=time&start=0&stop=20&order=1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=time&start=0&stop=20&order=1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "time"
+								},
+								{
+									"key": "start",
+									"value": "0"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "type=views&start=0&stop=20&order=-1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=views&start=0&stop=20&order=-1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "views"
+								},
+								{
+									"key": "start",
+									"value": "0"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "type=unanswered&start=0&stop=20&order=-1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=unanswered&start=2&stop=20&order=-1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "unanswered"
+								},
+								{
+									"key": "start",
+									"value": "2"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "get Public Ques With meta data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/public/q?type=time&start=2&stop=20&order=-1",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"public",
+						"q"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "time"
+						},
+						{
+							"key": "start",
+							"value": "2"
+						},
+						{
+							"key": "stop",
+							"value": "20"
+						},
+						{
+							"key": "order",
+							"value": "-1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "type=time&start=0&stop=20&order=1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=time&start=0&stop=20&order=1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "time"
+								},
+								{
+									"key": "start",
+									"value": "0"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "type=views&start=0&stop=20&order=-1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=views&start=0&stop=20&order=-1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "views"
+								},
+								{
+									"key": "start",
+									"value": "0"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "type=unanswered&start=0&stop=20&order=-1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/raka/Pictures/d9y1t23-9af8d5a4-f6e2-4a74-90d1-5ecd74b98477.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1/api/public/q?type=unanswered&start=2&stop=20&order=-1",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"api",
+								"public",
+								"q"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "unanswered"
+								},
+								{
+									"key": "start",
+									"value": "2"
+								},
+								{
+									"key": "stop",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Blog create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ID\" :  \"\",\n\t\"Title\"  : \"How to use marketing techniques to build a better resume\",\n\t\"MetaTitle\"  :\"If you want to get the attention of a employer, marketing has the techniques to get you there. \",\n\t\"Image\" \t: \"\",\n\t\"Description\" : \"Between the Great Resignation and the recent spate of layoffs, you may be thinking about your resume a bit more than usual in the last few months. Even if it’s been spruced up and you’re following the best advice out there, you might get more out of your resume by treating it as a marketing document instead of just an information dump. \",\n\t\"WrittenBy\" : [\"646b97e69c39ef015f354b0a\"],\n\t\"WrittenTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"EditedBy\" :\"\",\n\t\"EditedTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"Tags\" \t  : [\"golang\",\"rust\"],\n\t\"Comments\"  : [],\n\t\"Upvote\" \t:1,\n\t\"Downvote\"  :6,\n\t\"Votes\" : [{\n        \"ID\"    : \"\",\n        \"UserID\"\t   : \"646b97e69c39ef015f354b0a\",\n        \"Vote\"   : 3,\n        \"VoteTime\" : \"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Bookmark\" :[ {\n        \"ID\" \t: \"\",\n        \"UserID\"\t : \"646b97e69c39ef015f354b0a\",\n        \"BookmarkTime\" :\"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Views\" :77789,\n\t\"ViewedBy\" :[]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/b/write",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"b",
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Blog List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ID\" :  \"\",\n\t\"Title\"  : \"How to use marketing techniques to build a better resume\",\n\t\"MetaTitle\"  :\"If you want to get the attention of a employer, marketing has the techniques to get you there. \",\n\t\"Image\" \t: \"\",\n\t\"Description\" : \"Between the Great Resignation and the recent spate of layoffs, you may be thinking about your resume a bit more than usual in the last few months. Even if it’s been spruced up and you’re following the best advice out there, you might get more out of your resume by treating it as a marketing document instead of just an information dump. \",\n\t\"WrittenBy\" : [\"Caroline Thomas\"],  // vsn be written mode than one perosn\n\t\"WrittenTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"EditedBy\" :\"\",\n\t\"EditedTime\" : \"2023-05-26T09:44:56.065Z\",\n\t\"Tags\" \t  : [\"golang\",\"rust\"],\n\t\"Comments\"  : [],\n\t\"Upvote\" \t:1,\n\t\"Downvote\"  :6,\n\t\"Votes\" : [{\n        \"ID\"    : \"\",\n        \"UserID\"\t   : \"\",\n        \"Vote\"   : 3,\n        \"VoteTime\" : \"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Bookmark\" :[ {\n        \"ID\" \t: \"\",\n        \"UserID\"\t : \"Caroline Thomas\",\n        \"BookmarkTime\" :\"2023-05-26T09:44:56.065Z\"\n    }],\n\t\"Views\" :77789,\n\t\"ViewedBy\" :[]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1/api/b/write",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"b",
+						"write"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
