@@ -293,6 +293,7 @@ export type NavShowType={
 		"Blog": boolean ,
 		"SearchInput": boolean,
 		"SearchIcon": boolean,
+		// "SearchCross": boolean,
 		"Notification": boolean,
 		"Profile" : boolean,
 		"Options": boolean,

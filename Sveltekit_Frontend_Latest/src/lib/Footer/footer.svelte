@@ -6,9 +6,19 @@
 
 
 
-	<div class=" flex h-80  w-screen overflow-hidden flex-row items-start justify-center gap-2 bg-[#232629]">
-		<div class=" my-10 flex h-fit  w-52 flex-col items-start text-sm text-[#677079] ">
-			<Nullpointer class=" ml-0 h-6 w-auto" />
+	<div class=" grid
+
+	h-80  ?
+	xs:h-fit xs:overflow-y-scroll xs:pl-4 
+	sm:h-fit sm:overflow-y-scroll sm:pl-4 
+	md:h-fit md:overflow-y-scroll md:pl-4 
+	lg:h-fit lg:overflow-y-scroll lg:pl-4
+	xl:h-80 xl:grid-cols-5 xl:gap-y-0 xl:overflow-y-scroll    
+	xxl:h-fit xxl:overflow-y-scroll xxl:pl-4
+	pt-10
+	    bg-[#232629]">
+		<div class="?  flex h-fit  w-fit flex-col items-start text-sm text-[#677079] ">
+			<Nullpointer class=" ml-0 h-6  " />
 			<!-- <p class=" font-medium">Stack Overflow</p> -->
 			<p class="">Questions</p>
 			<p class="">Help</p>
@@ -41,14 +51,14 @@
 				Write hash
 			</p>
 		</div>
-		<div class=" my-10 h-fit w-40 flex-col items-start text-sm text-[#677079] ">
+		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
 			<p class=" my-2 text-base font-semibold text-gray-400">Products</p>
 			<p class="">Teams</p>
 			<p class="">Advertising</p>
 			<p class="">Collectives</p>
 			<p class="">Talent</p>
 		</div>
-		<div class=" my-10 h-fit w-48 flex-col items-start text-sm text-[#677079] ">
+		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
 			<p class="my-2 text-base font-semibold text-gray-400">Company</p>
 			<p class="">About</p>
 			<p class="">Press</p>
@@ -61,7 +71,7 @@
 			<p class="">Cookie Policy</p>
 		</div>
 
-		<div class=" my-10 h-fit w-72 flex-col items-start text-sm text-[#677079]">
+		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079]">
 			<p class="my-2 text-base font-semibold text-gray-400">Stack Exchange Network</p>
 			<p class="">Technology</p>
 			<p class="">Culture & recreation</p>
@@ -73,8 +83,8 @@
 			<p class="">Data</p>
 		</div>
 
-		<div class=" my-10 h-fit w-80 flex-col items-start text-sm text-[#677079] ">
-			<div class=" flex h-fit w-full flex-row gap-2">
+		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
+			<div class=" flex h-fit w-fit flex-row gap-2">
 				<p class="">Blog</p>
 				<p class="">Facebook</p>
 				<p class="">Twitter</p>
@@ -82,8 +92,8 @@
 				<p class="">Instagram</p>
 			</div>
 
-			<div class="mt-8  h-full  w-auto ">
-				<Stediablue class="m-auto h-full w-auto " />
+			<div class="mt-8  h-full   ">
+				<Stediablue class="m-auto h-full " />
 			</div>
 
 			<p class="">

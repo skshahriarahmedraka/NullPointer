@@ -230,6 +230,8 @@
 	import UserAnonymous from '$lib/icons/UserAnonymous.svelte';
 	import Hash from '$lib/icons/hash.svelte';
 	import Blog from '$lib/icons/blog.svelte';
+	import Cross from '$lib/icons/cross.svelte';
+	import Document from '$lib/icons/document.svelte';
 	const NotificationData: NotificationDataType[] = [
 		{
 			type: 'answer',
@@ -305,40 +307,15 @@
 		Profile: true,
 		Options: true
 	};
-	// 	if (window.innerWidth < 576) {
-	// 		showComponent ={
-	// 			"Logo": true,
-	// 			"Hash": true,
-	// 			"Blog":true ,
-	// 			"SearchInput":false,
-	// 			"SearchIcon":true,
-	// 		"Notification":false,
-	// 		"Profile" : false,
-	// 		"Options":true,
-	// 	}
-	// }
-	// 	else if (window.innerWidth < 767) {
-	// 		showComponent ={
-	// 			"Logo": true,
-	// 			"Hash": true,
-	// 			"Blog":true ,
-	// 			"SearchInput":false,
-	// 			"SearchIcon":true,
-	// 		"Notification":true,
-	// 		"Profile" : true,
-	// 		"Options":true,
-	// 	}}
-	// 	else if (window.innerWidth < 991) {
-	// 		showComponent ={
-	// 			"Logo": true,
-	// 			"Hash": true,
-	// 			"Blog":true ,
-	// 			"SearchInput":false,
-	// 			"SearchIcon":true,
-	// 		"Notification":true,
-	// 		"Profile" : true,
-	// 		"Options":true,
-	// 	}}
+		if (window.innerWidth < 576) {
+			showComponent.SearchInput=false 
+	}
+		else if (window.innerWidth < 767) {
+			showComponent.SearchInput=false
+	}
+		else if (window.innerWidth < 991) {
+			showComponent.SearchInput=false
+	}
 	// 	else if (window.innerWidth < 1199) {
 	// 		showComponent ={
 	// 			"Logo": true,
@@ -366,7 +343,7 @@
 </script>
 
 <div
-	class=" top-0 flex h-[53px] w-full flex-row items-center justify-center overflow-hidden border-b-2 border-solid border-[#32353a] bg-[#262626] xs:justify-around sm:justify-around md:justify-around lg:gap-2 xl:gap-2"
+	class=" top-0 flex h-[53px] w-full flex-row items-center justify-around border-b-2 border-solid border-[#32353a] bg-[#262626] xs:justify-around sm:justify-around md:justify-around lg:justify-center xl:justify-center xxl:justify-center"
 >
 	<!-- <div class=" grow" /> -->
 	<!-- Company logo -->
@@ -403,34 +380,78 @@
 				goto('/b');
 			}}
 		>
-			<Blog class="h-8 w-fit fill-sky-600" />
+
+			<!-- <Hash class=" h-8 fill-sky-600" /> -->
+			<Document class="h-8  fill-sky-600  " />
 			<!-- <QuestionForYou /> -->
 		</button>
 	{/if}
 	<!-- search bar  -->
-	<div class="mx-2 flex justify-center text-gray-200 xs:hidden sm:hidden md:hidden">
-		<div class=" lg:w-[450px] xl:min-w-[500px] xl:max-w-[550px]">
-			<div class="input-group relative flex w-full flex-row items-stretch">
-				<!-- search input -->
-				{#if showComponent.SearchInput}
-					<input
-						on:keypress={handleSearchKeyPress}
-						bind:value={$StoredSearchedString}
-						type="search"
-						class="form-control relative m-0 block min-w-0 max-w-full flex-auto rounded border border-solid border-gray-800 bg-gray-600 bg-clip-padding px-3 py-1.5 text-base font-normal transition ease-in-out focus:border-blue-600 focus:bg-gray-600 focus:outline-none"
-						placeholder="Search"
-						aria-label="Search"
-						aria-describedby="button-addon2"
+	{#if showComponent.SearchInput}
+		<div
+			class="input-group relative ml-2 flex w-[550px]  flex-row items-center justify-center text-gray-200  { showComponent.SearchInput ? "" :"xs:hidden sm:hidden md:hidden"}  lg:w-[550px] xl:w-[550px] xxl:w-[600px]"
+		>
+			<!-- search input -->
+			{#if showComponent.SearchInput}
+				<input
+					on:keypress={handleSearchKeyPress}
+					bind:value={$StoredSearchedString}
+					type="search"
+					class="form-control relative m-0 block w-full flex-auto rounded border border-solid border-gray-800 bg-gray-600 bg-clip-padding px-3 py-1.5 text-base font-normal transition ease-in-out focus:border-blue-600 focus:bg-gray-600 focus:outline-none"
+					placeholder="Search"
+					aria-label="Search"
+					aria-describedby="button-addon2"
 					/>
-				{/if}
-				<!-- search button -->
-			</div>
-		</div>
-	</div>
+					{/if}
+				</div>
+			{#if $StoredSearchedString.trim() !== '' || window.innerWidth < 992}
+				 <!-- content here -->
+				 <button 
+				 on:click={()=>{
+					 if ($StoredSearchedString.trim() === '') {
+						 showComponent = {
+							 Logo: true ,
+							 Hash: true  ,
+							 Blog: true ,
+							 SearchInput: false ,
+							 SearchIcon: true ,
+							 
+							 Notification: true ,
+							 Profile: true ,
+							 Options: true 
+							};
+						}
+						$StoredSearchedString=""
+						console.log("🚀 ~ file: index.svelte:435 ~ StoredSearchedString:", $StoredSearchedString)
+					}}
+		>
+		
+		<Cross class="h-6 w-6 hover:cursor-pointer fill-white " />
+	</button>
+	{/if}
+	{/if}
+	<!-- search button -->
 	{#if showComponent.SearchIcon}
 		<button
 			on:click={() => {
-				goto(`/search/${$StoredSearchedString.trim()}`);
+				if (window.innerWidth < 992 && $StoredSearchedString.trim() === '') {
+					showComponent = {
+						Logo: false,
+						Hash: false ,
+						Blog: false,
+						SearchInput: true,
+						SearchIcon: true ,
+						
+						Notification: false,
+						Profile: false ,
+						Options: false 
+					};
+				}
+				else if (window.innerWidth<992 && $StoredSearchedString.trim() != ''){
+
+					goto(`/search/${$StoredSearchedString.trim()}`);
+					
+				}
 			}}
 			class="  btn inline-block items-center rounded bg-sky-500 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-600 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg xs:px-3"
 			type="button"
@@ -439,11 +460,12 @@
 			<Search />
 		</button>
 	{/if}
+	
 	<!-- User Profile data -->
 	{#if showComponent.Profile}
 		{#if $UserData.UserID != ''}
 			<div
-				class=" flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 lg:mx-2"
+				class=" flex flex-row items-center justify-center rounded-lg hover:cursor-pointer hover:bg-gray-700 hover:bg-opacity-50 md:mx-2"
 				on:click={() => {
 					goto(`/${$UserData.UserID}`);
 				}}
@@ -455,7 +477,7 @@
 					<img
 						src={$UserData.UserImage}
 						alt=""
-						class=" aspect-square active:ring-offset-base-50 h-10 w-10 cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500 active:rounded-md active:ring active:ring-blue-600"
+						class=" aspect-square active:ring-offset-base-50 md::mx-2 h-10 w-10 cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500 active:rounded-md active:ring active:ring-blue-600 lg:mx-2 xl:mx-2 xxl:mx-2"
 					/>
 				{:else}
 					<!-- else content here -->
@@ -586,7 +608,7 @@
 			</div>
 
 			<!-- menu -->
-			<div class="">
+			{#if showComponent.Options}
 				<button
 					class=" flex h-full w-10 items-center justify-center overflow-hidden rounded-lg hover:bg-slate-800 focus:outline-none"
 					on:blur={() => {
@@ -603,79 +625,79 @@
 				>
 					<Menubar />
 				</button>
-				{#if NavbarOptsOpen}
-					<div
-						class=" fixed z-30 float-left -ml-[340px] mt-2 flex max-h-screen min-h-fit w-96 flex-col overflow-scroll rounded-lg border-2 border-gray-600 bg-[#2d2d2d] text-gray-200"
-					>
-						<div class="mb-1 ml-2 mt-3 flex flex-row">
-							{#if $UserData.UserImage != ''}
-								<!-- content here -->
-								<img
-									src={$UserData.UserImage}
-									alt=""
-									class=" aspect-square active:ring-offset-base-50 mx-2 h-10 w-10 cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500 active:rounded-md active:ring active:ring-blue-600"
-								/>
-							{:else}
-								<!-- else content here -->
-								<UserAnonymous
-									class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer  object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
-								/>
-							{/if}
-							<!-- <img
+			{/if}
+			{#if NavbarOptsOpen}
+				<div
+					class=" fixed z-30 float-left -ml-[340px] mt-2 flex max-h-screen min-h-fit w-96 flex-col overflow-scroll rounded-lg border-2 border-gray-600 bg-[#2d2d2d] text-gray-200"
+				>
+					<div class="mb-1 ml-2 mt-3 flex flex-row">
+						{#if $UserData.UserImage != ''}
+							<!-- content here -->
+							<img
+								src={$UserData.UserImage}
+								alt=""
+								class=" aspect-square active:ring-offset-base-50 mx-2 h-10 w-10 cursor-pointer rounded-lg object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500 active:rounded-md active:ring active:ring-blue-600"
+							/>
+						{:else}
+							<!-- else content here -->
+							<UserAnonymous
+								class=" aspect-square active:ring-offset-base-50 mx-2  h-10 w-10  cursor-pointer  object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
+							/>
+						{/if}
+						<!-- <img
 							src={$UserData['UserImage']}
 							alt=""
 							class=" aspect-square active:ring-offset-base-50 mx-2  h-16 w-16  cursor-pointer rounded-xl object-cover transition-all duration-150 ease-linear hover:rounded-xl hover:ring hover:ring-cyan-500  active:rounded-md  active:ring  active:ring-blue-600"
 						/> -->
-							<div class="flex flex-col items-center justify-center">
-								<div class=" line-clamp-1 text-2xl font-light">{$UserData.UserName}</div>
-								<p class=" font-semibold">
-									{ShortenNumber($UserData.Badges.Reputation)} Reputation <WhiteDot />
-									{ShortenNumber($UserData.Follower.length)} Follower
-								</p>
-							</div>
+						<div class="flex flex-col items-center justify-center">
+							<div class=" line-clamp-1 text-2xl font-light">{$UserData.UserName}</div>
+							<p class=" font-semibold">
+								{ShortenNumber($UserData.Badges.Reputation)} Reputation <WhiteDot />
+								{ShortenNumber($UserData.Follower.length)} Follower
+							</p>
 						</div>
-						<!-- <button
+					</div>
+					<!-- <button
 						class="flex h-fit w-full  flex-row border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d]  py-2 px-4 text-[#3196e3] transition-all duration-150  ease-linear  hover:bg-[#404245] "
 					>
 						profile
 					</button> -->
-						<button
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							My followers
-						</button>
-						<button
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							My Following
-						</button>
-						<button
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							My Stats
-						</button>
-						<button
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							HeapOverflow Stats
-						</button>
-						<button
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							Settings
-						</button>
+					<button
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						My followers
+					</button>
+					<button
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						My Following
+					</button>
+					<button
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						My Stats
+					</button>
+					<button
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						HeapOverflow Stats
+					</button>
+					<button
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-[#3196e3] transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						Settings
+					</button>
 
-						<button
-							on:click={() => {
-								goto('/api/logout');
-							}}
-							class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-red-500 transition-all duration-150 ease-linear hover:bg-[#404245]"
-						>
-							Logout
-						</button>
-					</div>
-				{/if}
-			</div>
+					<button
+						on:click={() => {
+							goto('/api/logout');
+						}}
+						class=" h-fit w-full border-0 border-b-[1px] border-gray-700 bg-[#2d2d2d] px-4 py-2 text-xl text-red-500 transition-all duration-150 ease-linear hover:bg-[#404245]"
+					>
+						Logout
+					</button>
+				</div>
+			{/if}
 		{:else}
 			<!-- else content here -->
 			<div class="flex h-full flex-row items-center justify-center gap-2">

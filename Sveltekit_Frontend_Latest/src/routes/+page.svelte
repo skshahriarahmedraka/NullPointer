@@ -100,8 +100,8 @@
 				</div>
 			</div>
 		</div>
-		<Footer />
 	</div>
+	<Footer />
 {:else}
 	<LoadingSVG />
 {/if}
