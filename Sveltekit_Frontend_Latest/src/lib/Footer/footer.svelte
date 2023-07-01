@@ -6,18 +6,18 @@
 
 
 
-	<div class=" grid
+	<div class=" flex flex-row 
 
-	h-80  ?
-	xs:h-fit xs:overflow-y-scroll xs:pl-4 
-	sm:h-fit sm:overflow-y-scroll sm:pl-4 
-	md:h-fit md:overflow-y-scroll md:pl-4 
-	lg:h-fit lg:overflow-y-scroll lg:pl-4
-	xl:h-80 xl:grid-cols-5 xl:gap-y-0 xl:overflow-y-scroll    
-	xxl:h-fit xxl:overflow-y-scroll xxl:pl-4
+	h-80  
+	xs:h-fit xs:overflow-y-scroll xs:p-2 xs:flex-col 
+	sm:h-fit sm:grid sm:grid-cols-2 sm:grid-rows-3 sm:overflow-y-scroll sm:p-4  sm:items-start sm:flex-col 
+	md:h-fit md:grid md:grid-cols-3 md:grid-rows-2 md:overflow-y-scroll md:p-4 md:justify-center md:items-start md:flex-col md:gap-4
+	lg:h-80   lg:w-full lg:p-4 lg:flex-row lg:gap-4 lg:justify-around lg:items-start lg:overflow-hidden
+	xl:h-80   xl:w-full xl:p-4 xl:flex-row xl:gap-4 xl:justify-around xl:items-start xl:overflow-hidden
+	xxl:h-80   xxl:w-full xxl:p-4 xxl:flex-row xxl:gap-10 xxl:justify-center  xxl:items-start xxl:overflow-hidden
 	pt-10
 	    bg-[#232629]">
-		<div class="?  flex h-fit  w-fit flex-col items-start text-sm text-[#677079] ">
+		<div class="   flex h-fit  w-fit flex-col items-start text-sm text-[#677079] ">
 			<Nullpointer class=" ml-0 h-6  " />
 			<!-- <p class=" font-medium">Stack Overflow</p> -->
 			<p class="">Questions</p>
@@ -51,14 +51,14 @@
 				Write hash
 			</p>
 		</div>
-		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
+		<div class="   h-fit w-fit flex-col items-start text-sm text-[#677079] ">
 			<p class=" my-2 text-base font-semibold text-gray-400">Products</p>
 			<p class="">Teams</p>
 			<p class="">Advertising</p>
 			<p class="">Collectives</p>
 			<p class="">Talent</p>
 		</div>
-		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
+		<div class="   h-fit w-fit flex-col items-start text-sm text-[#677079] ">
 			<p class="my-2 text-base font-semibold text-gray-400">Company</p>
 			<p class="">About</p>
 			<p class="">Press</p>
@@ -71,7 +71,7 @@
 			<p class="">Cookie Policy</p>
 		</div>
 
-		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079]">
+		<div class="   h-fit w-fit flex-col items-start text-sm text-[#677079]">
 			<p class="my-2 text-base font-semibold text-gray-400">Stack Exchange Network</p>
 			<p class="">Technology</p>
 			<p class="">Culture & recreation</p>
@@ -83,8 +83,8 @@
 			<p class="">Data</p>
 		</div>
 
-		<div class="?  h-fit w-fit flex-col items-start text-sm text-[#677079] ">
-			<div class=" flex h-fit w-fit flex-row gap-2">
+		<div class="   h-fit w-96 xs:w-full flex-col items-start text-sm text-[#677079] ">
+			<div class=" flex flex-wrap h-fit w-fit flex-row gap-2">
 				<p class="">Blog</p>
 				<p class="">Facebook</p>
 				<p class="">Twitter</p>
