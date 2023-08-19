@@ -138,7 +138,7 @@
 	})
 </script>
 
-<div class=" mt-2  flex w-[165px] flex-col  ">
+<div class="{$$props.class}  mt-2  flex w-[165px] flex-col  ">
 	<!-- My Favorite hash Tags -->
 	<div class="h-fit w-full">
 		<div

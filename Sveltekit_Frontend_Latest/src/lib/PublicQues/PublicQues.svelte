@@ -75,7 +75,7 @@
 
 {#if Loading}
 
-<div class="flex h-16 w-full flex-row">
+<div class="flex h-16 w-full flex-row flex-wrap xs:h-fit sm:h-fit sm:space-y-2 xs:space-y-2">
 	<div class="ml-5 self-center text-lg text-[#e7e9eb]">{QuestionList.Metadata.Length} Question</div>
 	<div class="grow" />
 	<div class=" flex h-9 flex-row justify-around self-center rounded-md border-2 border-[#7d858d]">
@@ -163,10 +163,10 @@
 					goto(`/q/${i.ID}`);
 				}}
 				on:keydown={() => {}}
-				class=" min-h-32 mx-2 flex max-h-40 w-full cursor-pointer flex-row border-t-2 border-[#404245] py-2 hover:bg-slate-800 hover:bg-opacity-50"
+				class="h-fit mx-2 flex   w-full cursor-pointer flex-row xs:flex-col xs:h-fit sm:flex-col sm:h-fit border-t-2 border-[#404245] py-2 hover:bg-slate-800 hover:bg-opacity-50"
 			>
 				<!-- quesVote -->
-				<div class="my-2 flex h-full w-60 flex-col items-center justify-center gap-1">
+				<div class="my-2 flex h-full  w-60 flex-col sm:flex-row sm:gap-3 xs:flex-row xs:gap-2  items-center justify-center gap-1">
 					<!-- VoteNumber -->
 					<div class="  {i.QuesUpvote - i.QuesDownvote > 0 ? 'text-[#e7e9eb]' : 'text-[#959ba0]'} ">
 						{i.QuesUpvote - i.QuesDownvote} Votes
@@ -190,7 +190,7 @@
 					</div>
 				</div>
 				<!-- Qtitle &detail -->
-				<div class=" flex h-full w-[1200px] flex-col">
+				<div class=" flex h-full w-[1200px] xs:w-full sm:w-full flex-col">
 					<!-- Title -->
 					<div class=" line-clamp-2 text-xl text-sky-600 hover:cursor-pointer hover:text-blue-600">
 						{i.QuesTitle}
@@ -198,8 +198,8 @@
 					<!-- description -->
 					<div class=" text-md line-clamp-2 text-[#e7e9eb]">{i.QuesDescription}</div>
 					<!-- tag ans user -->
-					<div class="flex flex-row items-center justify-center">
-						<div class="  min-h-10 mt-2 flex max-h-20 w-full flex-row flex-wrap">
+					<div class="flex flex-row   sm:flex-col xs:flex-col  sm:items-start xs:items-start  ">
+						<div class=" h-fit mt-2 flex  w-fit flex-row flex-wrap ">
 							{#if i.QuesTags.length != 0}
 								{#each i.QuesTags as tag}
 									<div
@@ -216,21 +216,24 @@
 								</div>
 							{/if}
 						</div>
-						<div class="" />
-						{#await fetchUserFlairData(i.QuesAskedBy)}
+						<!-- user flair -->
+						<div class="w-fit order-last  flex flex-row self-end ">
+
+							{#await fetchUserFlairData(i.QuesAskedBy)}
 							<p class=" text-white">...waiting</p>
-						{:then flairUserData}
+							{:then flairUserData}
 							<!-- <p>The number is {number}</p> -->
 							<p
-								class="mr-1 mt-2 line-clamp-1 h-6 w-fit  text-center text-sky-600 hover:cursor-pointer hover:text-blue-600"
+							class="mr-1 mt-2 line-clamp-1 h-6   text-center text-sky-600 hover:cursor-pointer hover:text-blue-600"
 							>
-								{flairUserData.UserName}
-							</p>
-							<p class="mx-2 mt-2 font-bold text-[#e7e9eb]">{flairUserData.Badges.Reputation}</p>
+							{flairUserData.UserName}
+						</p>
+						<p class="mx-2 mt-2 font-bold text-[#e7e9eb]">{flairUserData.Badges.Reputation}</p>
 						{:catch error}
-							<p style="color: red">{error.message}</p>
+						<p class="text-red-600">{error.message}</p>
 						{/await}
-						<p class=" mt-2 w-80 text-[#959ba0]">{new Date(i.QuesAskedTime).toLocaleString()}</p>
+						<p class=" mt-2 w-fit text-[#959ba0] ">{new Date(i.QuesAskedTime).toLocaleString()}</p>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -632,7 +632,7 @@
 				>
 					<div class="mb-1 ml-2 mt-3 flex flex-row">
 						{#if $UserData.UserImage != ''}
-							<!-- content here -->
+							
 							<img
 								src={$UserData.UserImage}
 								alt=""
